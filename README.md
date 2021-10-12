@@ -89,3 +89,26 @@ export const reducers = {cms: cmsReducer};
 
 * 💰💰💰 Profit 💰💰💰
 
+### Runing a local docker instance
+
+* Build the image of the app
+```
+docker build -t cfc-site:dev .
+```
+
+* Run a container with the created image
+
+```
+docker run \
+  --name=hcf-site \
+  -e CANON_API="http://localhost:3300" \
+  -e CANON_LANGUAGE_DEFAULT="en" \
+  -e CANON_LANGUAGES="en" \
+  -e CANON_CMS_ENABLE="true" \
+  -e CANON_CMS_DB="postgresql://user:password@ip:5432/dbname" \
+  -e CANON_CMS_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/" \
+  -e FLICKR_API_KEY="check-1password" \
+  -p 3300:3300 \
+  -d \
+  cfc-site:dev
+```
