@@ -112,3 +112,15 @@ docker run \
   -d \
   cfc-site:dev
 ```
+
+### Set-up secrets for github actions workflow
+
+| Secret Name                     | Value                                      |
+| ------------------------------- | ------------------------------------------ |
+| CANON_API                       | {http://localhost:3300}                    |
+| CANON_CMS_CUBES                 | https://dev.cfc.ui.datawheel.us/tesseract/ |
+| CANON_CMS_DB                    | postgresql://user:password@ip:5432/dbname  |
+| FLICKR_API_KEY                  | {flickr api key}                           |
+| GCP_ARTIFACT_REGISTRY_REPO_NAME | {gcp actifact registry name}               |
+| GCP_PROJECT_ID                  | {gcp project id}                           |
+| GCP_SA_KEY                      | {base64 json service account}              |
