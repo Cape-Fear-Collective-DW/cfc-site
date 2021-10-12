@@ -117,7 +117,7 @@ docker run \
 
 | Secret Name                     | Value                                      |
 | ------------------------------- | ------------------------------------------ |
-| CANON_API                       | {http://localhost:3300}                    |
+| CANON_API                       | https://dev.cfc.datawheel.us/              |
 | CANON_CMS_CUBES                 | https://dev.cfc.ui.datawheel.us/tesseract/ |
 | CANON_CMS_DB                    | postgresql://user:password@ip:5432/dbname  |
 | FLICKR_API_KEY                  | {flickr api key}                           |
