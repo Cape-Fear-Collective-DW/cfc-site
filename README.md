@@ -24,6 +24,7 @@ export CANON_CMS_ENABLE="true"
 # private keys for develop
 export CANON_CMS_DB="postgresql://user:password@ip:5432/dbname"
 export CANON_CMS_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/"
+export CANON_CONST_TESSERACT="https://dev.cfc.ui.datawheel.us/tesseract/"
 export FLICKR_API_KEY="check-1password"
 ```
 
@@ -107,6 +108,7 @@ docker run \
   -e CANON_CMS_ENABLE="true" \
   -e CANON_CMS_DB="postgresql://user:password@ip:5432/dbname" \
   -e CANON_CMS_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/" \
+  -e CANON_CONST_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/" \
   -e FLICKR_API_KEY="check-1password" \
   -p 3300:3300 \
   -d \
@@ -119,6 +121,7 @@ docker run \
 | ------------------------------- | ------------------------------------------ |
 | CANON_API                       | https://dev.cfc.datawheel.us/              |
 | CANON_CMS_CUBES                 | https://dev.cfc.ui.datawheel.us/tesseract/ |
+| CANON_CONST_CUBES               | https://dev.cfc.ui.datawheel.us/tesseract/ |
 | CANON_CMS_DB                    | postgresql://user:password@ip:5432/dbname  |
 | FLICKR_API_KEY                  | {flickr api key}                           |
 | GCP_ARTIFACT_REGISTRY_REPO_NAME | {gcp actifact registry name}               |
