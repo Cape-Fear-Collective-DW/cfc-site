@@ -12,5 +12,5 @@ export default {
     {name: "apple-mobile-web-app-status-bar-style", content: "black"},
     {name: "apple-mobile-web-app-title", content: "undefined"}
   ],
-  title: "undefined"
+  title: "Healthy Cape Fear"
 };
