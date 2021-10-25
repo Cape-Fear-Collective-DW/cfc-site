@@ -18,6 +18,7 @@ module.exports = function(app) {
     const customHierarchy = id1 === "cf" ? "Cape Fear Member" : "County"
     const customId = id1 === "cf" ? 1 : id1
     const isRegion = id1 === "cf"
+    const notRegion = !isRegion
 
     const poverty = {
         cube: "Poverty Population",
@@ -38,6 +39,7 @@ module.exports = function(app) {
       customHierarchy,
       customId,
       isRegion,
+      notRegion,
       povertyLastYear
     });
 
