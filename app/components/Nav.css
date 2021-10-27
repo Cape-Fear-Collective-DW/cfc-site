@@ -1,0 +1,30 @@
+nav {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 21px 29px;
+  position: fixed;
+  top: 0;
+  transition: background-color 0.2s;
+  width: 100%;
+  z-index: 100;
+  &.background {
+    background-color: var(--darkblue);
+  }
+
+  & .logo {
+    align-self: stretch;
+    & img {
+      height: 100%;
+    }
+  }
+  & .bp3-icon {
+    color: var(--white);
+    cursor: pointer;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+}
