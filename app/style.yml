@@ -1,23 +1,29 @@
-########################################
-# instructions
-########################################
+# color palette
+emerald: "#66bbb7"
+darkemerald: "#2b8f8b"
+darkblue: "#14406a"
+verydarkblue: "#0b3155"
+lightgreen: "#b2df8a"
+green: "#33a02c"
+pink: "#fb9a99"
+red: "#e31a1c"
+lightorange: "#fdbf6f"
+orange: "#ff7f00"
+lightpurple: "#cab2d6"
+purple: "#6a3d9a"
+background: "#d6dce5"
+backgroundlight: "#f8f9fb"
+gris: "#626262"
+midblue: "#6886a1"
 
-# When styling a canon profile, the first thing you should do is heavily customize these variables.
-# Each of the following variables is used throughout both the admin panel and generated profile css.
-# If you replace the default grayscale colors, you should try and use similar shades.
+# nav setup
+nav-height:                 "106px"
+subnav-height:              "var(--nav-height)"
 
-# It is recommended that you also use these variables in your css files. i.e., `color: var(--accent);`
-# They can also be imported and used by react components: `import styles from style.yml`, then `<span style={{color: styles["alert-dark"]}} />`
-# And of course, you can add as many new variables here as you like, and use them in the same way.
 
-# The pigments plugin is highly recommended for visualizing hex values as colors in your text editor:
-# Atom:   https://atom.io/packages/pigments
-# VSCode: https://marketplace.visualstudio.com/items?itemName=jaspernorth.vscode-pigments
 
-# GOTCHAS:
-# 1. When aliasing variables in this file (i.e., `section-text-color: "var(--dark-2)"`), these variables will be replaced in css files, but NOT in js files.
 
-# Finally, if you encounter any bugs, are confused by anything, or wish things were better/different, let @perpetualgrimace know!
+
 
 
 ########################################
@@ -38,6 +44,7 @@ black:        "#181A21"
 # accent colors
 accent:       "#FFCD33"
 accent-light: "#FFD65B"
+accent-light-RGB: "255, 214, 91"
 accent-dark:  "#C4960B"
 accent-black: "#7F6516"
 
@@ -79,8 +86,6 @@ body-font-scale-md:         "112.5%" # 1rem = 18px (min-width: 992px)
 body-font-scale-xl:         "125%"   # 1rem = 20px (min-width: 1400px)
 
 # measurements
-nav-height:                 "50px"
-subnav-height:              "var(--nav-height)"
 container-width:            "80rem" # 1280px
 hero-container-width:       "var(--container-width)"
 
