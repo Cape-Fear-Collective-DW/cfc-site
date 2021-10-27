@@ -8,14 +8,6 @@ export function toggleSearch() {
 
     dispatch({type: "SEARCH_TOGGLE", data: newValue});
 
-    // focus the search input if visible
-    if (document && newValue) {
-      setTimeout(() => {
-        const elem = document.querySelector(".global-search .cp-input");
-        if (elem) elem.focus();
-      }, 300);
-    }
-
   };
 
 }

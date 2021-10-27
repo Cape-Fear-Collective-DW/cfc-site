@@ -5,14 +5,11 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.global-search {
+.bp3-dialog.cp-hero-search {
   background-color: var(--background);
-  height: 100vh;
-  left: 0;
-  padding: var(--nav-height) var(--gutter-md) 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+}
+
+.cms-profilesearch {
   & .cp-input-label {
     height: 67px;
     & .cp-input {
