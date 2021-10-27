@@ -14,4 +14,17 @@ if (__DEV__ && !__SERVER__) {
 }
 
 import {cmsReducer} from "@datawheel/canon-cms";
-export const reducers = {cms: cmsReducer};
+export const reducers = {
+  cms: cmsReducer,
+  searchVisible: (state = false, action) => {
+    switch (action.type) {
+      case "SEARCH_TOGGLE":
+        return action.data;
+      // manually hide the search any time the loading screen appears
+      // (ie. clicking a profile tile in the search)
+      case "LOADING_START":
+        return false;
+      default: return state;
+    }
+  }
+};
