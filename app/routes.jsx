@@ -1,9 +1,10 @@
 import React from "react";
 import {Route, IndexRoute, browserHistory} from "react-router";
-import {Builder, Profile} from "@datawheel/canon-cms";
+import {Builder} from "@datawheel/canon-cms";
 
 import App from "./App";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 function createRoute() {
   return (
