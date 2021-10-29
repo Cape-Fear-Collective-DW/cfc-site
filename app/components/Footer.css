@@ -1,0 +1,25 @@
+footer {
+  align-items: center;
+  background-color: var(--darkblue);
+  display: flex;
+  justify-content: space-between;
+  padding: var(--gutter-xl) var(--gutter-xl) var(--gutter-xl);
+  & .footer-logo {
+    & img {
+      width: 264px;
+    }
+  }
+  & .footer-links {
+    & .footer-link {
+      color: var(--white);
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 19px;
+      margin-left: 50px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
