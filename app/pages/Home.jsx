@@ -20,7 +20,6 @@ class Home extends Component {
 
     const {t, tabs} = this.props;
     const {currentTab} = this.state;
-    console.log(currentTab, tabs);
 
     return (
       <div id="Home">
