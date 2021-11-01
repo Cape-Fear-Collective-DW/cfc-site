@@ -21,7 +21,47 @@ nav-height:                 "106px"
 subnav-height:              "var(--nav-height)"
 
 
+# changed CMS styles
+base-font-stack:            "'Poppins', sans-serif"
+accent:       "var(--emerald)"
+accent-light: "var(--darkemerald)"
 
+heading-font-stack:         "'Oswald', sans-serif"
+heading-font-weight:        "400"
+
+hero-bg-color:              "var(--darkblue)"
+
+# sections
+sidebar-width:              "26rem"
+section-bg-odd:             "transparent"
+section-bg-even:            "transparent"
+section-text-color:         "var(--gris)"
+section-heading-color:      "var(--darkblue)"
+
+button-border-width:        "1.2px"
+button-bg-color:            "transparent"
+button-border-color:        "var(--gris)"
+button-color:               "var(--gris)"
+button-hover-bg-color:      "var(--emerald)"
+button-hover-border-color:  "var(--emerald)"
+button-padding:             "0.5em 1em"
+field-padding:              "0.5em 1em 0.5em 1em"
+select-border-radius:       "20px"
+select-bg-color:            "transparent"
+field-bg-color:             "var(--white)"
+field-border-color:         "var(--gris)"
+field-color:                "var(--gris)"
+field-focus-color:          "var(--emerald)"
+field-placeholder-color:    "var(--gris)"
+field-icon-color:           "var(--gris)"
+field-icon-hover-color:     "var(--emerald)"
+
+stat-label-font-size:       "14px"
+stat-label-color:           "var(--darkblue)"
+stat-value-font-size:       "36px"
+stat-value-color:           "var(--darkblue)"
+stat-subtitle-font-size:    "20px"
+stat-subtitle-color:        "var(--darkblue)"
 
 
 
@@ -42,8 +82,6 @@ dark-3:       "#20242E"
 black:        "#181A21"
 
 # accent colors
-accent:       "#FFCD33"
-accent-light: "#FFD65B"
 accent-light-RGB: "255, 214, 91"
 accent-dark:  "#C4960B"
 accent-black: "#7F6516"
@@ -72,7 +110,6 @@ type-error-dark:    "#75224D"
 
 # measurements
 cms-nav-height:     "2.75rem"
-sidebar-width:      "17rem"
 toolbox-width:      "22.5rem"
 
 
@@ -106,14 +143,11 @@ font-xl:                    "1.5rem"   # 24px
 font-xxl:                   "2rem"     # 32px - use sparingly
 
 # base (p, li, etc.)
-base-font-stack:            "'Lato', 'Trebuchet MS', sans-serif" # Remember to import custom fonts & only the necessary weights via Helmet.js
 base-font-weight:           "400"
 base-letter-spacing:        "0"
 bold-weight:                "800"
 
 # headings (h1, h2, etc.; .heading class)
-heading-font-stack:         "var(--base-font-stack)"
-heading-font-weight:        "600"
 heading-text-transform:     "none"
 heading-letter-spacing:     "0"
 
@@ -130,7 +164,6 @@ label-text-transform:       "uppercase"
 label-letter-spacing:       "0.0125em" # generally, some kerning is helps legibility of all caps text only
 
 # hero AKA header AKA splash
-hero-bg-color:              "var(--dark-3)"
 hero-img-overlay-opacity:   "0.875"
 hero-text-color:            "var(--light-2)"
 hero-paragraph-size:        "var(--font-xs)"
@@ -143,11 +176,6 @@ hero-stat-column-count:     "4"
 hero-stat-column-width:     "10rem"
 hero-viz-width:             "20rem"
 
-# sections
-section-bg-odd:             "var(--white)"
-section-bg-even:            "var(--light-1)"
-section-text-color:         "var(--dark-2)"
-section-heading-color:      "var(--dark-3)"
 # sticky sections
 sticky-section-offset:      "50px" # px value required here unfortunately
 sticky-section-height:      "var(--nav-height)"
@@ -179,29 +207,12 @@ grouping-stat-value-color:  "var(--white)"
 
 # buttons
 button-border-radius:       "2px"
-button-border-width:        "1px"
-button-bg-color:            "color(var(--white) a(0.5))"
-button-border-color:        "var(--light-3)"
-button-color:               "var(--accent-black)"
-button-padding:             "0.5em 1.25em"
-button-hover-bg-color:      "var(--accent-black)"
-button-hover-border-color:  "var(--accent-black)"
 button-hover-color:         "var(--white)"
 
 # fields
 field-border-radius:        "1px"
 field-border-width:         "1px"
-field-padding:              "0.5em 0.5em 0.575em 0.5em"
 field-font-weight:          "400"
-field-bg-color:             "var(--white)"
-field-border-color:         "var(--light-3)"
-field-color:                "var(--dark-2)"
-field-placeholder-color:    "var(--gray)"
-field-focus-color:          "var(--accent-dark)"
-field-icon-color:           "var(--dark-1)"
-field-icon-hover-color:     "var(--dark-3)"
-select-border-radius:       "var(--button-border-radius)"
-select-bg-color:            "var(--light-1)"
 
 # visualizations
 viz-aspect-ratio:           "50%"  # set as padding-top on .cp-viz-container, then .cp-viz fills the height
@@ -213,10 +224,4 @@ percentage-bar-color:       "var(--accent-dark)"
 percentage-bar-radius:      "0.5em"
 
 # stats
-stat-label-font-size:       "var(--font-sm)"
-stat-label-color:           "inherit"
-stat-value-font-size:       "var(--font-xl)"
-stat-value-color:           "var(--accent-dark)"
-stat-subtitle-font-size:    "var(--font-xs)"
-stat-subtitle-color:        "var(--dark-1)"
 stat-group-stat-width:      "9rem"
