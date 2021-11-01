@@ -1,0 +1,195 @@
+.cp-subnav {
+  align-items: center;
+  & .cp-subnav-list.cp-subnav-secondary {
+    background-color: transparent;
+  }
+  & .cp-subnav-item {
+    & .bp3-icon {
+      transition: color 0.2s, transform 0.2s;
+    }
+    &.is-active {
+      & .bp3-icon {
+        color: var(--accent);
+      }
+      & .cp-subnav-link {
+        color: var(--white);
+      }
+    }
+    &:after {
+      height: 6px;
+    }
+    & .cp-subnav-group-list {
+      background-color: var(--darkemerald);
+      & .cp-subnav-group-link-icon {
+        display: none;
+      }
+    }
+  }
+}
+
+/* Section "Grouping" Background Color and Margin */
+.cp-grouping-section {
+  background-color: transparent;
+  margin-top: calc(var(--gutter-lg) * 2) !important;
+}
+
+.cp-section:not(.cp-grouping-section) + .cp-sub-grouping-section {
+  margin-top: calc(var(--gutter-xl) * 2) !important;
+}
+
+/* Section "Grouping" Header Text */
+.cp-grouping-section-heading {
+  color: var(--darkblue);
+  font-family: "Oswald", sans-serif;
+  font-size: 46px;
+  font-weight: normal;
+  text-align: center;
+  width: 100%;
+}
+
+/* Section "SubGrouping" Header Text */
+.cp-sub-grouping-section-heading-wrapper .cp-section-heading {
+  color: var(--midblue);
+  font-family: "Oswald", sans-serif;
+  font-size: 34px;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+/* Standard Section Container */
+.cp-section:not(.cp-grouping-section-inner):not(.cp-hero) {
+  margin: var(--gutter-md);
+  padding: 0;
+}
+
+/* Standard Section Inner Container */
+.cp-section-inner:not(.cp-grouping-section-inner):not(.cp-hero-inner) {
+  background-color: var(--backgroundlight);
+  border-radius: 15px;
+  box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
+  padding: var(--gutter-xl);
+}
+
+/* Standard Section Titles */
+h4 {
+  font-size: 34px;
+}
+
+.cp-select-label:not(:last-child),
+.cp-button-group {
+  margin-bottom: var(--gutter-sm);
+}
+
+/* Selector Label Text */
+.cp-button-group > [class*="-label"],
+.cp-select-text, label {
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+/* All Button Styles */
+.cp-button,
+.cp-select {
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.cp-select-icon {
+  font-size: 16px;
+  right: 0.5em;
+}
+
+/* Selector Button Container */
+.cp-button-group > [class*="-button"] {
+  border-radius: 20px !important;
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.cp-stat, .cp-stat-group {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: var(--gutter-md);
+  margin-top: var(--gutter-lg);
+}
+
+.cp-stat-group-list > .cp-stat {
+  margin-bottom: 0;
+}
+
+.cp-stat-group-wrapper .cp-stat-value-text {
+  margin-right: 16px;
+}
+
+.cp-stat-label {
+  margin-top: var(--gutter-xs);
+}
+
+.cp-stat-subtitle {
+  display: inline-block;
+  width: auto;
+}
+
+.cp-stat-group-title {
+  color: var(--darkblue);
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  margin-top: var(--gutter-xs);
+}
+
+.multi-list {
+  & .multi-item {
+    background-color: var(--emerald);
+    margin: var(--gutter-xs) var(--gutter-xs) var(--gutter-xs) 0;
+    padding: var(--button-padding);
+  }
+}
+
+p {
+  font-size: 17px;
+}
+
+.cp-viz-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  & .cp-viz-header {
+    position: static;
+    & .cp-viz-title {
+      color: var(--darkblue);
+      font-family: "Oswald", sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 22px;
+      margin: var(--gutter-sm) !important;
+      text-align: center;
+      text-transform: uppercase;
+      width: 100%;
+    }
+    & .Options {
+      bottom: 0;
+      position: absolute;
+      right: 0;
+      & .cp-button {
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+  & .cp-viz-figure,
+  & .cp-viz-header + .cp-viz-figure {
+    bottom: auto;
+    height: auto;
+    flex: 1 1 auto;
+    margin-bottom: 4em;
+    padding-top: 0;
+    top: auto;
+  }
+}
