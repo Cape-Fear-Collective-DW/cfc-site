@@ -1,0 +1,24 @@
+.sponsors {
+  color: var(--white);
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  justify-content: center;
+  & .sponsor-block {
+    align-items: center;
+    display: flex;
+    padding: 0 25px;
+    & img {
+      margin: 0 10px;
+      width: 120px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    &:not(:first-child) {
+      border-left: 1px solid var(--white);
+    }
+  }
+}

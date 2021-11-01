@@ -2,14 +2,22 @@ footer {
   align-items: center;
   background-color: var(--darkblue);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding: var(--gutter-xl) var(--gutter-xl) var(--gutter-xl);
+  padding: 0 0 var(--gutter-xl);
+  & .sponsors {
+    background-color: var(--verydarkblue);
+    min-width: 100%;
+    padding: var(--gutter-sm);
+  }
   & .footer-logo {
+    margin: var(--gutter-xl);
     & img {
       width: 264px;
     }
   }
   & .footer-links {
+    margin: var(--gutter-xl);
     & .footer-link {
       color: var(--white);
       font-family: "Poppins", sans-serif;

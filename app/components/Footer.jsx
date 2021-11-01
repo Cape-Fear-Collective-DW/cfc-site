@@ -1,9 +1,11 @@
 import React from "react";
 import {Link} from "react-router";
+import Sponsors from "$app/components/Sponsors";
 import "./Footer.css";
 
 const Footer = props =>
   <footer>
+    <Sponsors />
     <Link className="footer-logo" to="/">
       <img src="/images/cfc-logo.png" />
     </Link>
