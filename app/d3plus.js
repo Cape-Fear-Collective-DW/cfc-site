@@ -23,11 +23,17 @@ const axisConfig = {
 
 export default {
   colorScaleConfig: {
-    axisConfig
+    axisConfig,
+    color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
   },
   shapeConfig: {
-    labelConfig: labelStyle
+    labelConfig: labelStyle,
+    Path: {
+      fillOpacity: 0.75,
+      stroke: styles.darkblue
+    }
   },
+  topojsonFill: "#bbbbc2",
   xConfig: axisConfig,
   yConfig: axisConfig
 };
