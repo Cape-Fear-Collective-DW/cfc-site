@@ -13,27 +13,31 @@ class App extends Component {
 
   render() {
 
-    const {searchVisible, t, toggleSearch} = this.props;
+    const {barePage, searchVisible, t, toggleSearch} = this.props;
 
     return (
       <div>
-        <Nav />
+        { !barePage && <Nav /> }
         { this.props.children }
-        <Footer />
-        <Dialog className="cp-hero-search" isOpen={searchVisible} onClose={toggleSearch}>
+        { !barePage && <Footer /> }
+        { !barePage && <Dialog className="cp-hero-search" isOpen={searchVisible} onClose={toggleSearch}>
           <ProfileSearch
             {...profileSearchConfig(t)}
             display="grid"
             showExamples={true} />
-        </Dialog>
+        </Dialog> }
       </div>
     );
   }
 
 }
 
-export default withNamespaces()(connect(state => ({
-  searchVisible: state.searchVisible
-}), dispatch => ({
+export default withNamespaces()(connect(state => {
+  const pathname = state.routing.locationBeforeTransitions ? `/${state.routing.locationBeforeTransitions.pathname}` : state.location.pathname;
+  return {
+    barePage: pathname.includes("/cms"),
+    searchVisible: state.searchVisible
+  };
+}, dispatch => ({
   toggleSearch: () => dispatch(toggleSearch())
 }))(App));
