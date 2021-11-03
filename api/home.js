@@ -46,7 +46,7 @@ module.exports = function(app) {
         icon: "map-marker",
         title: "Overview",
         tiles: profiles.map(d => ({
-          image: `/api/image?level=${d.hierarchy}&id=${d.id}&size=thumb`,
+          image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
           subtitle: d.hierarchy,
           title: d.name.replace(" County", ""),
           url: `/profile/geo/${d.slug}`
@@ -66,7 +66,7 @@ module.exports = function(app) {
             tiles: shuffle(profiles.slice()).map(d => {
               const topic = shuffle(topics)[0];
               return {
-                image: `/api/image?level=${d.hierarchy}&id=${d.id}&size=thumb`,
+                image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
                 subtitle: `${d.name.replace(" County", "")} ${d.hierarchy}`,
                 title: stripP(topic.title),
                 url: `/profile/geo/${d.slug}#${topic.slug}`
