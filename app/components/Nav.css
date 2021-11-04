@@ -1,4 +1,4 @@
-nav:not(.cms-navbar) {
+nav.site-nav {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;

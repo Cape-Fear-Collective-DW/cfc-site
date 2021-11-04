@@ -30,6 +30,8 @@ heading-font-stack:         "'Oswald', sans-serif"
 heading-font-weight:        "400"
 
 hero-bg-color:              "var(--darkblue)"
+hero-subhead-color:         "var(--emerald)"
+hero-subhead-size:          "46px"
 
 # sections
 sidebar-width:              "26rem"
@@ -169,8 +171,6 @@ hero-text-color:            "var(--light-2)"
 hero-paragraph-size:        "var(--font-xs)"
 hero-heading-color:         "var(--white)"
 hero-heading-size:          "var(--font-xxl)"
-hero-subhead-color:         "var(--white)"
-hero-subhead-size:          "var(--font-md)"
 hero-stat-value-color:      "var(--accent)"
 hero-stat-column-count:     "4"
 hero-stat-column-width:     "10rem"

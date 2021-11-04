@@ -37,7 +37,7 @@ class Nav extends Component {
     const {scrolled} = this.state;
 
     return (
-      <nav className={scrolled ? "background" : ""}>
+      <nav className={`site-nav ${scrolled ? "background" : ""}`}>
         <Link className="logo" to="/">
           <img src="/images/cfc-logo.png" />
         </Link>
