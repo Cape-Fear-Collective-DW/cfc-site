@@ -22,6 +22,24 @@
   & .cp-hero-figure {
     padding: 0;
   }
+  & .cp-hero-pdf {
+    border-color: var(--white);
+    bottom: calc(var(--subnav-height) + var(--gutter-xl));
+    color: var(--white);
+    font-size: var(--font-xs);
+    left: var(--gutter-xl);
+    opacity: 0.5;
+    position: absolute !important;
+    right: auto;
+    top: auto;
+    z-index: 3;
+    &:hover {
+      opacity: 1;
+    }
+    & .bp3-icon {
+      vertical-align: bottom;
+    }
+  }
 }
 
 .cp-subnav {
