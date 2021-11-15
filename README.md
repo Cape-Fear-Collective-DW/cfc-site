@@ -14,17 +14,21 @@
 
 ```sh
 # public keys for everything
-export CANON_API="http://localhost:3300"
-export CANON_LANGUAGE_DEFAULT="en"
 export CANON_LANGUAGES="en"
+export CANON_LANGUAGE_DEFAULT="en"
 
 # public keys for develop
 export CANON_CMS_ENABLE="true"
+export CANON_CMS_LOGGING="false"
 
 # private keys for develop
+export CANON_API="http://localhost:3300"
+export CANON_CMS_CUBES="https://dev.cfc.api.datawheel.us/"
 export CANON_CMS_DB="postgresql://user:password@ip:5432/dbname"
-export CANON_CMS_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/"
-export CANON_CONST_TESSERACT="https://dev.cfc.ui.datawheel.us/tesseract/"
+export CANON_CONST_TESSERACT="https://dev.cfc.datawheel.us/proxy/"
+
+# private keys for images
+export CANON_CONST_STORAGE_BUCKET="check-1password"
 export FLICKR_API_KEY="check-1password"
 ```
 
@@ -92,38 +96,50 @@ export const reducers = {cms: cmsReducer};
 
 ### Runing a local docker instance
 
-* Build the image of the app
+* Build the Docker Image of the app
 ```
-docker build -t cfc-site:dev .
+docker build -t datawheel/cfc-site:<IMAGE_TAGNAME> .
 ```
 
-* Run a container with the created image
-
+* Deploy the Docker Image on a local container
 ```
 docker run \
-  --name=hcf-site \
-  -e CANON_API="http://localhost:3300" \
-  -e CANON_LANGUAGE_DEFAULT="en" \
+  --name=cfc-site \
   -e CANON_LANGUAGES="en" \
+  -e CANON_LANGUAGE_DEFAULT="en" \
   -e CANON_CMS_ENABLE="true" \
+  -e CANON_CMS_LOGGING="false" \
+  -e CANON_API="http://localhost:3300" \
+  -e CANON_CMS_CUBES="https://dev.cfc.api.datawheel.us/" \
   -e CANON_CMS_DB="postgresql://user:password@ip:5432/dbname" \
-  -e CANON_CMS_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/" \
-  -e CANON_CONST_CUBES="https://dev.cfc.ui.datawheel.us/tesseract/" \
+  -e CANON_CONST_TESSERACT="https://dev.cfc.datawheel.us/proxy/" \
+  -e CANON_CONST_STORAGE_BUCKET="check-1password" \
   -e FLICKR_API_KEY="check-1password" \
   -p 3300:3300 \
   -d \
-  cfc-site:dev
+  datawheel/cfc-site:<IMAGE_TAGNAME>
+```
+
+* Push the Docker Image to Docker Hub
+```
+docker push datawheel/cfc-tesseract:<IMAGE-TAGNAME>
+```
+
+** Login in to the respective user before pushing the image to Docker Hub
+```
+docker login -u <DOCKER_USER>
 ```
 
 ### Set-up secrets for github actions workflow
 
-| Secret Name                     | Value                                      |
-| ------------------------------- | ------------------------------------------ |
-| CANON_API                       | https://dev.cfc.datawheel.us/              |
-| CANON_CMS_CUBES                 | https://dev.cfc.ui.datawheel.us/tesseract/ |
-| CANON_CONST_CUBES               | https://dev.cfc.ui.datawheel.us/tesseract/ |
-| CANON_CMS_DB                    | postgresql://user:password@ip:5432/dbname  |
-| FLICKR_API_KEY                  | {flickr api key}                           |
-| GCP_ARTIFACT_REGISTRY_REPO_NAME | {gcp actifact registry name}               |
-| GCP_PROJECT_ID                  | {gcp project id}                           |
-| GCP_SA_KEY                      | {base64 json service account}              |
+| Secret Name | Value |
+| ----------- | ----- |
+| CANON_API | https://dev.cfc.datawheel.us |
+| CANON_CMS_CUBES | https://dev.cfc.api.datawheel.us/ |
+| CANON_CMS_DB | postgresql://user:password@ip:5432/dbname |
+| CANON_CONST_TESSERACT | https://dev.cfc.datawheel.us/proxy/ |
+| CANON_CONST_STORAGE_BUCKET | check-1password |
+| FLICKR_API_KEY | check-1password |
+| GCP_ARTIFACT_REGISTRY_REPO_NAME | <GCP_ARTIFACT_REGISTRY_REPO_NAME> |
+| GCP_PROJECT_ID | <GCP_PROJECT_ID> |
+| GCP_SA_KEY | <GPA_SA_KEY_BASE_64> |
