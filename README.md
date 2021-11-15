@@ -122,7 +122,7 @@ docker run \
 
 * Push the Docker Image to Docker Hub
 ```
-docker push datawheel/cfc-tesseract:<IMAGE-TAGNAME>
+docker push datawheel/cfc-tesseract:<IMAGE_TAGNAME>
 ```
 
 ** Login in to the respective user before pushing the image to Docker Hub
