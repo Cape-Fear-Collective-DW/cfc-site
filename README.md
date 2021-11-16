@@ -14,6 +14,8 @@
 
 ```sh
 # public keys for everything
+export CANON_CMS_GENERATOR_TIMEOUT=90000
+export CANON_CMS_REQUESTS_PER_SECOND=60
 export CANON_LANGUAGES="en"
 export CANON_LANGUAGE_DEFAULT="en"
 
@@ -105,6 +107,8 @@ docker build -t datawheel/cfc-site:<IMAGE_TAGNAME> .
 ```
 docker run \
   --name=cfc-site \
+  -e CANON_CMS_GENERATOR_TIMEOUT=90000 \
+  -e CANON_CMS_REQUESTS_PER_SECOND=60 \
   -e CANON_LANGUAGES="en" \
   -e CANON_LANGUAGE_DEFAULT="en" \
   -e CANON_CMS_ENABLE="true" \

@@ -12,6 +12,8 @@ env:
   # docker variables
   IMAGE_NAME: cfc-site-dev
   # canon env variables
+  CANON_CMS_GENERATOR_TIMEOUT: 90000
+  CANON_CMS_REQUESTS_PER_SECOND: 60
   CANON_LANGUAGES: "en"
   CANON_LANGUAGE_DEFAULT: "en"
   CANON_CMS_ENABLE: "true"
@@ -69,6 +71,8 @@ jobs:
         run: |-
           gcloud run deploy ${{ env.IMAGE_NAME }} \
             --image=us-central1-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_ARTIFACT_REGISTRY_REPO_NAME}}/${{env.IMAGE_NAME}}:latest-dev \
+            --set-env-vars=CANON_CMS_GENERATOR_TIMEOUT=${{ env.CANON_CMS_GENERATOR_TIMEOUT }} \
+            --set-env-vars=CANON_CMS_REQUESTS_PER_SECOND=${{ env.CANON_CMS_REQUESTS_PER_SECOND }} \
             --set-env-vars=CANON_LANGUAGES=${{ env.CANON_LANGUAGES }} \
             --set-env-vars=CANON_LANGUAGE_DEFAULT=${{ env.CANON_LANGUAGE_DEFAULT }} \
             --set-env-vars=CANON_CMS_ENABLE=${{ env.CANON_CMS_ENABLE }} \
