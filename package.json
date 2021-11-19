@@ -15,6 +15,7 @@
   "dependencies": {
     "@datawheel/canon-cms": "^0.20.9",
     "@datawheel/canon-core": "^0.25.0",
+    "mysql2": "^2.3.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
