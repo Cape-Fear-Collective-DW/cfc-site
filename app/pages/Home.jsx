@@ -18,7 +18,7 @@ class Home extends Component {
 
   render() {
 
-    const {t, tabs} = this.props;
+    const {router, t, tabs, tesseract} = this.props;
     const {currentTab} = this.state;
 
     return (
@@ -37,7 +37,16 @@ class Home extends Component {
           </div>
           <div className="home-splash-map">
             <Geomap config={{
+              data: `${tesseract}data.jsonrecords?cube=Regions&drilldowns=County&measures=Counties`,
+              groupBy: "County ID",
+              label: d => d.County,
+              legend: false,
               ocean: "transparent",
+              on: {
+                click: d => {
+                  router.push(`/profile/geo/${d.County.toLowerCase().replace(/\s/g, "-")}`);
+                }
+              },
               shapeConfig: {
                 Path: {
                   fill: "rgba(214, 220, 229, 0.3)",
@@ -47,6 +56,7 @@ class Home extends Component {
               },
               tiles: false,
               topojson: "/topojson/capeFearCounties.json",
+              topojsonId: d => d.properties.county_id,
               zoom: false
             }} />
           </div>
@@ -99,5 +109,6 @@ Home.need = [
 ];
 
 export default withNamespaces()(connect(state => ({
-  tabs: state.data.home
+  tabs: state.data.home,
+  tesseract: state.env.TESSERACT
 }))(Home));
