@@ -88,19 +88,45 @@
   font-family: "Oswald", sans-serif;
   font-size: 46px;
   font-weight: normal;
+  margin-left: calc(var(--gutter-md) * -1);
+  padding: 0;
   text-align: center;
   width: 100%;
 }
 
 /* Section "SubGrouping" Header Text */
-.cp-sub-grouping-section-heading-wrapper .cp-section-heading {
-  color: var(--midblue);
-  font-family: "Oswald", sans-serif;
-  font-size: 34px;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
+.cp-sub-grouping-section .cp-grouping-section-caption {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  & .cp-sub-grouping-section-paragraph {
+    border-left: 2px solid var(--midblue);
+    color: var(--midblue);
+    font-family: var(--heading-font-stack);
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    max-width: 330px;
+    padding: var(--gutter-xs) var(--gutter-md);
+  }
+}
+.cp-sub-grouping-section-heading-wrapper {
+  & .cp-section-heading {
+    color: var(--midblue);
+    font-family: "Oswald", sans-serif;
+    font-size: 34px;
+    font-weight: normal;
+    margin: var(--gutter-xs) var(--gutter-md);
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  & .cp-section-heading-anchor {
+    left: var(--gutter-md);
+  }
 }
 
 /* Standard Section Container */
