@@ -54,9 +54,14 @@ class Home extends Component {
         </div>
         <div className="home-intro">
           <h2>What is Healthy Cape Fear?</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae auctor justo, eget viverra risus. Proin et mattis nisi, tincidunt tristique felis. Ut a massa lacus. Fusce a lacus vitae mauris tempus euismod in eget tellus. Proin scelerisque faucibus nulla, vel mollis arcu tincidunt sed. Morbi at massa ut mauris tincidunt tempor at sit amet lectus.
-          </p>
+          <div>
+            <p>
+              The <b>Healthy NC 2030</b> taskforce, led by NCIOM and NCDHHS, brought together experts and leaders from multiple fields to develop a <b>common set of public health indicators and targets for the state over the next decade</b>. The full report, released in January of 2020, established a north star for localities and organizations to mobilize to accomplish North Carolina’s most pressing goals across housing, education, public health, and economic opportunity.
+            </p>
+            <p>
+              <b>Cape Fear Collective</b> is committed to helping partner organizations set and measure local goals through its expertise in <b>data &amp; analytics</b>. Our <b>Healthy Cape Fear Dashboard</b> enables alignment of community data collection and analysis to the Healthy NC 2030 initiative in order to empower shared hypothesis generation, goal setting, and program measurement.
+            </p>
+          </div>
         </div>
         <div className="home-tiles cms-profilesearch">
           <ul className="home-tile-tabs">
