@@ -57,8 +57,12 @@ module.exports = function(app) {
     for (let i = 0; i < sections.length; i++) {
       const group = sections[i];
       if (group.type === "Grouping") {
+
         const nextGroup = sections.slice(i + 1).findIndex(d => d.type === "Grouping");
-        const topics = sections.slice(i + 1, i + 1 + nextGroup).filter(d => d.type !== "SubGrouping");
+        const topics = sections
+          .slice(i + 1, nextGroup > 0 ? i + 1 + nextGroup : undefined)
+          .filter(d => d.type !== "SubGrouping");
+
         if (topics.length) {
           tabs.push({
             icon: group.icon,
