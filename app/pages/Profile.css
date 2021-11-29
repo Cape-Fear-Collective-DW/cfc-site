@@ -44,8 +44,18 @@
 
 .cp-subnav {
   align-items: center;
+  &.is-fixed {
+    box-shadow: none;
+  }
   & .cp-subnav-list.cp-subnav-secondary {
-    background-color: transparent;
+    background-color: #2b5986;
+    flex: none;
+    height: 37px;
+    width: 100%;
+    & .cp-subnav-link {
+      font-size: 13px;
+      text-transform: uppercase;
+    }
   }
   & .cp-subnav-item {
     & .bp3-icon {
@@ -64,9 +74,15 @@
       height: 6px;
     }
     & .cp-subnav-group-list {
-      background-color: var(--darkemerald);
+      background-color: #2b5986;
+      box-shadow: none;
       & .cp-subnav-group-link-icon {
         display: none;
+      }
+      & .cp-subnav-group-link {
+        font-size: 13px;
+        line-height: 19px;
+        text-transform: uppercase;
       }
     }
   }
