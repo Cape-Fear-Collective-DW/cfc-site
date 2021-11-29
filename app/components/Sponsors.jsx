@@ -16,6 +16,11 @@ const Sponsors = () => (
         <img src="/images/sponsors/datawheel.svg" />
       </a>
     </div>
+    <div className="sponsor-block">
+      Powered by <a href="https://capefearcollective.org/" target="_blank">
+        <img src="/images/cfc-logo.png" />
+      </a>
+    </div>
   </div>
 );
 

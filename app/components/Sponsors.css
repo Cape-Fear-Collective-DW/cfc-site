@@ -11,8 +11,8 @@
     display: flex;
     padding: 0 25px;
     & img {
-      margin: 0 10px;
-      width: 120px;
+      height: 30px;
+      margin: 4px 8px 0;
       &:last-child {
         margin-right: 0;
       }

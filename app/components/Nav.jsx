@@ -39,7 +39,7 @@ class Nav extends Component {
     return (
       <nav className={`site-nav ${scrolled ? "background" : ""}`}>
         <Link className="logo" to="/">
-          <img src="/images/cfc-logo.png" />
+          <img src="/images/hfc-logo.svg" />
         </Link>
         <Icon icon={searchVisible ? "cross" : "search"} size={20} onClick={toggleSearch} />
       </nav>
