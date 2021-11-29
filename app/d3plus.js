@@ -53,6 +53,38 @@ export default {
       stroke: styles.darkblue
     }
   },
+  tooltipConfig: {
+    arrowStyle: {
+      height: "15px",
+      width: "15px"
+    },
+    background: "white",
+    borderRadius: "6px",
+    padding: "21px",
+    tbodyStyle: {
+      "color": styles.darkblue,
+      "font-family": "Poppins",
+      "font-style": "normal",
+      "font-weight": "300",
+      "font-size": "13px",
+      "line-height": "19px",
+      "text-align": "left"
+    },
+    titleStyle: {
+      "color": styles.darkblue,
+      "font-family": "'Oswald', sans-serif",
+      "font-weight": "500",
+      "font-size": "16px",
+      "line-height": "24px",
+      "text-transform": "uppercase"
+    },
+    tdStyle: {
+      "padding": "6px"
+    },
+    trStyle: {
+      "border-top": `1px solid ${styles.background}`
+    }
+  },
   topojsonFill: "#bbbbc2",
   xConfig: axisConfig,
   yConfig: axisConfig

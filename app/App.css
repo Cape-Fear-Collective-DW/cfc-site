@@ -65,3 +65,24 @@ body {
     height: 200px;
   }
 }
+
+.d3plus-tooltip {
+  box-shadow: -1px -1px 3px rgba(15, 43, 70, 0.1), 1px 1px 3px rgba(15, 43, 70, 0.1);
+  & .d3plus-tooltip-thead {
+    & tr {
+      border-top: 0.75px solid var(--darkblue) !important;
+    }
+  }
+  & .d3plus-tooltip-tbody {
+    & tr:first-child {
+      border-top: 0 !important;
+      & td {
+        padding: 16px 6px 6px !important;
+      }
+    }
+    & td:last-child {
+      padding-left: var(--gutter-lg) !important;
+      text-align: right !important;
+    }
+  }
+}
