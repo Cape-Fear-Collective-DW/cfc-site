@@ -53,38 +53,39 @@ jobs:
             --quiet \
             --timeout=20m \
             --tag us-central1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_ARTIFACT_REGISTRY_REPO_NAME/$IMAGE_NAME:latest-dev
-  # deploys the recently created docker image via google cloude build
-  deploy:
-    needs: build
-    name: Deploy Docker Image to Cloud Run
-    runs-on: ubuntu-latest
-    environment: develop_environment
-    steps:
-      - name: Set up GCloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ env.GCP_SA_KEY }}
-          export_default_credentials: true
 
-      - name: Deploy Image to Cloud Run
-        run: |-
-          gcloud run deploy ${{ env.IMAGE_NAME }} \
-            --image=us-central1-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_ARTIFACT_REGISTRY_REPO_NAME}}/${{env.IMAGE_NAME}}:latest-dev \
-            --set-env-vars=CANON_CMS_GENERATOR_TIMEOUT=${{ env.CANON_CMS_GENERATOR_TIMEOUT }} \
-            --set-env-vars=CANON_CMS_REQUESTS_PER_SECOND=${{ env.CANON_CMS_REQUESTS_PER_SECOND }} \
-            --set-env-vars=CANON_LANGUAGES=${{ env.CANON_LANGUAGES }} \
-            --set-env-vars=CANON_LANGUAGE_DEFAULT=${{ env.CANON_LANGUAGE_DEFAULT }} \
-            --set-env-vars=CANON_CMS_ENABLE=${{ env.CANON_CMS_ENABLE }} \
-            --set-env-vars=CANON_CMS_LOGGING=${{ env.CANON_CMS_LOGGING }} \
-            --set-env-vars=CANON_API=${{ env.CANON_API }} \
-            --set-env-vars=CANON_CMS_CUBES=${{ env.CANON_CMS_CUBES }} \
-            --set-env-vars=CANON_CMS_DB=${{ env.CANON_CMS_DB }} \
-            --set-env-vars=CANON_CONST_TESSERACT=${{ env.CANON_CONST_TESSERACT }} \
-            --set-env-vars=CANON_CONST_STORAGE_BUCKET=${{ env.CANON_CONST_STORAGE_BUCKET }} \
-            --set-env-vars=FLICKR_API_KEY=${{ env.FLICKR_API_KEY }} \
-            --port=3300 \
-            --region=us-central1 \
-            --min-instances=1 \
-            --max-instances=4 \
-            --allow-unauthenticated
+  # deploys the recently created docker image via google cloude build
+  # deploy:
+  #   needs: build
+  #   name: Deploy Docker Image to Cloud Run
+  #   runs-on: ubuntu-latest
+  #   environment: develop_environment
+  #   steps:
+  #     - name: Set up GCloud SDK
+  #       uses: google-github-actions/setup-gcloud@master
+  #       with:
+  #         project_id: ${{ secrets.GCP_PROJECT_ID }}
+  #         service_account_key: ${{ env.GCP_SA_KEY }}
+  #         export_default_credentials: true
+  #
+  #     - name: Deploy Image to Cloud Run
+  #       run: |-
+  #         gcloud run deploy ${{ env.IMAGE_NAME }} \
+  #           --image=us-central1-docker.pkg.dev/${{env.GCP_PROJECT_ID}}/${{env.GCP_ARTIFACT_REGISTRY_REPO_NAME}}/${{env.IMAGE_NAME}}:latest-dev \
+  #           --set-env-vars=CANON_CMS_GENERATOR_TIMEOUT=${{ env.CANON_CMS_GENERATOR_TIMEOUT }} \
+  #           --set-env-vars=CANON_CMS_REQUESTS_PER_SECOND=${{ env.CANON_CMS_REQUESTS_PER_SECOND }} \
+  #           --set-env-vars=CANON_LANGUAGES=${{ env.CANON_LANGUAGES }} \
+  #           --set-env-vars=CANON_LANGUAGE_DEFAULT=${{ env.CANON_LANGUAGE_DEFAULT }} \
+  #           --set-env-vars=CANON_CMS_ENABLE=${{ env.CANON_CMS_ENABLE }} \
+  #           --set-env-vars=CANON_CMS_LOGGING=${{ env.CANON_CMS_LOGGING }} \
+  #           --set-env-vars=CANON_API=${{ env.CANON_API }} \
+  #           --set-env-vars=CANON_CMS_CUBES=${{ env.CANON_CMS_CUBES }} \
+  #           --set-env-vars=CANON_CMS_DB=${{ env.CANON_CMS_DB }} \
+  #           --set-env-vars=CANON_CONST_TESSERACT=${{ env.CANON_CONST_TESSERACT }} \
+  #           --set-env-vars=CANON_CONST_STORAGE_BUCKET=${{ env.CANON_CONST_STORAGE_BUCKET }} \
+  #           --set-env-vars=FLICKR_API_KEY=${{ env.FLICKR_API_KEY }} \
+  #           --port=3300 \
+  #           --region=us-central1 \
+  #           --min-instances=1 \
+  #           --max-instances=4 \
+  #           --allow-unauthenticated
