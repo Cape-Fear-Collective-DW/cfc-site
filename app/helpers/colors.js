@@ -23,12 +23,14 @@ export default [
       9: styles.purple, // Hispanic
 
       10: styles.orange, // White
-      11: styles.orange, // White (non-Hispanic)
+
+      11: styles.lightorange, // White (non-Hispanic)
 
       12: styles.gris, // Other
       13: styles.gris, // Other (non-Hispanic)
-      14: styles.gris, // Multiracial
       99: styles.gris, // Unknown
+
+      14: styles.lightgreen, // Multiracial/2+ Races
 
       98: styles.green, // All
 
