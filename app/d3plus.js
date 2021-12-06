@@ -46,7 +46,9 @@ export default {
     fill: colorLogic,
     labelConfig: labelStyle,
     Line: {
-      stroke: colorLogic
+      stroke: colorLogic,
+      strokeDasharray: d => d["Data ID"] === "Target" ? "10 5" : "none",
+      strokeWidth: d => d["Data ID"] === "Indicator" ? 4 : 2
     },
     Path: {
       fillOpacity: 0.75,
