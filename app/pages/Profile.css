@@ -235,37 +235,51 @@
 }
 
 /* Section "SubGrouping" Header Text */
-.cp-sub-grouping-section .cp-grouping-section-caption {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  & .cp-sub-grouping-section-paragraph {
-    border-left: 2px solid var(--midblue);
-    color: var(--midblue);
-    font-family: var(--heading-font-stack);
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0;
-    max-width: 330px;
-    padding: var(--gutter-xs) var(--gutter-md);
-  }
-}
-.cp-sub-grouping-section-heading-wrapper {
-  & .cp-section-heading {
-    color: var(--midblue);
-    font-family: "Oswald", sans-serif;
-    font-size: 34px;
-    font-weight: normal;
-    margin: var(--gutter-xs) var(--gutter-md);
-    padding: 0;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
-  }
-  & .cp-section-heading-anchor {
-    left: var(--gutter-md);
+.cp-sub-grouping-section {
+  position: relative;
+  text-align: center;
+  & .cp-grouping-section-caption {
+    columns: 2;
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: calc(var(--gutter-lg) * 2);
+    text-align: left;
+    & .cp-sub-grouping-section-heading-wrapper {
+      width: 100%;
+      & .cp-section-heading {
+        color: var(--midblue);
+        font-family: "Oswald", sans-serif;
+        font-size: 34px;
+        font-weight: normal;
+        margin: var(--gutter-xs) var(--gutter-md);
+        padding: 0;
+        left: 0;
+        position: absolute;
+        text-align: center;
+        text-transform: uppercase;
+        top: 0;
+        width: calc(100% - var(--gutter-xl));
+      }
+      & .cp-section-heading-anchor {
+        display: none;
+      }
+    }
+    & .cp-sub-grouping-section-paragraph {
+      color: var(--midblue);
+      font-family: var(--base-font-stack);
+      font-style: normal;
+      font-size: 14px;
+      line-height: 21px;
+      font-weight: normal;
+      margin: 0;
+      max-width: 450px;
+      padding: var(--gutter-xs);
+      &:first-of-type {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+      }
+    }
   }
 }
 
