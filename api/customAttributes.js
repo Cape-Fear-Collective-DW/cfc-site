@@ -3,6 +3,7 @@ const {CANON_CMS_CUBES} = process.env;
 const yn = require("yn");
 const verbose = yn(process.env.CANON_CMS_LOGGING);
 const BASE_API = `${CANON_CMS_CUBES}data.jsonrecords`;
+const sponsors = require("../app/helpers/sponsors.js");
 
 const catcher = error => {
   if (verbose) console.error("Custom Attribute Error:", error);
@@ -33,14 +34,14 @@ module.exports = function(app) {
       povertyData.sort((a, b) => b["Year"] - a["Year"]);
       const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
 
-
     return res.json({
       tesseract: process.env.CANON_CONST_TESSERACT,
       customHierarchy,
       customId,
       isRegion,
       notRegion,
-      povertyLastYear
+      povertyLastYear,
+      sponsor: sponsors[0]
     });
 
   });
