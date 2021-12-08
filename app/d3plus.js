@@ -42,6 +42,10 @@ export default {
     color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
   },
   groupPadding: 1,
+  legendTooltip: {
+    tbody: []
+  },
+  legendPosition: "bottom",
   shapeConfig: {
     fill: colorLogic,
     labelConfig: labelStyle,
