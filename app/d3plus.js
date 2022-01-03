@@ -41,6 +41,7 @@ export default {
     axisConfig,
     color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
   },
+  colorScalePosition: "bottom",
   groupPadding: 1,
   legendTooltip: {
     tbody: []
