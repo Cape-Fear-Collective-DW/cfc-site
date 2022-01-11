@@ -1,6 +1,21 @@
 import styles from "style.yml";
 
+const magenta = "#e22ac5";
+const other = "#93bd66";
+const two = "#fcc201";
+const islander = "#a23e60";
+const asian = "#3e6686";
+const native = "#d8abe8";
+
 export default [
+  {
+    key: "Data",
+    colors: {
+      Projection: "#a54bc5",
+      Indicator: styles.purple,
+      Target: styles.darkblue
+    }
+  },
   {
     key: "Gender",
     colors: {
@@ -11,30 +26,30 @@ export default [
   {
     key: "Race",
     colors: {
-      3: styles.midblue, // Asian
+      3: asian, // Asian
       4: styles.midblue, // Asian (non-Hispanic)
 
       5: styles.emerald, // Black
-      6: styles.emerald, // African American (non-Hispanic)
+      6: styles.darkemerald, // African American (non-Hispanic)
 
-      7: styles.red, // Hawaiian Native or Pacific Islander
+      7: islander, // Hawaiian Native or Pacific Islander
       8: styles.red, // Hawaiian Native or Pacific Islander (non-Hispanic)
 
       9: styles.purple, // Hispanic
 
       10: styles.orange, // White
+      11: magenta, // White (non-Hispanic)
 
-      11: styles.lightorange, // White (non-Hispanic)
+      12: other, // Other
 
-      12: styles.gris, // Other
       13: styles.gris, // Other (non-Hispanic)
       99: styles.gris, // Unknown
 
-      14: styles.lightgreen, // Multiracial/2+ Races
+      14: two, // Multiracial/2+ Races
 
       98: styles.green, // All
 
-      1: styles.lightpurple, // American Indian or Alaskan Native
+      1: native, // American Indian or Alaskan Native
       2: styles.lightpurple, // Native American or Alaskan Native (non-Hispanic)
       15: styles.lightpurple // American Indian
     }
