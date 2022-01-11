@@ -294,7 +294,14 @@
   background-color: var(--backgroundlight);
   border-radius: 15px;
   box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
-  padding: var(--gutter-xl);
+  padding: var(--gutter-xl) var(--gutter-xl) calc(var(--gutter-lg) * 2);
+}
+
+/* Adjust middle gutter on standard screens */
+@media (min-width: 768px) {
+  .cp-default-section-figure {
+    width: calc(100% - var(--sidebar-width) - var(--gutter-lg));
+  }
 }
 
 /* Standard Section Titles */
@@ -399,7 +406,7 @@ p {
       width: 100%;
     }
     & .Options {
-      bottom: 0;
+      bottom: -50px;
       position: absolute;
       right: 0;
       & .cp-button {
@@ -413,7 +420,7 @@ p {
     bottom: auto;
     height: auto;
     flex: 1 1 auto;
-    margin-bottom: 4em;
+    margin-bottom: 0;
     padding-top: 0;
     top: auto;
   }
