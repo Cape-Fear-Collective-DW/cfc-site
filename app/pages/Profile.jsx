@@ -40,7 +40,7 @@ class Profile extends Component {
     let title = null;
 
     if (profile.sections && profile.sections.length) {
-      title = stripP(profile.sections[0].title);
+      title = `${stripP(profile.sections[0].title)} ${stripP(profile.sections[0].subtitles[0].subtitle)}`;
     }
 
     return (
