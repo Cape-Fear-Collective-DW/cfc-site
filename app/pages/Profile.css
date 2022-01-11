@@ -42,6 +42,7 @@
       flex: none;
       margin: 0;
       min-width: 0;
+      overflow: hidden;
       width: auto;
       & .cp-stat-label-text {
         text-transform: lowercase;
