@@ -1,7 +1,12 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 .cp-hero {
   max-height: 650px;
   min-height: auto;
   padding: var(--nav-height) var(--gutter-xl);
+  @mixin max-sm {
+    padding-bottom: 0;
+  }
   & .cp-hero-inner {
     padding: 0;
     position: relative;
@@ -17,6 +22,9 @@
     flex-direction: column;
     justify-content: center;
     min-height: 400px;
+    @mixin max-sm {
+      min-height: 0;
+    }
   }
 
   & .cp-hero-heading {
@@ -54,6 +62,7 @@
   }
 
   & .cp-hero-figure {
+    align-self: stretch;
     padding: 0;
   }
 
@@ -71,6 +80,9 @@
     right: auto;
     top: auto;
     z-index: 3;
+    @mixin max-sm {
+      display: none;
+    }
     & .cp-button-text {
       font-family: "Poppins", sans-serif;
       font-style: normal;
@@ -299,7 +311,7 @@
 }
 
 /* Adjust middle gutter on standard screens */
-@media (min-width: 768px) {
+@mixin min-sm {
   .cp-default-section-figure {
     width: calc(100% - var(--sidebar-width) - var(--gutter-lg));
   }
