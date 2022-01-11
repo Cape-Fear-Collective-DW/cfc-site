@@ -25,9 +25,18 @@ const labelStyle = {
 };
 
 const axisConfig = {
+  barConfig: {
+    stroke: styles.background
+  },
+  gridConfig: {
+    stroke: styles.background,
+    "stroke-dasharray": "2"
+  },
   labelConfig: labelStyle,
   shapeConfig: {
-    labelConfig: labelStyle
+    fill: styles.background,
+    labelConfig: {...labelStyle, fontColor: styles.verydarkblue},
+    stroke: styles.background
   },
   titleConfig: {
     fontFamily: () => "'Oswald', sans-serif",
@@ -42,7 +51,17 @@ export default {
     color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
   },
   colorScalePosition: "bottom",
+  confidenceConfig: {
+    fillOpacity: 0.4
+  },
   groupPadding: 1,
+  legendConfig: {
+    shapeConfig: {
+      labelConfig: {
+        fontColor: styles.gris
+      }
+    }
+  },
   legendTooltip: {
     tbody: []
   },
