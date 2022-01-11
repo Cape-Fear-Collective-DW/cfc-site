@@ -13,7 +13,7 @@ footer {
   & .footer-logo {
     margin: var(--gutter-xl);
     & img {
-      width: 264px;
+      width: 180px;
     }
   }
   & .footer-links {
@@ -23,7 +23,7 @@ footer {
       font-family: "Poppins", sans-serif;
       font-style: normal;
       font-weight: 500;
-      font-size: 19px;
+      font-size: 17px;
       margin-left: 50px;
       &:first-child {
         margin-left: 0;
