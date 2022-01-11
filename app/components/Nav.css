@@ -3,7 +3,7 @@ nav.site-nav {
   display: flex;
   justify-content: space-between;
   height: var(--nav-height);
-  padding: 20px;
+  padding: 13px;
   position: fixed;
   top: 0;
   transition: background-color 0.2s;
@@ -15,6 +15,9 @@ nav.site-nav {
       height: 100%;
       opacity: 0;
       transition: opacity 0.2s;
+    }
+    &.visible img {
+      opacity: 1;
     }
   }
   &.background {

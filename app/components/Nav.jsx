@@ -33,12 +33,12 @@ class Nav extends Component {
 
   render() {
 
-    const {searchVisible, toggleSearch} = this.props;
+    const {homePage, searchVisible, toggleSearch} = this.props;
     const {scrolled} = this.state;
 
     return (
       <nav className={`site-nav ${scrolled ? "background" : ""}`}>
-        <Link className="logo" to="/">
+        <Link className={`logo ${(!homePage || scrolled) ? "visible" : ""}`} to="/">
           <img src="/images/hfc-logo.svg" />
         </Link>
         <Icon icon={searchVisible ? "cross" : "search"} size={20} onClick={toggleSearch} />
@@ -48,8 +48,13 @@ class Nav extends Component {
 
 }
 
-export default connect(state => ({
-  searchVisible: state.searchVisible
-}), dispatch => ({
+export default connect(state => {
+  const pathname = state.routing.locationBeforeTransitions ? `/${state.routing.locationBeforeTransitions.pathname}` : state.location.pathname;
+  console.log(state.routing, state.location, pathname);
+  return {
+    homePage: pathname === "//",
+    searchVisible: state.searchVisible
+  };
+}, dispatch => ({
   toggleSearch: () => dispatch(toggleSearch())
 }))(Nav);
