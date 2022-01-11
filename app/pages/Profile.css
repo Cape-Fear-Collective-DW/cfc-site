@@ -255,6 +255,7 @@
     columns: 2;
     display: inline-block;
     margin: 0 auto;
+    orphans: 5;
     padding-top: calc(var(--gutter-lg) * 2);
     text-align: left;
     & .cp-sub-grouping-section-heading-wrapper {
@@ -308,6 +309,11 @@
   border-radius: 15px;
   box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
   padding: var(--gutter-xl) var(--gutter-xl) calc(var(--gutter-lg) * 2);
+}
+
+/* fixes box-shadow cropping on sections */
+.cp-section {
+  overflow: visible;
 }
 
 /* Adjust middle gutter on standard screens */
@@ -399,7 +405,8 @@ h4 {
 }
 
 p {
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .cp-viz-container {
@@ -423,9 +430,25 @@ p {
       bottom: -50px;
       position: absolute;
       right: 0;
+      & .cp-button-group {
+        margin-bottom: 0;
+      }
       & .cp-button {
         align-items: center;
+        border: 0;
+        color: var(--darkblue);
         display: flex;
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 18px;
+        text-transform: uppercase;
+        & > [class*="-button-icon"],
+        & > [class*="-button-icon"] > svg {
+          height: 1.4em;
+          width: 1.4em;
+        }
       }
     }
   }
