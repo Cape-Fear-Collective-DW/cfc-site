@@ -34,7 +34,6 @@ const axisConfig = {
   },
   labelConfig: labelStyle,
   shapeConfig: {
-    fill: styles.background,
     labelConfig: {...labelStyle, fontColor: styles.verydarkblue},
     stroke: styles.background
   },
