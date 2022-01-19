@@ -37,6 +37,9 @@ body {
     background: linear-gradient(180deg, rgba(20, 64, 106, 0.25) 40%, rgba(20, 64, 106, 0.85) 70%);
     border: 0;
     height: 200px;
+    &:not([href]) {
+      pointer-events: none;
+    }
     & .cms-profilesearch-tile-link-text {
       align-self: flex-end;
       padding: var(--gutter);

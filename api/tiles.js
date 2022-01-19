@@ -12,22 +12,45 @@ const stripP = require("@datawheel/canon-cms/src/utils/formatters/stripP");
   return a;
 }
 
+const regions = [
+  "Cape Fear",
+  "Charlotte",
+  "Eastern",
+  "Mountains",
+  "Northeast",
+  "Sandhills",
+  "Triad",
+  "Triangle"
+].map((d, i) => ({
+  id: i ? false : "cf",
+  hierarchy: "Region",
+  slug: d.replace(/\s/g, "-").toLowerCase(),
+  name: d
+}));
+
 module.exports = function(app) {
 
   const {db} = app.settings;
 
-  app.get("/home", async(req, res) => {
+  app.get("/tiles", async(req, res) => {
 
-    const profiles = await db.search
+    const {id} = req.query;
+
+    console.log("tiles ID", id);
+    console.log(typeof id);
+    const showCounties = id !== "<id>";
+
+    const profiles = showCounties ? await db.search
       .findAll({
-        include: [{association: "content"}]
+        include: [{association: "content"}],
+        where: {hierarchy: "County"}
       })
       .then(rows => rows.map(d => ({
         id: d.id,
         hierarchy: d.hierarchy,
         slug: d.slug,
         name: d.content.find(c => c.locale === "en").name
-      })));
+      }))) : regions;
 
     const sections = await db.section
       .findAll({
@@ -49,7 +72,7 @@ module.exports = function(app) {
           image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
           subtitle: d.hierarchy,
           title: d.name.replace(" County", ""),
-          url: `/profile/geo/${d.slug}`
+          url: d.id ? `/profile/geo/${d.slug}` : false
         }))
       }
     ];
@@ -67,13 +90,13 @@ module.exports = function(app) {
           tabs.push({
             icon: group.icon,
             title: stripP(group.title),
-            tiles: shuffle(profiles.slice()).map(d => {
+            tiles: (showCounties ? shuffle(profiles.slice()) : profiles.slice()).map(d => {
               const topic = shuffle(topics)[0];
               return {
                 image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
                 subtitle: `${d.name.replace(" County", "")} ${d.hierarchy}`,
                 title: stripP(topic.title),
-                url: `/profile/geo/${d.slug}#${topic.slug}`
+                url: d.id ? `/profile/geo/${d.slug}#${topic.slug}` : false
               };
             })
           });
