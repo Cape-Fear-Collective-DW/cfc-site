@@ -42,14 +42,14 @@ class Home extends Component {
               },
               shapeConfig: {
                 Path: {
-                  fill: "rgba(214, 220, 229, 0.3)",
+                  fill: d => `rgba(214, 220, 229, ${d.properties ? 0.3 : 0.75})`,
                   stroke: "#d6dce5",
                   strokeWidth: 1
                 }
               },
               tiles: false,
-              topojson: "/topojson/capeFearCounties.json",
-              topojsonId: d => d.properties.county_id,
+              topojson: "/topojson/ncCounties.json",
+              topojsonId: d => d.properties.GEOID,
               zoom: false
             }} />
           </div>
