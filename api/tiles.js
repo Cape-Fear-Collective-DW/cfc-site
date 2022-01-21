@@ -36,8 +36,6 @@ module.exports = function(app) {
 
     const {id} = req.query;
 
-    console.log("tiles ID", id);
-    console.log(typeof id);
     const showCounties = id !== "<id>";
 
     const profiles = showCounties ? await db.search
