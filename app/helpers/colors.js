@@ -17,6 +17,14 @@ export default [
     }
   },
   {
+    key: "Tract",
+    colors: {
+      Projection: "#a54bc5",
+      Indicator: styles.purple,
+      Target: styles.darkblue
+    }
+  },
+  {
     key: "Data",
     colors: {
       Projection: "#a54bc5",
