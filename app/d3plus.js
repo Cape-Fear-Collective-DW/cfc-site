@@ -70,8 +70,8 @@ export default {
     labelConfig: labelStyle,
     Line: {
       stroke: colorLogic,
-      strokeDasharray: d => d["Data ID"] === "Target" ? "10 5" : "none",
-      strokeWidth: d => d["Data ID"] === "Indicator" ? 4 : 2
+      strokeDasharray: d => d["Data ID"] === "Target" || d.County === "Target" ? "10 5" : "none",
+      strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" ? 4 : 2
     },
     Path: {
       fillOpacity: 0.75,

@@ -9,6 +9,14 @@ const native = "#d8abe8";
 
 export default [
   {
+    key: "County",
+    colors: {
+      Projection: "#a54bc5",
+      Indicator: styles.purple,
+      Target: styles.darkblue
+    }
+  },
+  {
     key: "Data",
     colors: {
       Projection: "#a54bc5",
