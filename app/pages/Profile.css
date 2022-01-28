@@ -225,6 +225,34 @@
   }
 }
 
+/* Introduction Section w/ Radar */
+#cp-section-104 {
+  background-color: var(--darkblue);
+  margin: 0;
+  padding: var(--gutter-md) var(--gutter-xl);
+  & .cp-section-inner {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 1000px;
+    flex-direction: row-reverse;
+    padding: 0 var(--gutter-xl);
+    & .cp-section-content {
+      padding: var(--gutter-xl) 0;
+      width: 50%;
+    }
+    & .cp-default-section-figure {
+      width: 50%;
+    }
+    & h2, & p {
+      color: var(--white);
+    }
+    & .SourceGroup, & .Options {
+      display: none;
+    }
+  }
+}
+
 /* Section "Grouping" Background Color and Margin */
 .cp-grouping-section {
   background-color: transparent;
