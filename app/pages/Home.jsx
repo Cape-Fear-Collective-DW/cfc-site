@@ -19,7 +19,7 @@ class Home extends Component {
         <div className="home-splash">
           <div className="home-splash-image"></div>
           <div className="home-splash-content">
-            <img className="home-splash-logo" src="/images/hfc-logo.svg" />
+            <img className="home-splash-logo" src="/images/hcnc-logo.svg" />
             <ProfileSearch
               {...profileSearchConfig(t)}
               display="list"
