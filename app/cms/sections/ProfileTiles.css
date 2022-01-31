@@ -47,10 +47,18 @@
     padding: 0;
   }
   & .cms-profilesearch-tile-banner {
+    background-color: var(--emerald);
+    color: var(--white);
+    font-family: var(--base-font-stack);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
     left: 0;
-    margin: var(--gutter-sm) auto;
+    line-height: 27px;
+    padding: calc(var(--gutter-xs) / 2);
     position: absolute;
     text-align: center;
+    text-transform: uppercase;
     top: 0;
     width: 100%;
   }

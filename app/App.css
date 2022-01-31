@@ -29,7 +29,7 @@ body {
 }
 
 .cms-profilesearch-tile {
-  background-color: var(--background);
+  background-color: var(--darkblue);
   height: 200px;
   max-width: 300px !important;
   min-width: 220px !important;
