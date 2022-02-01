@@ -443,3 +443,22 @@ p {
 .d3plus-tooltip {
   z-index: 20;
 }
+
+.mirror-content {
+  & .mirror-content-inner {
+    height: 100%;
+  }
+}
+.mirror-footer {
+  & .mirror-footer-logo {
+    background-image: url("/images/hcnc-logo-dark.svg");
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    height: 100%;
+    margin: auto 0 auto var(--gutter-md);
+    max-height: 2.5rem;
+    width: 10rem;
+  }
+}
