@@ -119,6 +119,7 @@
     & .cp-hero-credits-button {
       align-items: center;
       border: 0;
+      color: var(--light-3);
       display: flex;
       padding: 0;
       position: static;
@@ -140,6 +141,7 @@
       &:hover,&:focus {
         background: none;
         border: 0;
+        color: var(--white);
         cursor: pointer;
         opacity: 1;
         & .bp3-icon {
