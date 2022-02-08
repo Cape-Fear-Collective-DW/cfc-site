@@ -47,7 +47,11 @@ const axisConfig = {
 export default {
   colorScaleConfig: {
     axisConfig,
-    color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
+    bucketJoiner: (a, b) => `${a} to ${b}`,
+    color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue],
+    colorMin: styles.red,
+    colorMid: styles.backgroundlight,
+    colorMax: styles.green
   },
   colorScalePosition: "bottom",
   confidenceConfig: {
