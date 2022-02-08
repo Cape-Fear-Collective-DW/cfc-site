@@ -69,6 +69,7 @@ export default {
     tbody: []
   },
   legendPosition: "bottom",
+  ocean: "transparent",
   shapeConfig: {
     fill: colorLogic,
     labelConfig: labelStyle,
@@ -78,10 +79,12 @@ export default {
       strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" || d.Tract === "Indicator" ? 4 : 2
     },
     Path: {
-      fillOpacity: 0.75,
+      // fillOpacity: 0.75, // used with tiles: true
+      fillOpacity: 1,
       stroke: styles.darkblue
     }
   },
+  tiles: false,
   tooltipConfig: {
     arrowStyle: {
       height: "15px",
@@ -116,5 +119,6 @@ export default {
   },
   topojsonFill: "#bbbbc2",
   xConfig: axisConfig,
-  yConfig: axisConfig
+  yConfig: axisConfig,
+  zoom: false
 };
