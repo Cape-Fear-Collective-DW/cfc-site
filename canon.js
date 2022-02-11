@@ -6,5 +6,10 @@ module.exports = {
         require("@datawheel/canon-cms/models")
       ]
     }
-  ]
+  ],
+  pdf: {
+    pageOptions: {
+      timeout: 120000
+    }
+  }
 };
