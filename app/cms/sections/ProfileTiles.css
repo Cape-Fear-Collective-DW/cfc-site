@@ -1,16 +1,32 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 .profile-tiles {
   align-items: flex-start;
   display: flex;
   flex-direction: row;
   margin: 0 auto;
-  padding: var(--gutter-xl) var(--gutter-xl) var(--gutter-xl);
+  padding: var(--gutter-xl);
   max-width: calc(1400px + var(--gutter-xl) + var(--gutter-xl));
+
+  @mixin max-md {
+    flex-direction: column;
+  }
+
+  @mixin max-sm {
+    padding: var(--gutter-md);
+  }
+
   & .profile-tile-tabs {
     flex: none;
     list-style-type: none;
     margin-right: 50px;
     padding: 0;
     width: 335px;
+
+    @mixin max-md {
+      width: 100%;
+    }
+
     & .profile-tile-tab {
       align-items: center;
       color: var(--darkblue);

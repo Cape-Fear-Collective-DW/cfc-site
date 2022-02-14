@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Poppins:wght@400;500;600&display=swap");
 @import "print.css";
+@import "@datawheel/canon-cms/src/css/mixins.css";
 
 body {
   background-color: var(--background);
@@ -34,10 +35,23 @@ body {
   height: 200px;
   max-width: 300px !important;
   min-width: 220px !important;
+
+  @mixin max-sm {
+    height: 125px;
+    margin: var(--gutter-xs) 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
   & .cms-profilesearch-tile-link {
     background: linear-gradient(180deg, rgba(20, 64, 106, 0.25) 40%, rgba(20, 64, 106, 0.85) 70%);
     border: 0;
     height: 200px;
+
+    @mixin max-sm {
+      height: 125px;
+    }
+
     &:not([href]) {
       pointer-events: none;
     }
