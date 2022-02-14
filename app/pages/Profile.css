@@ -45,6 +45,10 @@
     right: 0;
     width: 300px;
     z-index: 3;
+    @mixin max-md {
+      justify-content: center;
+      width: 100%;
+    }
     & .cp-hero-stat {
       display: inline-block;
       flex: none;
@@ -64,6 +68,9 @@
   & .cp-hero-figure {
     align-self: stretch;
     padding: 0;
+    @mixin max-md {
+      min-height: 300px !important;
+    }
   }
 
   & .cp-hero-pdf {
@@ -239,12 +246,27 @@
     max-width: 1000px;
     flex-direction: row-reverse;
     padding: 0 var(--gutter-xl);
+
+    @mixin max-md {
+      flex-direction: column-reverse;
+      max-width: 100%;
+      padding: 0;
+    }
+
     & .cp-section-content {
       padding: var(--gutter-xl) 0;
       width: 50%;
+      @mixin max-md {
+        padding: var(--gutter-md) 0 0;
+        width: 100%;
+      }
     }
     & .cp-default-section-figure {
       width: 50%;
+      @mixin max-md {
+        height: 300px;
+        width: 100%;
+      }
     }
     & h2, & p {
       color: var(--white);
@@ -252,6 +274,7 @@
     & .SourceGroup, & .Options {
       display: none;
     }
+
   }
 }
 
@@ -274,9 +297,12 @@
 }
 
 /* Standard Section Container */
-.cp-section:not(.cp-grouping-section-inner):not(.cp-sub-grouping-section-inner):not(.cp-hero) {
+.cp-section:not(.cp-grouping-section):not(.cp-sub-grouping-section):not(.cp-hero) {
   margin: var(--gutter-md);
   padding: 0;
+  @mixin max-md {
+    margin: var(--gutter-sm) 0;
+  }
 }
 
 /* Standard Section Inner Container */
@@ -285,6 +311,10 @@
   border-radius: 15px;
   box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
   padding: var(--gutter-xl) var(--gutter-xl) calc(var(--gutter-lg) * 2);
+  @mixin max-md {
+    border-radius: 0;
+    padding: var(--gutter-md) var(--gutter-md) calc(var(--gutter-sm) * 2);
+  }
 }
 
 /* fixes box-shadow cropping on sections */
@@ -406,6 +436,9 @@ p {
       bottom: -50px;
       position: absolute;
       right: 0;
+      @mixin max-md {
+        display: none;
+      }
       & .cp-button-group {
         margin-bottom: 0;
       }
