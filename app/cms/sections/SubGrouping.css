@@ -81,6 +81,8 @@
           font-weight: 500;
           line-height: 21px;
           margin: 0 auto;
+          max-width: 250px;
+          text-align: center;
           text-transform: uppercase;
         }
       }
@@ -93,13 +95,11 @@
         font-weight: normal;
         line-height: 24px;
         margin: 0;
-        max-width: 450px;
+        max-width: 460px;
         padding: var(--gutter-xs);
         &:first-of-type {
           color: var(--darkblue);
-          font-size: 18px;
           font-weight: 500;
-          line-height: 27px;
         }
       }
     }
@@ -111,7 +111,7 @@
         font-weight: normal;
         line-height: 20px;
         margin: 0;
-        max-width: 450px;
+        max-width: 330px;
         padding: var(--gutter-xs);
         text-transform: none;
         &:first-of-type:before {

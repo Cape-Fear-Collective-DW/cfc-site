@@ -1,8 +1,8 @@
 @import "@datawheel/canon-cms/src/css/mixins.css";
 
 .cp-hero {
-  max-height: 650px;
-  min-height: auto;
+  max-height: 700px;
+  min-height: 630px;
   padding: var(--nav-height) var(--gutter-xl);
   @mixin max-sm {
     padding-bottom: 0;
@@ -282,6 +282,8 @@
 .cp-grouping-section {
   background-color: transparent;
   margin-top: calc(var(--gutter-lg) * 2) !important;
+  padding-bottom: 0.25rem;
+  padding-top: 2.5rem;
 }
 
 /* Section "Grouping" Header Text */
@@ -382,12 +384,21 @@ h4 {
   margin-bottom: 0;
 }
 
-.cp-stat-group-wrapper .cp-stat-value-text {
-  margin-right: 16px;
+.cp-stat-group-wrapper {
+  & .cp-stat-value-text {
+    margin-right: 16px;
+    &.length-sm {
+      font-size: 32px;
+    }
+  }
 }
 
 .cp-stat-label {
+  line-height: 1.2;
   margin-top: var(--gutter-xs);
+  & .cp-stat-label-text.length-lg {
+    font-size: 12px;
+  }
 }
 
 .cp-stat-subtitle {
