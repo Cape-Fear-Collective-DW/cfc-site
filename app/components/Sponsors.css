@@ -6,16 +6,16 @@
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
+  font-size: 14px;
   justify-content: center;
 
   & .sponsor-block {
     align-items: center;
     display: flex;
-    padding: 0 25px;
+    padding: 0 20px;
     & img {
-      height: 30px;
-      margin: 4px 8px 0;
+      height: 23px;
+      margin: 4px 10px 0;
       &:last-child {
         margin-right: 0;
       }

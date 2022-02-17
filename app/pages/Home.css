@@ -42,7 +42,7 @@
       flex-direction: column;
       justify-content: center;
       margin-right: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 425px;
       z-index: 2;
       @mixin max-md {
         align-items: center;
@@ -51,7 +51,7 @@
       }
       & .home-splash-logo {
         margin-bottom: var(--gutter-lg);
-        max-width: 300px;
+        max-width: 260px;
       }
       & .cms-profilesearch {
         & .cp-input-label {
@@ -64,6 +64,9 @@
             }
           }
         }
+        & .cms-profilesearch-list-item-link {
+          color: var(--darkblue);
+        }
       }
       @mixin max-md {
         align-items: center;
@@ -75,7 +78,7 @@
       height: 350px;
       flex: 1;
       margin-left: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 600px;
       z-index: 1;
       @mixin max-md {
         height: 300px;
