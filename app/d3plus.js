@@ -49,9 +49,9 @@ export default {
     axisConfig,
     bucketJoiner: (a, b) => `${a} to ${b}`,
     color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue],
-    colorMin: styles.red,
+    colorMin: styles.purple,
     colorMid: styles.backgroundlight,
-    colorMax: styles.green
+    colorMax: styles.orange
   },
   colorScalePosition: "bottom",
   confidenceConfig: {
