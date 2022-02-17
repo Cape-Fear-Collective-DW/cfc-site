@@ -482,6 +482,12 @@ p {
 .mirror-content {
   & .mirror-content-inner {
     height: 100%;
+    & .d3plus-geomap-tileGroup {
+      display: none;
+    }
+    & .d3plus-attribution {
+      opacity: 0 !important;
+    }
   }
 }
 .mirror-footer {

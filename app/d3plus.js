@@ -79,12 +79,10 @@ export default {
       strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" || d.Tract === "Indicator" ? 4 : 2
     },
     Path: {
-      // fillOpacity: 0.75, // used with tiles: true
-      fillOpacity: 1,
+      fillOpacity: 0.8,
       stroke: styles.darkblue
     }
   },
-  tiles: false,
   tooltipConfig: {
     arrowStyle: {
       height: "15px",
