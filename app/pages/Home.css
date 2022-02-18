@@ -86,7 +86,7 @@
         max-width: 100%;
       }
     }
-    & .sponsors {
+    & .site-logos {
       margin-top: var(--gutter-xl);
       min-width: 100%;
       z-index: 1;

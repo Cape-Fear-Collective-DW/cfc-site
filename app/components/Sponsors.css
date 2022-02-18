@@ -1,6 +1,6 @@
 @import "@datawheel/canon-cms/src/css/mixins.css";
 
-.sponsors {
+.site-logos {
   color: var(--white);
   display: flex;
   font-family: "Poppins", sans-serif;
@@ -9,7 +9,7 @@
   font-size: 14px;
   justify-content: center;
 
-  & .sponsor-block {
+  & .site-logo-block {
     align-items: center;
     display: flex;
     padding: 0 20px;
@@ -28,7 +28,7 @@
   @mixin max-sm {
     align-items: center;
     flex-direction: column;
-    & .sponsor-block {
+    & .site-logo-block {
       border: 0 !important;
       margin: var(--gutter-xs) 0;
     }
