@@ -7,10 +7,15 @@
     font-size: var(--font-xs);
   }
 
+  .cp-hero-heading-dimension {
+    border: 0;
+  }
+
   /* hide unuseful stuff */
   nav,
   .cp-hero-pdf,
-  .cp-hero-credits {
+  .cp-hero-credits,
+  .cp .profile-tiles {
     display: none !important;
   }
 
@@ -19,6 +24,21 @@
     & .cp-section-inner {
       background-color: transparent !important;
       box-shadow: none !important;
+      & .cp-section-paragraph a {
+        color: inherit;
+        &::after {
+          content: "";
+        }
+      }
+    }
+  }
+
+  footer {
+    background-color: transparent;
+    padding: 0;
+    & .footer-logo,
+    & .footer-links {
+      display: none;
     }
   }
 
