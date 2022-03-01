@@ -117,6 +117,5 @@ export default {
   },
   topojsonFill: "#bbbbc2",
   xConfig: axisConfig,
-  yConfig: axisConfig,
-  zoom: false
+  yConfig: axisConfig
 };
