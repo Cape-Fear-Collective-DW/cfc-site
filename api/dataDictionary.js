@@ -1,5 +1,7 @@
 const mysql = require("mysql2");
 const {Parser} = require("json2csv");
+const {rollup} = require("d3-array");
+const {merge} = require("d3plus-common");
 
 module.exports = function(app) {
 
@@ -17,10 +19,29 @@ module.exports = function(app) {
     return d;
   };
 
+  const aggs = {
+    last_updated: (arr, cb) => cb(arr[0]),
+    tags: (arr, cb) => arr.map(cb)
+      .filter(d => d !== "key")
+      .join(",")
+      .split(/\,[\s]{0,1}/g)
+      .filter((d, i, a) => a.indexOf(d) === i)
+  };
+
+  const stickies = ["year", "state", "state_fips", "county", "county_fips", "gender", "race"];
+  const sorter = (a, b) => {
+    const sA = stickies.indexOf(a);
+    const sB = stickies.indexOf(b);
+    return sA < 0 && sB < 0 ? a.localeCompare(b) : sA < 0 ? 1 : sB < 0 ? -1 : sA - sB;
+  };
+
   app.get("/data", async(req, res) => {
 
-    connection.query("SELECT tags, attribute_description, tablename, geography, region, vintage, source, notes FROM `data_dictionary` GROUP BY tablename", (err, results) => {
-      return res.json(results);
+    connection.query("SELECT * FROM `data_dictionary`", (err, results) => {
+      const rollups = rollup(results, arr => merge(arr, aggs), d => d.tablename);
+      const tables = Array.from(rollups, r => r[1])
+        .sort((a, b) => a.tablename.localeCompare(b.tablename));
+      return res.json(tables);
     });
 
   });
@@ -33,7 +54,7 @@ module.exports = function(app) {
 
       connection.query(`SELECT * FROM \`${table}\``, (err, results) => {
         const data = results.map(prepData);
-        const fields = Object.keys(data[0]);
+        const fields = Object.keys(data[0]).sort(sorter);
         const json2csv = new Parser({fields});
         const csv = json2csv.parse(data);
         res.header('Content-Type', 'text/csv');
