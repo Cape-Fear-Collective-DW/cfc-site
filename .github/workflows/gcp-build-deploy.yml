@@ -5,7 +5,7 @@ on:
   push:
     # only trigger a new build when a commit is pushed to master
     branches:
-      - main
+      - develop
 
 # environment variables used on the respective workflow
 env:
