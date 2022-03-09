@@ -1,8 +1,8 @@
 @import "@datawheel/canon-cms/src/css/mixins.css";
 
 .cp-hero {
-  max-height: 650px;
-  min-height: auto;
+  max-height: 700px;
+  min-height: 630px;
   padding: var(--nav-height) var(--gutter-xl);
   @mixin max-sm {
     padding-bottom: 0;
@@ -34,6 +34,7 @@
   & .cp-hero-subhead {
     font-family: "Oswald", sans-serif;
     font-weight: 300;
+    margin: var(--gutter-md) 0;
     text-transform: lowercase;
   }
 
@@ -45,6 +46,10 @@
     right: 0;
     width: 300px;
     z-index: 3;
+    @mixin max-md {
+      justify-content: center;
+      width: 100%;
+    }
     & .cp-hero-stat {
       display: inline-block;
       flex: none;
@@ -64,6 +69,9 @@
   & .cp-hero-figure {
     align-self: stretch;
     padding: 0;
+    @mixin max-md {
+      min-height: 300px !important;
+    }
   }
 
   & .cp-hero-pdf {
@@ -239,12 +247,27 @@
     max-width: 1000px;
     flex-direction: row-reverse;
     padding: 0 var(--gutter-xl);
+
+    @mixin max-md {
+      flex-direction: column-reverse;
+      max-width: 100%;
+      padding: 0;
+    }
+
     & .cp-section-content {
       padding: var(--gutter-xl) 0;
       width: 50%;
+      @mixin max-md {
+        padding: var(--gutter-md) 0 0;
+        width: 100%;
+      }
     }
     & .cp-default-section-figure {
       width: 50%;
+      @mixin max-md {
+        height: 300px;
+        width: 100%;
+      }
     }
     & h2, & p {
       color: var(--white);
@@ -252,6 +275,7 @@
     & .SourceGroup, & .Options {
       display: none;
     }
+
   }
 }
 
@@ -259,6 +283,8 @@
 .cp-grouping-section {
   background-color: transparent;
   margin-top: calc(var(--gutter-lg) * 2) !important;
+  padding-bottom: 0.25rem;
+  padding-top: 2.5rem;
 }
 
 /* Section "Grouping" Header Text */
@@ -274,9 +300,12 @@
 }
 
 /* Standard Section Container */
-.cp-section:not(.cp-grouping-section-inner):not(.cp-sub-grouping-section-inner):not(.cp-hero) {
+.cp-section:not(.cp-grouping-section):not(.cp-sub-grouping-section):not(.cp-hero) {
   margin: var(--gutter-md);
   padding: 0;
+  @mixin max-md {
+    margin: var(--gutter-sm) 0;
+  }
 }
 
 /* Standard Section Inner Container */
@@ -285,6 +314,10 @@
   border-radius: 15px;
   box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
   padding: var(--gutter-xl) var(--gutter-xl) calc(var(--gutter-lg) * 2);
+  @mixin max-md {
+    border-radius: 0;
+    padding: var(--gutter-md) var(--gutter-md) calc(var(--gutter-sm) * 2);
+  }
 }
 
 /* fixes box-shadow cropping on sections */
@@ -352,12 +385,21 @@ h4 {
   margin-bottom: 0;
 }
 
-.cp-stat-group-wrapper .cp-stat-value-text {
-  margin-right: 16px;
+.cp-stat-group-wrapper {
+  & .cp-stat-value-text {
+    margin-right: 16px;
+    &.length-sm {
+      font-size: 32px;
+    }
+  }
 }
 
 .cp-stat-label {
+  line-height: 1.2;
   margin-top: var(--gutter-xs);
+  & .cp-stat-label-text.length-lg {
+    font-size: 12px;
+  }
 }
 
 .cp-stat-subtitle {
@@ -406,6 +448,9 @@ p {
       bottom: -50px;
       position: absolute;
       right: 0;
+      @mixin max-md {
+        display: none;
+      }
       & .cp-button-group {
         margin-bottom: 0;
       }
@@ -449,6 +494,12 @@ p {
 .mirror-content {
   & .mirror-content-inner {
     height: 100%;
+    & .d3plus-geomap-tileGroup {
+      display: none;
+    }
+    & .d3plus-attribution {
+      opacity: 0 !important;
+    }
   }
 }
 .mirror-footer {

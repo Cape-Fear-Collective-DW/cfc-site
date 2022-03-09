@@ -1,0 +1,32 @@
+#data {
+  margin-top: var(--nav-height);
+  padding: var(--gutter-md) var(--gutter-xl) var(--gutter-xl);
+  & .data-title {
+    text-align: center;
+  }
+  & .bp3-input {
+    width: 100%;
+  }
+  & .bp3-card {
+    margin: var(--gutter-md) 0;
+    & .bp3-tag {
+      margin: 0 var(--gutter-xs) var(--gutter-xs) 0;
+    }
+    & .card-content {
+      display: flex;
+      & .meta-table {
+        flex: 1 1 auto;
+        margin-right: var(--gutter-md);
+      }
+      & .attribute-table {
+        flex: 3 1 auto;
+      }
+    }
+  }
+  & .bp3-callout {
+    margin: var(--gutter-sm) 0;
+  }
+  & .bp3-collapse-body {
+    overflow-x: scroll;
+  }
+}

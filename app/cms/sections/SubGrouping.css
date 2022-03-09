@@ -1,3 +1,5 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 .cp-section:not(.cp-grouping-section) + .cp-sub-grouping-section {
   margin-top: calc(var(--gutter-xl) * 2) !important;
 }
@@ -13,6 +15,9 @@
     margin: 0 auto;
     padding-top: calc(var(--gutter-lg) * 2);
     text-align: left;
+    @mixin max-md {
+      flex-direction: column;
+    }
     & .cp-sub-grouping-section-heading-wrapper {
       width: 100%;
       & .cp-section-heading {
@@ -76,6 +81,8 @@
           font-weight: 500;
           line-height: 21px;
           margin: 0 auto;
+          max-width: 250px;
+          text-align: center;
           text-transform: uppercase;
         }
       }
@@ -88,13 +95,11 @@
         font-weight: normal;
         line-height: 24px;
         margin: 0;
-        max-width: 450px;
+        max-width: 460px;
         padding: var(--gutter-xs);
         &:first-of-type {
           color: var(--darkblue);
-          font-size: 18px;
           font-weight: 500;
-          line-height: 27px;
         }
       }
     }
@@ -106,7 +111,7 @@
         font-weight: normal;
         line-height: 20px;
         margin: 0;
-        max-width: 450px;
+        max-width: 330px;
         padding: var(--gutter-xs);
         text-transform: none;
         &:first-of-type:before {
