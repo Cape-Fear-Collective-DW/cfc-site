@@ -26,7 +26,9 @@
       "Copy": "Copy",
       "Direct link": "Direct link",
       "Download": "Download",
-      "Download as CSV": "Download as CSV",
+      "Download as CSV": "Download CSV",
+      "Download as JSON": "Download JSON",
+      "Download as XLS": "Download XLS",
       "Endpoint": "Endpoint",
       "Image Format": "Image Format",
       "Image area": "Image area",
@@ -48,9 +50,9 @@
     "Profile": {
       "Data Appendix": "Data Appendix",
       "Data Appendix Description": "These data tables represent the underlying datasets used to power each visualization featured in this report.",
-      "Download Page as PDF": "Download Page as PDF",
+      "Download Page as PDF": "Download Report as PDF",
       "Photograph by": "Photograph by",
-      "image credits": "image credits"
+      "image credits": "see image credits"
     },
     "Search": {
       "All": "All",

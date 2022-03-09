@@ -1,0 +1,81 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
+.profile-tiles {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding: var(--gutter-xl);
+  max-width: calc(1400px + var(--gutter-xl) + var(--gutter-xl));
+
+  @mixin max-md {
+    flex-direction: column;
+  }
+
+  @mixin max-sm {
+    padding: var(--gutter-md);
+  }
+
+  & .profile-tile-tabs {
+    flex: none;
+    list-style-type: none;
+    margin-right: 30px;
+    padding: 0;
+    width: 335px;
+
+    @mixin max-md {
+      width: 100%;
+    }
+
+    & .profile-tile-tab {
+      align-items: center;
+      color: var(--darkblue);
+      cursor: pointer;
+      display: flex;
+      font-family: "Poppins", sans-serif;
+      font-size: 17px;
+      font-weight: normal;
+      margin-bottom: 8px;
+      transition: background-color 0.2s, color 0.2s;
+      & .bp3-icon {
+        align-items: center;
+        background-color: var(--darkblue);
+        color: var(--white);
+        display: flex;
+        height: 60px;
+        justify-content: center;
+        margin-right: 13px;
+        width: 50px;
+        transition: color 0.2s;
+      }
+      &.selected {
+        background-color: var(--darkblue);
+        color: var(--white);
+        & .bp3-icon {
+          color: var(--emerald);
+        }
+      }
+    }
+  }
+  & .profile-tile-grid {
+    flex: 1 1 auto;
+    list-style-type: none;
+    padding: 0;
+  }
+  & .cms-profilesearch-tile-banner {
+    background-color: var(--emerald);
+    color: var(--white);
+    font-family: var(--base-font-stack);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    left: 0;
+    line-height: 27px;
+    padding: calc(var(--gutter-xs) / 2);
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+  }
+}

@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Poppins:wght@400;500;600&display=swap");
+@import "print.css";
+@import "@datawheel/canon-cms/src/css/mixins.css";
 
 body {
   background-color: var(--background);
   font-family: "Poppins", sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 .bp3-dialog.cp-hero-search {
@@ -29,14 +33,30 @@ body {
 }
 
 .cms-profilesearch-tile {
-  background-color: var(--background);
+  background-color: var(--darkblue);
   height: 200px;
-  max-width: 300px !important;
-  min-width: 225px !important;
+  max-width: 700px !important;
+  min-width: 260px !important;
+
+  @mixin max-sm {
+    height: 125px;
+    margin: var(--gutter-xs) 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
   & .cms-profilesearch-tile-link {
-    background: linear-gradient(to bottom, rgba(20, 64, 106, 0) 40%, rgba(20, 64, 106, 0.8) 80%);
+    background: linear-gradient(180deg, rgba(20, 64, 106, 0.25) 40%, rgba(20, 64, 106, 0.85) 70%);
     border: 0;
     height: 200px;
+
+    @mixin max-sm {
+      height: 125px;
+    }
+
+    &:not([href]) {
+      pointer-events: none;
+    }
     & .cms-profilesearch-tile-link-text {
       align-self: flex-end;
       padding: var(--gutter);
@@ -44,10 +64,10 @@ body {
       & .cms-profilesearch-tile-link-title {
         color: var(--white);
         font-family: "Poppins", sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         font-style: normal;
         font-weight: 500;
-        line-height: 30px;
+        line-height: 25px;
       }
       & .cms-profilesearch-tile-link-sub {
         color: var(--emerald);
@@ -62,6 +82,28 @@ body {
     }
   }
   & .cms-profilesearch-tile-image {
+    background-position: center;
     height: 200px;
+  }
+}
+
+.d3plus-tooltip {
+  box-shadow: -1px -1px 3px rgba(15, 43, 70, 0.1), 1px 1px 3px rgba(15, 43, 70, 0.1);
+  & .d3plus-tooltip-thead {
+    & tr {
+      border-top: 0.75px solid var(--darkblue) !important;
+    }
+  }
+  & .d3plus-tooltip-tbody {
+    & tr:first-child {
+      border-top: 0 !important;
+      & td {
+        padding: 16px 6px 6px !important;
+      }
+    }
+    & td:last-child {
+      padding-left: var(--gutter-lg) !important;
+      text-align: right !important;
+    }
   }
 }

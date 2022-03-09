@@ -17,8 +17,8 @@ gris: "#626262"
 midblue: "#6886a1"
 
 # nav setup
-nav-height:                 "106px"
-subnav-height:              "var(--nav-height)"
+nav-height:                 "60px"
+subnav-height:              "71px"
 
 
 # changed CMS styles

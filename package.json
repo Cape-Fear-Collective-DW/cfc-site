@@ -13,9 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@datawheel/canon-cms": "^0.20.9",
-    "@datawheel/canon-core": "^0.25.0",
-    "mysql2": "^2.3.3",
+    "@datawheel/canon-cms": "^0.21.11",
+    "@datawheel/canon-core": "^0.25.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

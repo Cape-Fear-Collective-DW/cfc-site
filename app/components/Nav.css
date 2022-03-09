@@ -1,22 +1,29 @@
 nav.site-nav {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   justify-content: space-between;
   height: var(--nav-height);
-  padding: 21px 29px;
+  padding: 13px;
   position: fixed;
   top: 0;
   transition: background-color 0.2s;
   width: 100%;
   z-index: 19;
-  &.background {
-    background-color: var(--darkblue);
-  }
-
   & .logo {
     align-self: stretch;
     & img {
       height: 100%;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    &.visible img {
+      opacity: 1;
+    }
+  }
+  &.background {
+    background-color: var(--darkblue);
+    & img {
+      opacity: 1;
     }
   }
   & .bp3-icon {

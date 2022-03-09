@@ -12,6 +12,7 @@ import libs from "@datawheel/canon-cms/src/utils/libs";
 import {Profile as CMSProfile} from "@datawheel/canon-cms";
 
 import profileSearchConfig from "$app/helpers/search";
+import ProfileTiles from "$app/cms/sections/ProfileTiles";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -40,7 +41,7 @@ class Profile extends Component {
     let title = null;
 
     if (profile.sections && profile.sections.length) {
-      title = stripP(profile.sections[0].title);
+      title = `${stripP(profile.sections[0].title)} ${stripP(profile.sections[0].subtitles[0].subtitle)}`;
     }
 
     return (
@@ -55,7 +56,8 @@ class Profile extends Component {
 
 Profile.need = [
   fetchData("profile", "/api/profile/?slug=<slug>&id=<id>&locale=<i18n.locale>"),
-  fetchData("formatters", "/api/formatters")
+  fetchData("formatters", "/api/formatters"),
+  ProfileTiles
 ];
 
 Profile.childContextTypes = {

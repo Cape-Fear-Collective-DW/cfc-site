@@ -1,15 +1,32 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 .cp-hero {
-  max-height: 650px;
-  min-height: auto;
+  max-height: 700px;
+  min-height: 630px;
   padding: var(--nav-height) var(--gutter-xl);
+  @mixin max-sm {
+    padding-bottom: 0;
+  }
   & .cp-hero-inner {
     padding: 0;
+    position: relative;
   }
   & .cp-hero-img-overlay {
     background: linear-gradient(180deg, rgba(18, 19, 29, 0.9) 0, rgba(34, 37, 64, 0.4) 40%, rgba(26, 54, 90, 0.85) 70%, #14406A 85%);
     background-color: transparent;
     opacity: 1;
   }
+
+  & .cp-hero-heading-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 400px;
+    @mixin max-sm {
+      min-height: 0;
+    }
+  }
+
   & .cp-hero-heading {
     font-size: 84px;
     margin-bottom: var(--gutter-xs);
@@ -17,35 +34,175 @@
   & .cp-hero-subhead {
     font-family: "Oswald", sans-serif;
     font-weight: 300;
+    margin: var(--gutter-md) 0;
     text-transform: lowercase;
   }
-  & .cp-hero-figure {
-    padding: 0;
+
+  & .cp-hero-stat-group-wrapper {
+    bottom: 0;
+    margin-top: 0;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+    width: 300px;
+    z-index: 3;
+    @mixin max-md {
+      justify-content: center;
+      width: 100%;
+    }
+    & .cp-hero-stat {
+      display: inline-block;
+      flex: none;
+      margin: 0;
+      min-width: 0;
+      overflow: hidden;
+      width: auto;
+      & .cp-stat-label-text {
+        text-transform: lowercase;
+      }
+      & .cp-stat-value-text {
+        margin: 0;
+      }
+    }
   }
+
+  & .cp-hero-figure {
+    align-self: stretch;
+    padding: 0;
+    @mixin max-md {
+      min-height: 300px !important;
+    }
+  }
+
   & .cp-hero-pdf {
-    border-color: var(--white);
-    bottom: calc(var(--subnav-height) + var(--gutter-xl));
+    align-items: center;
+    border: 0;
+    bottom: 0;
     color: var(--white);
-    font-size: var(--font-xs);
-    left: var(--gutter-xl);
-    opacity: 0.5;
+    display: flex;
+    flex-direction: row-reverse;
+    left: 0;
+    opacity: 0.75;
+    padding: var(--gutter-xs);
     position: absolute !important;
     right: auto;
     top: auto;
     z-index: 3;
-    &:hover {
-      opacity: 1;
+    @mixin max-sm {
+      display: none;
+    }
+    & .cp-button-text {
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      margin: 0;
+      max-width: 110px;
+      text-align: left;
+      text-transform: uppercase;
     }
     & .bp3-icon {
+      margin: 0 20px 0 0 !important;
+      transform: scale(1.5);
       vertical-align: bottom;
+    }
+    &:hover {
+      background: none;
+      cursor: pointer;
+      opacity: 1;
+      & .bp3-icon {
+        transform: scale(1.75);
+      }
+    }
+  }
+  & .cp-hero-credits {
+    bottom: var(--nav-height);
+    display: flex;
+    left: calc(var(--gutter-xl) + 180px);
+    margin: 0;
+    padding: var(--gutter-xs);
+    position: absolute;
+    width: 150px;
+    & .cp-hero-credits-button {
+      align-items: center;
+      border: 0;
+      color: var(--light-3);
+      display: flex;
+      padding: 0;
+      position: static;
+      & .cp-button-text {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        text-align: left;
+        text-transform: uppercase;
+        width: 80px;
+      }
+      & .bp3-icon {
+        margin: 0 15px 0 0 !important;
+        transform: scale(1.25);
+        vertical-align: bottom;
+      }
+      &:hover,&:focus {
+        background: none;
+        border: 0;
+        color: var(--white);
+        cursor: pointer;
+        opacity: 1;
+        & .bp3-icon {
+          transform: scale(1.5);
+        }
+      }
+    }
+    & .cp-hero-credits-text {
+      color: white;
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      margin: 0;
+      text-transform: uppercase;
+      & .cp-hero-credits-name {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        text-transform: uppercase;
+      }
+    }
+    &.is-open {
+      top: auto;
+      & .cp-hero-credits-button {
+        background-color: transparent;
+        border: 0;
+        top: auto;
+        & .cp-button-text {
+          display: none;
+        }
+      }
     }
   }
 }
 
 .cp-subnav {
   align-items: center;
+  &.is-fixed {
+    box-shadow: none;
+  }
   & .cp-subnav-list.cp-subnav-secondary {
-    background-color: transparent;
+    background-color: #2b5986;
+    flex: none;
+    height: 37px;
+    width: 100%;
+    & .cp-subnav-link {
+      font-size: 13px;
+      text-transform: uppercase;
+    }
   }
   & .cp-subnav-item {
     & .bp3-icon {
@@ -64,11 +221,61 @@
       height: 6px;
     }
     & .cp-subnav-group-list {
-      background-color: var(--darkemerald);
+      background-color: #2b5986;
+      box-shadow: none;
       & .cp-subnav-group-link-icon {
         display: none;
       }
+      & .cp-subnav-group-link {
+        font-size: 13px;
+        line-height: 19px;
+        text-transform: uppercase;
+      }
     }
+  }
+}
+
+/* Introduction Section w/ Radar */
+#cp-section-104 {
+  background-color: var(--darkblue);
+  margin: 0;
+  padding: var(--gutter-md) var(--gutter-xl);
+  & .cp-section-inner {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 1000px;
+    flex-direction: row-reverse;
+    padding: 0 var(--gutter-xl);
+
+    @mixin max-md {
+      flex-direction: column-reverse;
+      max-width: 100%;
+      padding: 0;
+    }
+
+    & .cp-section-content {
+      padding: var(--gutter-xl) 0;
+      width: 50%;
+      @mixin max-md {
+        padding: var(--gutter-md) 0 0;
+        width: 100%;
+      }
+    }
+    & .cp-default-section-figure {
+      width: 50%;
+      @mixin max-md {
+        height: 300px;
+        width: 100%;
+      }
+    }
+    & h2, & p {
+      color: var(--white);
+    }
+    & .SourceGroup, & .Options {
+      display: none;
+    }
+
   }
 }
 
@@ -76,10 +283,8 @@
 .cp-grouping-section {
   background-color: transparent;
   margin-top: calc(var(--gutter-lg) * 2) !important;
-}
-
-.cp-section:not(.cp-grouping-section) + .cp-sub-grouping-section {
-  margin-top: calc(var(--gutter-xl) * 2) !important;
+  padding-bottom: 0.25rem;
+  padding-top: 2.5rem;
 }
 
 /* Section "Grouping" Header Text */
@@ -88,38 +293,49 @@
   font-family: "Oswald", sans-serif;
   font-size: 46px;
   font-weight: normal;
+  margin-left: calc(var(--gutter-md) * -1);
+  padding: 0;
   text-align: center;
-  width: 100%;
-}
-
-/* Section "SubGrouping" Header Text */
-.cp-sub-grouping-section-heading-wrapper .cp-section-heading {
-  color: var(--midblue);
-  font-family: "Oswald", sans-serif;
-  font-size: 34px;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
   width: 100%;
 }
 
 /* Standard Section Container */
-.cp-section:not(.cp-grouping-section-inner):not(.cp-hero) {
+.cp-section:not(.cp-grouping-section):not(.cp-sub-grouping-section):not(.cp-hero) {
   margin: var(--gutter-md);
   padding: 0;
+  @mixin max-md {
+    margin: var(--gutter-sm) 0;
+  }
 }
 
 /* Standard Section Inner Container */
-.cp-section-inner:not(.cp-grouping-section-inner):not(.cp-hero-inner) {
+.cp-section-inner:not(.cp-grouping-section-inner):not(.cp-sub-grouping-section-inner):not(.cp-hero-inner) {
   background-color: var(--backgroundlight);
   border-radius: 15px;
   box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
-  padding: var(--gutter-xl);
+  padding: var(--gutter-xl) var(--gutter-xl) calc(var(--gutter-lg) * 2);
+  @mixin max-md {
+    border-radius: 0;
+    padding: var(--gutter-md) var(--gutter-md) calc(var(--gutter-sm) * 2);
+  }
+}
+
+/* fixes box-shadow cropping on sections */
+.cp-section {
+  overflow: visible;
+}
+
+/* Adjust middle gutter on standard screens */
+@mixin min-sm {
+  .cp-default-section-figure {
+    width: calc(100% - var(--sidebar-width) - var(--gutter-lg));
+  }
 }
 
 /* Standard Section Titles */
 h4 {
   font-size: 34px;
+  margin-bottom: var(--gutter-md);
 }
 
 .cp-select-label:not(:last-child),
@@ -162,19 +378,28 @@ h4 {
   display: flex;
   flex-direction: column-reverse;
   margin-bottom: var(--gutter-md);
-  margin-top: var(--gutter-lg);
+  margin-top: 0;
 }
 
 .cp-stat-group-list > .cp-stat {
   margin-bottom: 0;
 }
 
-.cp-stat-group-wrapper .cp-stat-value-text {
-  margin-right: 16px;
+.cp-stat-group-wrapper {
+  & .cp-stat-value-text {
+    margin-right: 16px;
+    &.length-sm {
+      font-size: 32px;
+    }
+  }
 }
 
 .cp-stat-label {
+  line-height: 1.2;
   margin-top: var(--gutter-xs);
+  & .cp-stat-label-text.length-lg {
+    font-size: 12px;
+  }
 }
 
 .cp-stat-subtitle {
@@ -198,7 +423,8 @@ h4 {
 }
 
 p {
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .cp-viz-container {
@@ -219,12 +445,34 @@ p {
       width: 100%;
     }
     & .Options {
-      bottom: 0;
+      bottom: -50px;
       position: absolute;
       right: 0;
+      @mixin max-md {
+        display: none;
+      }
+      & .cp-button-group {
+        margin-bottom: 0;
+      }
       & .cp-button {
         align-items: center;
+        border: 0;
+        color: var(--darkblue);
         display: flex;
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 18px;
+        text-transform: uppercase;
+        & > [class*="-button-icon"],
+        & > [class*="-button-icon"] > svg {
+          height: 1.4em;
+          width: 1.4em;
+        }
+        &:hover {
+          color: var(--white);
+        }
       }
     }
   }
@@ -233,7 +481,7 @@ p {
     bottom: auto;
     height: auto;
     flex: 1 1 auto;
-    margin-bottom: 4em;
+    margin-bottom: 0;
     padding-top: 0;
     top: auto;
   }
@@ -241,4 +489,29 @@ p {
 
 .d3plus-tooltip {
   z-index: 20;
+}
+
+.mirror-content {
+  & .mirror-content-inner {
+    height: 100%;
+    & .d3plus-geomap-tileGroup {
+      display: none;
+    }
+    & .d3plus-attribution {
+      opacity: 0 !important;
+    }
+  }
+}
+.mirror-footer {
+  & .mirror-footer-logo {
+    background-image: url("/images/hcnc-logo-dark.svg");
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    height: 100%;
+    margin: auto 0 auto var(--gutter-md);
+    max-height: 2.5rem;
+    width: 10rem;
+  }
 }

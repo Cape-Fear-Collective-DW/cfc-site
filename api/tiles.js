@@ -12,22 +12,43 @@ const stripP = require("@datawheel/canon-cms/src/utils/formatters/stripP");
   return a;
 }
 
+const regions = [
+  "Cape Fear",
+  "Charlotte",
+  "Eastern",
+  "Mountains",
+  "Northeast",
+  "Sandhills",
+  "Triad",
+  "Triangle"
+].map((d, i) => ({
+  id: i ? false : "cf",
+  hierarchy: "Region",
+  slug: d.replace(/\s/g, "-").toLowerCase(),
+  name: d
+}));
+
 module.exports = function(app) {
 
   const {db} = app.settings;
 
-  app.get("/home", async(req, res) => {
+  app.get("/tiles", async(req, res) => {
 
-    const profiles = await db.search
+    const {id} = req.query;
+
+    const showCounties = id !== "<id>";
+
+    const profiles = showCounties ? await db.search
       .findAll({
-        include: [{association: "content"}]
+        include: [{association: "content"}],
+        where: {hierarchy: "County"}
       })
       .then(rows => rows.map(d => ({
         id: d.id,
         hierarchy: d.hierarchy,
         slug: d.slug,
         name: d.content.find(c => c.locale === "en").name
-      })));
+      }))) : regions;
 
     const sections = await db.section
       .findAll({
@@ -49,7 +70,7 @@ module.exports = function(app) {
           image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
           subtitle: d.hierarchy,
           title: d.name.replace(" County", ""),
-          url: `/profile/geo/${d.slug}`
+          url: d.id ? `/profile/geo/${d.slug}` : false
         }))
       }
     ];
@@ -57,19 +78,23 @@ module.exports = function(app) {
     for (let i = 0; i < sections.length; i++) {
       const group = sections[i];
       if (group.type === "Grouping") {
+
         const nextGroup = sections.slice(i + 1).findIndex(d => d.type === "Grouping");
-        const topics = sections.slice(i + 1, i + 1 + nextGroup).filter(d => d.type !== "SubGrouping");
+        const topics = sections
+          .slice(i + 1, nextGroup > 0 ? i + 1 + nextGroup : undefined)
+          .filter(d => d.type !== "SubGrouping");
+
         if (topics.length) {
           tabs.push({
             icon: group.icon,
             title: stripP(group.title),
-            tiles: shuffle(profiles.slice()).map(d => {
+            tiles: (showCounties ? shuffle(profiles.slice()) : profiles.slice()).map(d => {
               const topic = shuffle(topics)[0];
               return {
                 image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
                 subtitle: `${d.name.replace(" County", "")} ${d.hierarchy}`,
                 title: stripP(topic.title),
-                url: `/profile/geo/${d.slug}#${topic.slug}`
+                url: d.id ? `/profile/geo/${d.slug}#${topic.slug}` : false
               };
             })
           });

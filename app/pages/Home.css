@@ -1,11 +1,19 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 #Home {
-  background-color: #e5e5e5;
+  background-color: var(--backgroundlight);
   & .home-splash {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: calc(var(--nav-height) + var(--gutter-xl)) var(--gutter-xl) var(--gutter-md);
     position: relative;
+
+    @mixin max-md {
+      flex-direction: column;
+      padding: calc(var(--nav-height) + var(--gutter-md)) var(--gutter-md) var(--gutter-md);
+    }
+
     & .home-splash-image {
       background-image: url("/images/home-splash.jpg");
       background-position: center;
@@ -34,29 +42,51 @@
       flex-direction: column;
       justify-content: center;
       margin-right: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 425px;
       z-index: 2;
+      @mixin max-md {
+        align-items: center;
+        margin-right: 0;
+        max-width: 100%;
+      }
       & .home-splash-logo {
         margin-bottom: var(--gutter-lg);
-        max-width: 300px;
+        max-width: 260px;
       }
       & .cms-profilesearch {
         & .cp-input-label {
           & .cp-input {
             background-color: var(--white);
             border-radius: 0;
+            padding: 0.5em 3em .4em 1.8em;
+            @mixin max-sm {
+              padding: 0.5em 3em .4em 2.4em;
+            }
           }
         }
+        & .cms-profilesearch-list-item-link {
+          color: var(--darkblue);
+        }
+      }
+      @mixin max-md {
+        align-items: center;
+        margin-right: 0;
+        max-width: 100%;
       }
     }
     & .home-splash-map {
       height: 350px;
       flex: 1;
       margin-left: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 600px;
       z-index: 1;
+      @mixin max-md {
+        height: 300px;
+        margin-left: 0;
+        max-width: 100%;
+      }
     }
-    & .sponsors {
+    & .site-logos {
       margin-top: var(--gutter-xl);
       min-width: 100%;
       z-index: 1;
@@ -64,77 +94,38 @@
   }
 
   & .home-intro {
-    display: flex;
-    margin: 0 auto;
-    padding: calc(var(--gutter-xl) * 2) var(--gutter-xl) var(--gutter-xl);
+    margin: 0 auto var(--gutter-xl);
+    padding: calc(var(--gutter-xl) * 2) var(--gutter-xl) 0;
     max-width: calc(1135px + var(--gutter-xl) + var(--gutter-xl));
     & h2 {
       color: var(--darkblue);
-      flex: 1 1 50%;
       font-family: "Oswald", sans-serif;
       font-size: 46px;
       font-style: normal;
       font-weight: normal;
-      margin: 0;
+      margin: 0 auto calc(var(--gutter-lg) * 2);
+      text-align: center;
     }
-    & p {
+    & div {
       color: var(--gris);
-      flex: 1 1 50%;
-      font-family: "Poppins", sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 17px;
-      line-height: 25px;
+      columns: 2;
+      column-gap: var(--gutter-xl);
+      & p {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 25.5px;
+        margin-bottom: var(--gutter-md);
+        & b {
+          color: var(--darkblue);
+          font-weight: 500;
+        }
+      }
+      @mixin max-sm {
+        columns: 1;
+      }
     }
   }
 
-  & .home-tiles {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    padding: calc(var(--gutter-xl) * 2) var(--gutter-xl) var(--gutter-xl);
-    max-width: calc(1400px + var(--gutter-xl) + var(--gutter-xl));
-    & .home-tile-tabs {
-      flex: none;
-      list-style-type: none;
-      margin-right: 50px;
-      padding: 0;
-      width: 335px;
-      & .home-tile-tab {
-        align-items: center;
-        color: var(--darkblue);
-        cursor: pointer;
-        display: flex;
-        font-family: "Poppins", sans-serif;
-        font-size: 18px;
-        font-weight: normal;
-        margin-bottom: 8px;
-        transition: background-color 0.2s, color 0.2s;
-        & .bp3-icon {
-          align-items: center;
-          background-color: var(--darkblue);
-          color: var(--white);
-          display: flex;
-          height: 60px;
-          justify-content: center;
-          margin-right: 13px;
-          width: 50px;
-          transition: color 0.2s;
-        }
-        &.selected {
-          background-color: var(--darkblue);
-          color: var(--white);
-          & .bp3-icon {
-            color: var(--emerald);
-          }
-        }
-      }
-    }
-    & .home-tile-grid {
-      flex: 1 1 auto;
-      list-style-type: none;
-      padding: 0;
-    }
-  }
 }

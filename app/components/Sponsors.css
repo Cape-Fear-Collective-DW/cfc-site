@@ -1,24 +1,36 @@
-.sponsors {
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
+.site-logos {
   color: var(--white);
   display: flex;
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
+  font-size: 14px;
   justify-content: center;
-  & .sponsor-block {
+
+  & .site-logo-block {
     align-items: center;
     display: flex;
-    padding: 0 25px;
+    padding: 0 20px;
     & img {
-      margin: 0 10px;
-      width: 120px;
+      height: 23px;
+      margin: 4px 10px 0;
       &:last-child {
         margin-right: 0;
       }
     }
     &:not(:first-child) {
       border-left: 1px solid var(--white);
+    }
+  }
+
+  @mixin max-sm {
+    align-items: center;
+    flex-direction: column;
+    & .site-logo-block {
+      border: 0 !important;
+      margin: var(--gutter-xs) 0;
     }
   }
 }

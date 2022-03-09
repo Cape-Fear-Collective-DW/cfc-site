@@ -1,3 +1,5 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 footer {
   align-items: center;
   background-color: var(--darkblue);
@@ -5,7 +7,12 @@ footer {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 0 var(--gutter-xl);
-  & .sponsors {
+
+  @mixin max-sm {
+    justify-content: center;
+  }
+
+  & .site-logos {
     background-color: var(--verydarkblue);
     min-width: 100%;
     padding: var(--gutter-sm);
@@ -13,7 +20,7 @@ footer {
   & .footer-logo {
     margin: var(--gutter-xl);
     & img {
-      width: 264px;
+      width: 180px;
     }
   }
   & .footer-links {
@@ -23,7 +30,7 @@ footer {
       font-family: "Poppins", sans-serif;
       font-style: normal;
       font-weight: 500;
-      font-size: 19px;
+      font-size: 17px;
       margin-left: 50px;
       &:first-child {
         margin-left: 0;

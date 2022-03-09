@@ -25,9 +25,17 @@ const labelStyle = {
 };
 
 const axisConfig = {
+  barConfig: {
+    stroke: styles.background
+  },
+  gridConfig: {
+    stroke: styles.background,
+    "stroke-dasharray": "2"
+  },
   labelConfig: labelStyle,
   shapeConfig: {
-    labelConfig: labelStyle
+    labelConfig: {...labelStyle, fontColor: styles.verydarkblue},
+    stroke: styles.background
   },
   titleConfig: {
     fontFamily: () => "'Oswald', sans-serif",
@@ -39,18 +47,72 @@ const axisConfig = {
 export default {
   colorScaleConfig: {
     axisConfig,
-    color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue]
+    bucketJoiner: (a, b) => `${a} to ${b}`,
+    color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue],
+    colorMin: styles.purple,
+    colorMid: styles.backgroundlight,
+    colorMax: styles.orange
+  },
+  colorScalePosition: "bottom",
+  confidenceConfig: {
+    fillOpacity: 0.4
   },
   groupPadding: 1,
+  legendConfig: {
+    shapeConfig: {
+      labelConfig: {
+        fontColor: styles.gris
+      }
+    }
+  },
+  legendTooltip: {
+    tbody: []
+  },
+  legendPosition: "bottom",
+  ocean: "transparent",
   shapeConfig: {
     fill: colorLogic,
     labelConfig: labelStyle,
     Line: {
-      stroke: colorLogic
+      stroke: colorLogic,
+      strokeDasharray: d => d["Data ID"] === "Target" || d.County === "Target" || d.Tract === "Target" ? "10 5" : "none",
+      strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" || d.Tract === "Indicator" ? 4 : 2
     },
     Path: {
-      fillOpacity: 0.75,
+      fillOpacity: 0.8,
       stroke: styles.darkblue
+    }
+  },
+  tooltipConfig: {
+    arrowStyle: {
+      height: "15px",
+      width: "15px"
+    },
+    background: "white",
+    borderRadius: "6px",
+    padding: "21px",
+    tbodyStyle: {
+      "color": styles.darkblue,
+      "font-family": "Poppins",
+      "font-style": "normal",
+      "font-weight": "300",
+      "font-size": "13px",
+      "line-height": "19px",
+      "text-align": "left"
+    },
+    titleStyle: {
+      "color": styles.darkblue,
+      "font-family": "'Oswald', sans-serif",
+      "font-weight": "500",
+      "font-size": "16px",
+      "line-height": "24px",
+      "text-transform": "uppercase"
+    },
+    tdStyle: {
+      "padding": "6px"
+    },
+    trStyle: {
+      "border-top": `1px solid ${styles.background}`
     }
   },
   topojsonFill: "#bbbbc2",
