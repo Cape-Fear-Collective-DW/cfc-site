@@ -3,9 +3,13 @@ const {Parser} = require("json2csv");
 const {rollup} = require("d3-array");
 const {merge} = require("d3plus-common");
 
+const catcher = err => {
+  console.log("MySQL Connection Error:");
+  console.log(err);
+};
+
 module.exports = function(app) {
 
-  console.log("CANON_AWS_DB", process.env.CANON_AWS_DB);
   const pool = mysql.createPool(process.env.CANON_AWS_DB).promise();
 
   const {countyFips, stateFips} = app.settings.cache;
@@ -38,7 +42,7 @@ module.exports = function(app) {
 
   app.get("/data", async(req, res) => {
 
-    const connection = await pool.getConnection();
+    const connection = await pool.getConnection().catch(catcher);
 
     const [results, ] = await connection.query("SELECT * FROM `data_dictionary`");
     connection.release();
@@ -58,7 +62,7 @@ module.exports = function(app) {
 
     const query = `SELECT * FROM \`${table}\`${format === "json" ? " LIMIT 10" : ""}`;
 
-    const connection = await pool.getConnection();
+    const connection = await pool.getConnection().catch(catcher);
     const [results, ] = await connection.query(query);
     connection.release();
 
