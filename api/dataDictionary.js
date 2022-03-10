@@ -5,7 +5,7 @@ const {merge} = require("d3plus-common");
 
 module.exports = function(app) {
 
-  const connection = mysql.createConnection(process.env.CANON_AWS_DB);
+  const pool = mysql.createPool(process.env.CANON_AWS_DB).promise();
 
   const {countyFips, stateFips} = app.settings.cache;
 
@@ -37,12 +37,17 @@ module.exports = function(app) {
 
   app.get("/data", async(req, res) => {
 
-    connection.query("SELECT * FROM `data_dictionary`", (err, results) => {
-      const rollups = rollup(results, arr => merge(arr, aggs), d => d.tablename);
-      const tables = Array.from(rollups, r => r[1])
-        .sort((a, b) => a.tablename.localeCompare(b.tablename));
-      return res.json(tables);
-    });
+    const connection = await pool.getConnection();
+
+    const [results, ] = await connection.query("SELECT * FROM `data_dictionary`");
+    connection.release();
+
+    const rollups = rollup(results, arr => merge(arr, aggs), d => d.tablename);
+
+    const tables = Array.from(rollups, r => r[1])
+      .sort((a, b) => a.tablename.localeCompare(b.tablename));
+
+    return res.json(tables);
 
   });
 
@@ -50,26 +55,27 @@ module.exports = function(app) {
 
     const {table, format} = req.params;
 
+    const query = `SELECT * FROM \`${table}\`${format === "json" ? " LIMIT 10" : ""}`;
+
+    const connection = await pool.getConnection();
+    const [results, ] = await connection.query(query);
+    connection.release();
+
+    const data = results.map(prepData);
+
     if (format === "csv") {
 
-      connection.query(`SELECT * FROM \`${table}\``, (err, results) => {
-        const data = results.map(prepData);
-        const fields = Object.keys(data[0]).sort(sorter);
-        const json2csv = new Parser({fields});
-        const csv = json2csv.parse(data);
-        res.header('Content-Type', 'text/csv');
-        res.attachment(`${table}.csv`);
-        return res.send(csv);
-      });
+      const fields = Object.keys(data[0]).sort(sorter);
+      const json2csv = new Parser({fields});
+      const csv = json2csv.parse(data);
+
+      res.header('Content-Type', 'text/csv');
+      res.attachment(`${table}.csv`);
+      return res.send(csv).end();
 
     }
     else {
-
-      connection.query(`SELECT * FROM \`${table}\` LIMIT 10`, (err, results) => {
-        const data = results.map(prepData);
-        return res.json(data);
-      });
-
+      return res.json(data);
     }
 
   });
