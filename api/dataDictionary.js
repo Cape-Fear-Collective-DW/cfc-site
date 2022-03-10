@@ -5,6 +5,7 @@ const {merge} = require("d3plus-common");
 
 module.exports = function(app) {
 
+  console.log("CANON_AWS_DB", process.env.CANON_AWS_DB);
   const pool = mysql.createPool(process.env.CANON_AWS_DB).promise();
 
   const {countyFips, stateFips} = app.settings.cache;
