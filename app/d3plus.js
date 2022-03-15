@@ -2,7 +2,7 @@ import styles from "style.yml";
 import colorLookup from "$app/helpers/colors";
 
 import {colorDefaults} from "d3plus-color";
-colorDefaults.dark = styles.gris;
+colorDefaults.dark = styles.verydarkblue;
 
 // function to lookup & assign color depending on present dimension keys
 function colorLogic(d) {
