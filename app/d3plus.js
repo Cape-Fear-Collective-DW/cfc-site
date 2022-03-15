@@ -117,7 +117,7 @@ export default {
       "border-top": `1px solid ${styles.background}`
     }
   },
-  topojsonFill: "#bbbbc2",
+  topojsonFill: "#D6DCE5",
   xConfig: axisConfig,
   yConfig: axisConfig,
   zoom: false
