@@ -1,11 +1,12 @@
 import styles from "style.yml";
 
 const magenta = "#e22ac5";
-const other = "#93bd66";
+const other = "#93BD66";
 const two = "#fcc201";
 const islander = "#a23e60";
-const asian = "#3e6686";
+const asian = "#D5D83E";
 const native = "#d8abe8";
+const unknown = "#D6DCE5";
 
 export default [
   {
@@ -57,9 +58,8 @@ export default [
       11: magenta, // White (non-Hispanic)
 
       12: other, // Other
-
-      13: styles.gris, // Other (non-Hispanic)
-      99: styles.gris, // Unknown
+      13: other, // Other (non-Hispanic)
+      99: unknown, // Unknown
 
       14: two, // Multiracial/2+ Races
 
