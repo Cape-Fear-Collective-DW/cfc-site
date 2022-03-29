@@ -1,3 +1,5 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 footer {
   align-items: center;
   background-color: var(--darkblue);
@@ -5,7 +7,12 @@ footer {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 0 var(--gutter-xl);
-  & .sponsors {
+
+  @mixin max-sm {
+    justify-content: center;
+  }
+
+  & .site-logos {
     background-color: var(--verydarkblue);
     min-width: 100%;
     padding: var(--gutter-sm);

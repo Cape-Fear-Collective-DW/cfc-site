@@ -49,9 +49,9 @@ export default {
     axisConfig,
     bucketJoiner: (a, b) => `${a} to ${b}`,
     color: ["#E1F7CD", styles.lightgreen, styles.emerald, styles.darkblue],
-    colorMin: styles.red,
+    colorMin: styles.purple,
     colorMid: styles.backgroundlight,
-    colorMax: styles.green
+    colorMax: styles.orange
   },
   colorScalePosition: "bottom",
   confidenceConfig: {
@@ -79,12 +79,10 @@ export default {
       strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" || d.Tract === "Indicator" ? 4 : 2
     },
     Path: {
-      // fillOpacity: 0.75, // used with tiles: true
-      fillOpacity: 1,
+      fillOpacity: 0.8,
       stroke: styles.darkblue
     }
   },
-  tiles: false,
   tooltipConfig: {
     arrowStyle: {
       height: "15px",
@@ -119,6 +117,5 @@ export default {
   },
   topojsonFill: "#D6DCE5",
   xConfig: axisConfig,
-  yConfig: axisConfig,
-  zoom: false
+  yConfig: axisConfig
 };

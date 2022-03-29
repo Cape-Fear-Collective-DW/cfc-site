@@ -1,3 +1,5 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 #Home {
   background-color: var(--backgroundlight);
   & .home-splash {
@@ -6,6 +8,12 @@
     justify-content: center;
     padding: calc(var(--nav-height) + var(--gutter-xl)) var(--gutter-xl) var(--gutter-md);
     position: relative;
+
+    @mixin max-md {
+      flex-direction: column;
+      padding: calc(var(--nav-height) + var(--gutter-md)) var(--gutter-md) var(--gutter-md);
+    }
+
     & .home-splash-image {
       background-image: url("/images/home-splash.jpg");
       background-position: center;
@@ -34,11 +42,16 @@
       flex-direction: column;
       justify-content: center;
       margin-right: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 425px;
       z-index: 2;
+      @mixin max-md {
+        align-items: center;
+        margin-right: 0;
+        max-width: 100%;
+      }
       & .home-splash-logo {
         margin-bottom: var(--gutter-lg);
-        max-width: 300px;
+        max-width: 260px;
       }
       & .cms-profilesearch {
         & .cp-input-label {
@@ -46,18 +59,34 @@
             background-color: var(--white);
             border-radius: 0;
             padding: 0.5em 3em .4em 1.8em;
+            @mixin max-sm {
+              padding: 0.5em 3em .4em 2.4em;
+            }
           }
         }
+        & .cms-profilesearch-list-item-link {
+          color: var(--darkblue);
+        }
+      }
+      @mixin max-md {
+        align-items: center;
+        margin-right: 0;
+        max-width: 100%;
       }
     }
     & .home-splash-map {
       height: 350px;
       flex: 1;
       margin-left: var(--gutter-lg);
-      max-width: 500px;
+      max-width: 600px;
       z-index: 1;
+      @mixin max-md {
+        height: 300px;
+        margin-left: 0;
+        max-width: 100%;
+      }
     }
-    & .sponsors {
+    & .site-logos {
       margin-top: var(--gutter-xl);
       min-width: 100%;
       z-index: 1;
@@ -92,6 +121,9 @@
           color: var(--darkblue);
           font-weight: 500;
         }
+      }
+      @mixin max-sm {
+        columns: 1;
       }
     }
   }

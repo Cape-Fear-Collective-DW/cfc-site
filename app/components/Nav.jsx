@@ -51,7 +51,7 @@ class Nav extends Component {
 export default connect(state => {
   const pathname = state.routing.locationBeforeTransitions ? `/${state.routing.locationBeforeTransitions.pathname}` : state.location.pathname;
   return {
-    homePage: pathname === "//",
+    homePage: pathname === "//" || pathname === "/",
     searchVisible: state.searchVisible
   };
 }, dispatch => ({

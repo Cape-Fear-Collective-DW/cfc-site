@@ -44,7 +44,7 @@ class Home extends Component {
                 Path: {
                   fill: d => `rgba(214, 220, 229, ${d.properties ? 0.3 : 0.75})`,
                   stroke: "#d6dce5",
-                  strokeWidth: 1
+                  strokeWidth: 0.6
                 }
               },
               tiles: false,
