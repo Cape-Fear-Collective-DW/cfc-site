@@ -1,6 +1,14 @@
 # starting point: an image of node-12
 FROM node:12
 
+# install mysql
+RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 8C718D3B5072E1F5
+
+RUN echo "deb http://repo.mysql.com/apt/debian/ buster mysql-8.0" > /etc/apt/sources.list.d/mysql.list
+
+RUN apt-get update \
+    && apt-get install -y mysql-community-client
+
 # create the app directory inside the image
 WORKDIR /usr/src/app
 
