@@ -33,11 +33,11 @@ class Nav extends Component {
 
   render() {
 
-    const {homePage, searchVisible, toggleSearch} = this.props;
+    const {homePage, profilePage, searchVisible, toggleSearch} = this.props;
     const {scrolled} = this.state;
 
     return (
-      <nav className={`site-nav ${scrolled ? "background" : ""}`}>
+      <nav className={`site-nav ${(!homePage && !profilePage) || scrolled ? "background" : ""}`}>
         <Link className={`logo ${(!homePage || scrolled) ? "visible" : ""}`} to="/">
           <img src="/images/hcnc-logo.svg" />
         </Link>
@@ -52,6 +52,7 @@ export default connect(state => {
   const pathname = state.routing.locationBeforeTransitions ? `/${state.routing.locationBeforeTransitions.pathname}` : state.location.pathname;
   return {
     homePage: pathname === "//" || pathname === "/",
+    profilePage: pathname.includes("profile/"),
     searchVisible: state.searchVisible
   };
 }, dispatch => ({
