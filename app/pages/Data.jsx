@@ -69,7 +69,7 @@ class Data extends Component {
 
     const {open, preview, results} = this.state;
     const {tables} = this.props;
-    const title = "Data Library";
+    const title = "Community Data Platform";
 
     return (
       <div id="data">

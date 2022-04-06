@@ -11,7 +11,7 @@ function createRoute() {
   return (
     <Route path="/" component={App} history={browserHistory}>
       <IndexRoute component={Home} />
-      <Route path="/data-library" component={Data} />
+      <Route path="/community-data" component={Data} />
       <Route path="/cms" component={Builder} />
       <Route path="/profile/:slug/:id" component={Profile} />
     </Route>
