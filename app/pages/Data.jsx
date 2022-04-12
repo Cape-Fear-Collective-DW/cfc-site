@@ -6,7 +6,6 @@ import axios from "axios";
 import {fetchData} from "@datawheel/canon-core";
 import {Button, Card, Spinner, Tag} from "@blueprintjs/core";
 import {merge} from "d3-array";
-import {unique} from "d3plus-common";
 import "./Data.css";
 
 const categories = [
