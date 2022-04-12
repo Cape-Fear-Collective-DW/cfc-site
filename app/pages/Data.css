@@ -49,12 +49,31 @@
       min-width: 200px;
       padding: var(--gutter-lg);
       width: 100%;
-      & .data-result-title {
-        color: var(--verydarkblue);
-        font-size: 24px;
-        font-weight: 400;
-        margin: 0 0 var(--gutter-xs);
-        text-transform: uppercase;
+      & .data-result-header {
+        align-items: center;
+        display: flex;
+        width: 100%;
+        & .data-result-header-text {
+          flex: 1 1 100%;
+          margin-right: var(--gutter-md);
+          & .data-result-title {
+            color: var(--verydarkblue);
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 var(--gutter-xs);
+            text-transform: uppercase;
+          }
+        }
+        & .bp3-button {
+          background-color: var(--lightblue);
+          border: 0;
+          & .bp3-icon {
+            color: var(--white);
+          }
+        }
+      }
+      & .meta-table {
+        margin-top: var(--gutter-md);
       }
       & .bp3-tag {
         background: var(--lightblue);

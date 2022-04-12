@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
@@ -20,8 +20,9 @@ class Data extends Component {
     super(props);
     this.state = {
       fields: Object.keys(props.tables[0]),
-      open: false,
+      open: [],
       preview: false,
+      previewTable: false,
       results: props.tables
     }
   }
@@ -44,11 +45,11 @@ class Data extends Component {
 
   onPreview(tablename) {
 
-    if (tablename === this.state.open) {
-      this.setState({preview: false, open: false});
+    if (tablename === this.state.previewTable) {
+      this.setState({preview: false, previewTable: false});
     }
     else {
-      this.setState({preview: false, open: tablename});
+      this.setState({preview: false, previewTable: tablename});
       axios.get(`/data/${tablename}/json`)
         .then(resp => this.setState({preview: resp.data}));
     }
@@ -65,9 +66,21 @@ class Data extends Component {
 
   }
 
+  toggleOpen(tablename) {
+
+    const open = this.state.open.slice();
+    const i = open.indexOf(tablename);
+
+    if (i >= 0) open.splice(i, 1);
+    else open.push(tablename);
+
+    this.setState({open});
+
+  }
+
   render() {
 
-    const {open, preview, results} = this.state;
+    const {open, preview, previewTable, results} = this.state;
     const {tables} = this.props;
     const title = "Community Data Platform";
 
@@ -86,79 +99,89 @@ class Data extends Component {
             <div className="data-results-count">Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</div>
             { results.map(table => {
               return <Card>
-                <h2 className="data-result-title">{table.tablename}</h2>
-                <p>{table.table_description}</p>
-                <table className="bp3-html-table bp3-html-table-condensed meta-table">
-                  <thead>
-                    <tr>
-                      <th colSpan={4}>Meta Information</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="bp3-heading">Region</td>
-                      <td>{table.region}</td>
-                      <td rowSpan={3} className="bp3-heading" rowSpan={3}>Source</td>
-                      <td rowSpan={3}>{table.source}</td>
-                    </tr>
-                    <tr>
-                      <td className="bp3-heading">Geographical Resolution</td>
-                      <td>{table.geography}</td>
-                    </tr>
-                    <tr>
-                      <td className="bp3-heading">Time Resolution</td>
-                      <td>{table.vintage}</td>
-                    </tr>
-                    <tr>
-                      <td className="bp3-heading">Tags</td>
-                      <td colSpan={3}>{table.tags.map(t => <Tag>{t}</Tag>)}</td>
-                    </tr>
-                    { table.notes && <tr>
-                      <td className="bp3-heading">Note</td>
-                      <td colSpan={3} dangerouslySetInnerHTML={{__html: table.notes.replace(/_/g, "_<wbr/>")}} />
-                    </tr> }
-                  </tbody>
-                </table>
-                <div className="data-table-container">
-                  <table className="bp3-html-table bp3-html-table-condensed attribute-table">
-                    <thead>
-                      <tr>
-                        <th>Column</th>
-                        <th>Description</th>
-                        <th>Data Type</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      { table.attribute.map((a, i) => <tr key={a}>
-                          <td>{a}</td>
-                          <td className="wrap">{table.attribute_description[i]}</td>
-                          <td>{table.vartype[i]}</td>
-                        </tr>)}
-                    </tbody>
-                  </table>
-                </div>
-                <Button icon="th" active={table.tablename === open} onClick={this.onPreview.bind(this, table.tablename)}>Preview First 10 Rows</Button>
-                <Button icon="download" onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
-                { table.tablename === open
-                  ? <div className="data-table-container">
-                    { preview ? <table className="bp3-html-table">
-                    <thead>
-                      <tr>
-                        {
-                          Object.keys(preview[0])
-                            .sort(sorter)
-                            .map(k => <th key={k} dangerouslySetInnerHTML={{__html: k.replace(/_/g, "_<wbr/>")}} />)
-                        }
-                      </tr>
-                    </thead>
-                    <tbody>
-                      { preview.map((d, i) => <tr key={i}>
-                        { Object.keys(d).sort(sorter).map((k, j) => <td key={`${k}_${j}`}>{d[k]}</td>) }
-                        </tr>) }
-                    </tbody>
-                  </table> : <Spinner /> }
+                <div className="data-result-header">
+                  <div className="data-result-header-text">
+                    <h2 className="data-result-title">{table.tablename}</h2>
+                    <p>{table.table_description}</p>
                   </div>
-                : null }
+                  <div className="data-result-header-button">
+                    <Button icon={open.includes(table.tablename) ? "minus" : "plus"} onClick={this.toggleOpen.bind(this, table.tablename)} />
+                  </div>
+                </div>
+                { open.includes(table.tablename)
+                  ? <Fragment>
+                      <table className="bp3-html-table bp3-html-table-condensed meta-table">
+                        <thead>
+                          <tr>
+                            <th colSpan={4}>Meta Information</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="bp3-heading">Region</td>
+                            <td>{table.region}</td>
+                            <td rowSpan={3} className="bp3-heading" rowSpan={3}>Source</td>
+                            <td rowSpan={3}>{table.source}</td>
+                          </tr>
+                          <tr>
+                            <td className="bp3-heading">Geographical Resolution</td>
+                            <td>{table.geography}</td>
+                          </tr>
+                          <tr>
+                            <td className="bp3-heading">Time Resolution</td>
+                            <td>{table.vintage}</td>
+                          </tr>
+                          <tr>
+                            <td className="bp3-heading">Tags</td>
+                            <td colSpan={3}>{table.tags.map(t => <Tag>{t}</Tag>)}</td>
+                          </tr>
+                          { table.notes && <tr>
+                            <td className="bp3-heading">Note</td>
+                            <td colSpan={3} dangerouslySetInnerHTML={{__html: table.notes.replace(/_/g, "_<wbr/>")}} />
+                          </tr> }
+                        </tbody>
+                      </table>
+                      <div className="data-table-container">
+                        <table className="bp3-html-table bp3-html-table-condensed attribute-table">
+                          <thead>
+                            <tr>
+                              <th>Column</th>
+                              <th>Description</th>
+                              <th>Data Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            { table.attribute.map((a, i) => <tr key={a}>
+                                <td>{a}</td>
+                                <td className="wrap">{table.attribute_description[i]}</td>
+                                <td>{table.vartype[i]}</td>
+                              </tr>)}
+                          </tbody>
+                        </table>
+                      </div>
+                      <Button icon="th" active={table.tablename === previewTable} onClick={this.onPreview.bind(this, table.tablename)}>Preview First 10 Rows</Button>
+                      <Button icon="download" onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
+                      { table.tablename === previewTable
+                        ? <div className="data-table-container">
+                          { preview ? <table className="bp3-html-table">
+                          <thead>
+                            <tr>
+                              {
+                                Object.keys(preview[0])
+                                  .sort(sorter)
+                                  .map(k => <th key={k} dangerouslySetInnerHTML={{__html: k.replace(/_/g, "_<wbr/>")}} />)
+                              }
+                            </tr>
+                          </thead>
+                          <tbody>
+                            { preview.map((d, i) => <tr key={i}>
+                              { Object.keys(d).sort(sorter).map((k, j) => <td key={`${k}_${j}`}>{d[k]}</td>) }
+                              </tr>) }
+                          </tbody>
+                        </table> : <Spinner /> }
+                        </div>
+                      : null }
+                  </Fragment> : null}
               </Card>;
             })}
           </div>
