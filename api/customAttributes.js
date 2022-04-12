@@ -14,13 +14,28 @@ module.exports = function(app) {
 
   app.post("/api/cms/customAttributes/:pid", async(req, res) => {
     const {variables} = req.body;
-    const {id1} = variables;
+    const {id1, hierarchy1} = variables;
 
-    const customHierarchy = id1 === "cf" ? "Cape Fear Member" : "County"
-    const customId = id1 === "cf" ? 1 : id1
-    const isRegion = id1 === "cf"
-    const notRegion = !isRegion
+    const isRegion = hierarchy1 === "Region";
+    const isCounty = hierarchy1 === "County";
+    const customHierarchy = hierarchy1 === "Region" ? "Region Member" : "County"
 
+    //Regions cube
+       const region = {
+        cube: "Regions",
+        drilldowns: "County",
+        measures: "Counties",
+        [hierarchy1]: id1,
+        parents: true
+      };
+
+      const regionData = await axios
+        .get(BASE_API, {params: region})
+        .then(resp => resp.data.data)
+        .catch(catcher);
+      const customId = hierarchy1 === "County" ? regionData[0]["County ID"] : id1;
+
+    //Poverty cube
     const poverty = {
         cube: "Poverty Population",
         drilldowns: "Year",
@@ -36,14 +51,13 @@ module.exports = function(app) {
 
     return res.json({
       tesseract: process.env.CANON_CONST_TESSERACT,
-      customHierarchy,
-      customId,
       isRegion,
-      notRegion,
+      isCounty,
+      customId,
+      customHierarchy,
       povertyLastYear,
       sponsor: sponsors[0]
     });
 
   });
-
 };
