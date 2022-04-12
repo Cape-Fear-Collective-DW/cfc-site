@@ -5,7 +5,48 @@ import axios from "axios";
 
 import {fetchData} from "@datawheel/canon-core";
 import {Button, Card, Spinner, Tag} from "@blueprintjs/core";
+import {merge} from "d3-array";
+import {unique} from "d3plus-common";
 import "./Data.css";
+
+const categories = [
+  {
+    title: "Economy",
+    tags: ["Business & Industry", "Employment", "Income", "Poverty"]
+  },
+  {
+    title: "Education & Childhood",
+    tags: ["Attainment", "Schools", "Students", "Teachers"]
+  },
+  {
+    title: "Demographics & Geography",
+    tags: ["Clusters", "Geography", "Population"]
+  },
+  {
+    title: "Transportation",
+    tags: ["Mobility", "Public Transit"]
+  },
+  {
+    title: "Housing",
+    tags: ["Affordability", "Housing Problems", "Inventory", "Rent & Ownership"]
+  },
+  {
+    title: "Justice & Civics",
+    tags: ["Crime & Safety", "Elections", "Incarceration", "Justice", "Participation"]
+  },
+  {
+    title: "Environment",
+    tags: ["Air", "Climate", "Land & Parks", "Water"]
+  },
+  {
+    title: "Social Support",
+    tags: ["Food Stamps", "Foster Care", "Single Parent", "Social Vulnerability"]
+  },
+  {
+    title: "Health",
+    tags: ["Addiction & Substance Abuse", "COVID & Vaccinations", "Chronic Disease", "Disability", "Health Care Practitioners", "Insurance", "Life Expectancy & Mortality", "Nutrition", "Pregnancy & Prenatal Care"]
+  }
+];
 
 const stickies = ["year", "state", "state_fips", "county", "county_fips", "gender", "race"];
 const sorter = (a, b) => {
@@ -20,26 +61,38 @@ class Data extends Component {
     super(props);
     this.state = {
       fields: Object.keys(props.tables[0]),
-      open: [],
+      filters: [],
+      openFilters: [],
+      openTables: [],
       preview: false,
       previewTable: false,
+      query: "",
       results: props.tables
     }
   }
 
   onFilter(e) {
 
-    const query = e.target.value.toLowerCase();
-    const {tables} = this.props;
-    const {fields} = this.state;
+    const query = e ? e.target.value.toLowerCase() : this.state.query;
+    let results = this.props.tables.slice();
+    const {fields, filters} = this.state;
 
-    const filteredTables = tables.filter(t => {
-      return fields.some(k => t[k] instanceof Array
-        ? t[k].some(s => s.toLowerCase().includes(query))
-        : t[k].toLowerCase().includes(query));
-    })
+    if (query.length) {
 
-    this.setState({results: filteredTables});
+      results = results.filter(t => {
+        return fields.some(k => t[k] instanceof Array
+          ? t[k].some(s => s.toLowerCase().includes(query))
+          : t[k].toLowerCase().includes(query));
+      });
+
+    }
+
+    if (filters.length) {
+      const tags = merge(filters.map(f => f.split(" & ").map(d => d.toLowerCase())));
+      results = results.filter(r => r.tags.some(t => tags.includes(t)));
+    }
+
+    this.setState({results, query});
 
   }
 
@@ -66,21 +119,45 @@ class Data extends Component {
 
   }
 
-  toggleOpen(tablename) {
+  toggleFilters(filter) {
 
-    const open = this.state.open.slice();
-    const i = open.indexOf(tablename);
+    const filters = this.state.filters.slice();
+    const i = filters.indexOf(filter);
 
-    if (i >= 0) open.splice(i, 1);
-    else open.push(tablename);
+    if (i >= 0) filters.splice(i, 1);
+    else filters.push(filter);
 
-    this.setState({open});
+    this.setState({filters}, this.onFilter.bind(this, false));
+
+  }
+
+  toggleOpenFilters(tablename) {
+
+    const openFilters = this.state.openFilters.slice();
+    const i = openFilters.indexOf(tablename);
+
+    if (i >= 0) openFilters.splice(i, 1);
+    else openFilters.push(tablename);
+
+    this.setState({openFilters});
+
+  }
+
+  toggleOpenTables(tablename) {
+
+    const openTables = this.state.openTables.slice();
+    const i = openTables.indexOf(tablename);
+
+    if (i >= 0) openTables.splice(i, 1);
+    else openTables.push(tablename);
+
+    this.setState({openTables});
 
   }
 
   render() {
 
-    const {open, preview, previewTable, results} = this.state;
+    const {filters, openFilters, openTables, preview, previewTable, results} = this.state;
     const {tables} = this.props;
     const title = "Community Data Platform";
 
@@ -94,6 +171,18 @@ class Data extends Component {
               <span className="bp3-icon bp3-icon-search"></span>
               <input type="text" className="bp3-input" onChange={this.onFilter.bind(this)} />
             </div>
+            <div className="data-filters-list">
+              <h2 className="data-filters-list-title">Filter by Category</h2>
+              { categories.map(({title, tags}, i) => <ul key={i}>
+                <div className="data-filters-list-category" onClick={filters.some(f => tags.includes(f)) ? null : this.toggleOpenFilters.bind(this, i)}>
+                  { title }
+                  { filters.some(f => tags.includes(f)) ? null : <Button small icon={openFilters.includes(i) ? "minus" : "plus"} />}
+                </div>
+                { openFilters.includes(i) || filters.some(f => tags.includes(f)) ? tags.map(t =>
+                  <li key={t} onClick={this.toggleFilters.bind(this, t)} className={filters.includes(t) ? "active" : ""}>{t}</li>
+                ) : false }
+              </ul>)}
+            </div>
           </div>
           <div id="data-results">
             <div className="data-results-count">Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</div>
@@ -105,10 +194,10 @@ class Data extends Component {
                     <p>{table.table_description}</p>
                   </div>
                   <div className="data-result-header-button">
-                    <Button icon={open.includes(table.tablename) ? "minus" : "plus"} onClick={this.toggleOpen.bind(this, table.tablename)} />
+                    <Button icon={openTables.includes(table.tablename) ? "minus" : "plus"} onClick={this.toggleOpenTables.bind(this, table.tablename)} />
                   </div>
                 </div>
-                { open.includes(table.tablename)
+                { openTables.includes(table.tablename)
                   ? <Fragment>
                       <table className="bp3-html-table bp3-html-table-condensed meta-table">
                         <thead>
