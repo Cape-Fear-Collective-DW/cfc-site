@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet-async";
 import axios from "axios";
 
 import {fetchData} from "@datawheel/canon-core";
-import {Button, Callout, Card, Collapse, Elevation, Spinner, Tag} from "@blueprintjs/core";
+import {Button, Card, Spinner, Tag} from "@blueprintjs/core";
 import "./Data.css";
 
 const stickies = ["year", "state", "state_fips", "county", "county_fips", "gender", "race"];
@@ -75,79 +75,94 @@ class Data extends Component {
       <div id="data">
         <Helmet title={title} />
         <h1 className="data-title">{title}</h1>
-        <input className="bp3-input" onChange={this.onFilter.bind(this)} placeholder="Search" />
-        <Callout>Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</Callout>
-        { results.map(table => {
-          return <Card elevation={Elevation.TWO}>
-            <h2>{table.tablename}</h2>
-            <div className="card-content">
-              <table className="meta-table bp3-html-table bp3-html-table-condensed">
-                <thead>
-                  <tr>
-                    <th colSpan={2}>Meta Information</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Region</td>
-                    <td>{table.region}</td>
-                  </tr>
-                  <tr>
-                    <td>Geographical Resolution</td>
-                    <td>{table.geography}</td>
-                  </tr>
-                  <tr>
-                    <td>Time Resolution</td>
-                    <td>{table.vintage}</td>
-                  </tr>
-                  <tr>
-                    <td>Source</td>
-                    <td>{table.source}</td>
-                  </tr>
-                  <tr>
-                    <td>Tags</td>
-                    <td>{table.tags.map(t => <Tag>{t}</Tag>)}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table className="bp3-html-table bp3-html-table-condensed bp3-html-table-striped attribute-table">
-                <thead>
-                  <tr>
-                    <th>Column</th>
-                    <th>Description</th>
-                    <th>Data Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  { table.attribute.map((a, i) => <tr key={a}>
-                      <td>{a}</td>
-                      <td>{table.attribute_description[i]}</td>
-                      <td>{table.vartype[i]}</td>
-                    </tr>)}
-                </tbody>
-              </table>
+        <div id="data-container">
+          <div id="data-filters">
+            <div className="bp3-input-group bp3-large">
+              <span className="bp3-icon bp3-icon-search"></span>
+              <input type="text" className="bp3-input" onChange={this.onFilter.bind(this)} />
             </div>
-            { table.notes && <Callout title="Note">
-              {table.notes}
-            </Callout> }
-            <Button icon="th" active={table.tablename === open} onClick={this.onPreview.bind(this, table.tablename)}>Preview First 10 Rows</Button>
-            <Button icon="download" onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
-            <Collapse isOpen={table.tablename === open}>
-              { preview ? <table className="bp3-html-table">
+          </div>
+          <div id="data-results">
+            <div className="data-results-count">Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</div>
+            { results.map(table => {
+              return <Card>
+                <h2 className="data-result-title">{table.tablename}</h2>
+                <p>{table.table_description}</p>
+                <table className="bp3-html-table bp3-html-table-condensed meta-table">
                   <thead>
                     <tr>
-                      {Object.keys(preview[0]).sort(sorter).map(k => <th key={k}>{k}</th>)}
+                      <th colSpan={4}>Meta Information</th>
                     </tr>
                   </thead>
                   <tbody>
-                    { preview.map((d, i) => <tr key={i}>
-                      {Object.keys(d).sort(sorter).map((k, j) => <td key={`${k}_${j}`}>{d[k]}</td>)}
-                      </tr>) }
+                    <tr>
+                      <td className="bp3-heading">Region</td>
+                      <td>{table.region}</td>
+                      <td rowSpan={3} className="bp3-heading" rowSpan={3}>Source</td>
+                      <td rowSpan={3}>{table.source}</td>
+                    </tr>
+                    <tr>
+                      <td className="bp3-heading">Geographical Resolution</td>
+                      <td>{table.geography}</td>
+                    </tr>
+                    <tr>
+                      <td className="bp3-heading">Time Resolution</td>
+                      <td>{table.vintage}</td>
+                    </tr>
+                    <tr>
+                      <td className="bp3-heading">Tags</td>
+                      <td colSpan={3}>{table.tags.map(t => <Tag>{t}</Tag>)}</td>
+                    </tr>
+                    { table.notes && <tr>
+                      <td className="bp3-heading">Note</td>
+                      <td colSpan={3} dangerouslySetInnerHTML={{__html: table.notes.replace(/_/g, "_<wbr/>")}} />
+                    </tr> }
                   </tbody>
-                </table> : <Spinner /> }
-            </Collapse>
-          </Card>;
-        })}
+                </table>
+                <div className="data-table-container">
+                  <table className="bp3-html-table bp3-html-table-condensed attribute-table">
+                    <thead>
+                      <tr>
+                        <th>Column</th>
+                        <th>Description</th>
+                        <th>Data Type</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { table.attribute.map((a, i) => <tr key={a}>
+                          <td>{a}</td>
+                          <td className="wrap">{table.attribute_description[i]}</td>
+                          <td>{table.vartype[i]}</td>
+                        </tr>)}
+                    </tbody>
+                  </table>
+                </div>
+                <Button icon="th" active={table.tablename === open} onClick={this.onPreview.bind(this, table.tablename)}>Preview First 10 Rows</Button>
+                <Button icon="download" onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
+                { table.tablename === open
+                  ? <div className="data-table-container">
+                    { preview ? <table className="bp3-html-table">
+                    <thead>
+                      <tr>
+                        {
+                          Object.keys(preview[0])
+                            .sort(sorter)
+                            .map(k => <th key={k} dangerouslySetInnerHTML={{__html: k.replace(/_/g, "_<wbr/>")}} />)
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { preview.map((d, i) => <tr key={i}>
+                        { Object.keys(d).sort(sorter).map((k, j) => <td key={`${k}_${j}`}>{d[k]}</td>) }
+                        </tr>) }
+                    </tbody>
+                  </table> : <Spinner /> }
+                  </div>
+                : null }
+              </Card>;
+            })}
+          </div>
+        </div>
       </div>
     );
   }
