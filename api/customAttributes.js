@@ -14,7 +14,7 @@ module.exports = function(app) {
 
   app.post("/api/cms/customAttributes/:pid", async(req, res) => {
     const {variables} = req.body;
-    const {id1, hierarchy1, parents1} = variables;
+    const {id1, hierarchy1} = variables;
 
     const isRegion = hierarchy1 === "Region";
     const isCounty = hierarchy1 === "County";
