@@ -14,11 +14,11 @@ module.exports = function(app) {
 
   app.post("/api/cms/customAttributes/:pid", async(req, res) => {
     const {variables} = req.body;
-    const {id1, hierarchy1} = variables;
+    const {id1, hierarchy1, parents1} = variables;
 
     const isRegion = hierarchy1 === "Region";
     const isCounty = hierarchy1 === "County";
-    const customHierarchy = hierarchy1 === "Region" ? "Region Member" : "County"
+    const customHierarchy = hierarchy1 === "County" ? "Region" : hierarchy1
 
     //Regions cube
        const region = {
@@ -33,7 +33,7 @@ module.exports = function(app) {
         .get(BASE_API, {params: region})
         .then(resp => resp.data.data)
         .catch(catcher);
-      const customId = hierarchy1 === "County" ? regionData[0]["County ID"] : id1;
+      const customId = hierarchy1 === "County" ? regionData[0]["Region ID"] : id1;
 
     //Poverty cube
     const poverty = {
@@ -56,7 +56,7 @@ module.exports = function(app) {
       customId,
       customHierarchy,
       povertyLastYear,
-      sponsor: sponsors[0]
+      sponsor: sponsors[0],
     });
 
   });
