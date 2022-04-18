@@ -18,8 +18,10 @@ module.exports = function(app) {
 
     const isRegion = hierarchy1 === "Region";
     const isCounty = hierarchy1 === "County";
-    const customHierarchy = hierarchy1 === "County" ? "Region" : hierarchy1
+    const customHierarchy = "Region";
 
+    let regionId = ""
+    if (hierarchy1 === "County"){
     //Regions cube
        const region = {
         cube: "Regions",
@@ -33,7 +35,11 @@ module.exports = function(app) {
         .get(BASE_API, {params: region})
         .then(resp => resp.data.data)
         .catch(catcher);
-      const customId = hierarchy1 === "County" ? regionData[0]["Region ID"] : id1;
+      regionId = regionData[0]["Region ID"]
+    }
+    else {
+      regionId = id1
+    }
 
     //Poverty cube
     const poverty = {
@@ -53,10 +59,10 @@ module.exports = function(app) {
       tesseract: process.env.CANON_CONST_TESSERACT,
       isRegion,
       isCounty,
-      customId,
+      regionId,
       customHierarchy,
       povertyLastYear,
-      sponsor: sponsors[0],
+      sponsor: sponsors[0]
     });
 
   });
