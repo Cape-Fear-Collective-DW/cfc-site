@@ -16,7 +16,6 @@
   & #data-filters {
     align-self: flex-start;
     min-width: 264px;
-    padding-top: var(--gutter-xl);
     position: sticky;
     top: var(--nav-height);
     & .bp3-input-group {
@@ -33,7 +32,7 @@
       }
     }
     & .data-filters-list {
-      max-height: calc(100vh - var(--nav-height) - var(--gutter-xl) -  var(--gutter-xl) - 40px);
+      max-height: calc(100vh - var(--nav-height) - 40px);
       overflow-y: auto;
       & .data-filters-list-title {
         color: var(--darkblue);

@@ -6,6 +6,8 @@ import axios from "axios";
 import {fetchData} from "@datawheel/canon-core";
 import {Button, Card, Spinner, Tag} from "@blueprintjs/core";
 import {merge} from "d3-array";
+import styles from "style.yml";
+const navHeight = parseFloat(styles["nav-height"], 10);
 import "./Data.css";
 
 const categories = [
@@ -90,6 +92,10 @@ class Data extends Component {
       const tags = merge(filters.map(f => f.split(" & ").map(d => d.toLowerCase())));
       results = results.filter(r => r.tags.some(t => tags.includes(t)));
     }
+
+    const container = document.getElementById("data-container");
+    const top = container.getBoundingClientRect().top;
+    if (top < navHeight) window.scrollTo(0, container.offsetTop - navHeight);
 
     this.setState({results, query});
 
