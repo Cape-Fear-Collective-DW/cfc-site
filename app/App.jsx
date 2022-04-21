@@ -3,6 +3,7 @@ import {withNamespaces} from "react-i18next";
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet-async";
 
+import {fetchData} from "@datawheel/canon-core";
 import {ProfileSearch} from "@datawheel/canon-cms";
 import {Dialog} from "@blueprintjs/core";
 
@@ -37,6 +38,10 @@ class App extends Component {
   }
 
 }
+
+App.need = [
+  fetchData("tables", "/data")
+];
 
 export default withNamespaces()(connect(state => {
   const pathname = state.routing.locationBeforeTransitions ? `/${state.routing.locationBeforeTransitions.pathname}` : state.location.pathname;

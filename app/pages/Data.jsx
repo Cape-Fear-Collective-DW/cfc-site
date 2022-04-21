@@ -3,11 +3,10 @@ import {connect} from "react-redux";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
 
-import {fetchData} from "@datawheel/canon-core";
-import {Button, Card, Spinner, Tag} from "@blueprintjs/core";
+import {AnchorButton, Button, Card, Spinner, Tag} from "@blueprintjs/core";
 import {merge} from "d3-array";
 import styles from "style.yml";
-const navHeight = parseFloat(styles["nav-height"], 10);
+const navHeight = parseFloat(styles["nav-height"]);
 import "./Data.css";
 
 const categories = [
@@ -63,13 +62,20 @@ class Data extends Component {
     this.state = {
       fields: Object.keys(props.tables[0]),
       filters: [],
+      keywords: props.keywords,
       openFilters: [],
       openTables: [],
       preview: false,
       previewTable: false,
       query: "",
-      results: props.tables
+      results: props.tables,
+      title: props.title || "Community Data Platform"
     }
+  }
+
+  componentDidMount() {
+    const {keywords} = this.state;
+    if (keywords) this.setState({filters: keywords}, this.onFilter.bind(this, false));
   }
 
   onFilter(e) {
@@ -90,7 +96,13 @@ class Data extends Component {
 
     if (filters.length) {
       const tags = merge(filters.map(f => f.split(" & ").map(d => d.toLowerCase())));
-      results = results.filter(r => r.tags.some(t => tags.includes(t)));
+      results = results
+        .filter(r => r.tags.some(t => tags.includes(t)))
+        .sort((a, b) => {
+          const aIndex = tags.findIndex(t => a.tags.includes(t));
+          const bIndex = tags.findIndex(t => b.tags.includes(t));
+          return aIndex - bIndex;
+        });
     }
 
     const container = document.getElementById("data-container");
@@ -162,16 +174,20 @@ class Data extends Component {
 
   render() {
 
-    const {filters, openFilters, openTables, preview, previewTable, results} = this.state;
+    const {filters, keywords, openFilters, openTables, preview, previewTable, results, title} = this.state;
     const {tables} = this.props;
-    const title = "Community Data Platform";
 
     return (
       <div id="data">
-        <Helmet title={title} />
+        { !keywords ? <Helmet title={title} /> : null }
         <h1 className="data-title">{title}</h1>
+        { keywords
+          ? <AnchorButton className="data-page-link" href="/community-data" rightIcon="chevron-right">
+              Explore All Datasets
+            </AnchorButton>
+          : null }
         <div id="data-container">
-          <div id="data-filters">
+          { !keywords ? <div id="data-filters">
             <div className="bp3-input-group bp3-large">
               <span className="bp3-icon bp3-icon-search"></span>
               <input type="text" className="bp3-input" onChange={this.onFilter.bind(this)} />
@@ -188,9 +204,12 @@ class Data extends Component {
                 ) : false }
               </ul>)}
             </div>
-          </div>
+          </div> : null }
           <div id="data-results">
-            <div className="data-results-count">Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</div>
+            { keywords
+              ? <div className="data-results-count">Showing {results.length} Tables containing the following tags: {keywords.map(k => <Tag key={k}>{k}</Tag>)}</div>
+              : <div className="data-results-count">Showing {results.length === tables.length ? tables.length : `${results.length} of ${tables.length}`} Tables</div>
+            }
             { results.map(table => {
               return <Card>
                 <div className="data-result-header">
@@ -284,11 +303,6 @@ class Data extends Component {
     );
   }
 }
-
-
-Data.need = [
-  fetchData("tables", "/data")
-];
 
 export default connect(state => ({
   tables: state.data.tables

@@ -125,5 +125,29 @@
         }
       }
     }
+    & .dataset-button {
+      background: var(--background);
+      border: 1px solid var(--midblue);
+      border-radius: 17px;
+      box-shadow: none;
+      color: var(--darkblue);
+      font-family: "Oswald", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 18px;
+      margin: var(--gutter-sm) var(--gutter-xs) 0;
+      text-transform: uppercase;
+      & .bp3-icon {
+        color: var(--darkblue);
+      }
+      &:hover, &.bp3-active {
+        background: var(--darkblue);
+        border-color: var(--darkblue);
+        color: var(--white);
+        & .bp3-icon {
+          color: var(--white);
+        }
+      }
+    }
   }
 }
