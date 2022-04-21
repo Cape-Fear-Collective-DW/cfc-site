@@ -33,6 +33,11 @@
       }
     }
   }
+  & .data-intro {
+    margin: 0 auto var(--gutter-xl);
+    max-width: 600px;
+    text-align: left;
+  }
   & #data-container {
     display: flex;
     flex-wrap: nowrap;

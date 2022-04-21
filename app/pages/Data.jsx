@@ -185,7 +185,9 @@ class Data extends Component {
           ? <AnchorButton className="data-page-link" href="/community-data" rightIcon="chevron-right">
               Explore All Datasets
             </AnchorButton>
-          : null }
+          : <p className="data-intro">
+              Our Community Data Platform (CDP) is a cloud-based AWS MySQL database containing over 1,000 up-to-date and localized metrics from publicly available sources, regional anchor institutions, and our partner organizations through data usage agreements. This platform is a core component of our commitment and mission to democratize data, enabling data-driven goals, shared measurement, and alignment of community resources.
+            </p> }
         <div id="data-container">
           { !keywords ? <div id="data-filters">
             <div className="bp3-input-group bp3-large">
