@@ -8,9 +8,11 @@ const catcher = err => {
   console.log(err);
 };
 
+const {CANON_AWS_DB} = process.env;
+
 module.exports = function(app) {
 
-  const pool = mysql.createPool(process.env.CANON_AWS_DB).promise();
+  const pool = CANON_AWS_DB ? mysql.createPool(CANON_AWS_DB).promise() : false;
 
   const {countyFips, stateFips} = app.settings.cache;
 
@@ -42,7 +44,9 @@ module.exports = function(app) {
 
   app.get("/data", async(req, res) => {
 
+    if (!pool) return res.json([]);
     const connection = await pool.getConnection().catch(catcher);
+    if (!connection) return res.json([]);
 
     const [results, ] = await connection.query("SELECT * FROM `data_dictionary`");
     connection.release();
@@ -58,11 +62,13 @@ module.exports = function(app) {
 
   app.get("/data/:table/:format", async(req, res) => {
 
-    const {table, format} = req.params;
+    if (!pool) return res.json([]);
+    const connection = await pool.getConnection().catch(catcher);
+    if (!connection) return res.json([]);
 
+    const {table, format} = req.params;
     const query = `SELECT * FROM \`${table}\`${format === "json" ? " LIMIT 10" : ""}`;
 
-    const connection = await pool.getConnection().catch(catcher);
     const [results, ] = await connection.query(query);
     connection.release();
 

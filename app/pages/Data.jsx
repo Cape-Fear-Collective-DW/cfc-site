@@ -60,7 +60,7 @@ class Data extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: Object.keys(props.tables[0]),
+      fields: props.tables.length ? Object.keys(props.tables[0]) : [],
       filters: [],
       keywords: props.keywords,
       openFilters: [],
