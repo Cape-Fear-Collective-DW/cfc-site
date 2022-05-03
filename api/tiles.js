@@ -12,21 +12,16 @@ const stripP = require("@datawheel/canon-cms/src/utils/formatters/stripP");
   return a;
 }
 
-const regions = [
-  "Cape Fear",
-  "Charlotte",
-  "Eastern",
-  "Mountains",
-  "Northeast",
-  "Sandhills",
-  "Triad",
-  "Triangle"
-].map((d, i) => ({
-  id: i ? false : "cf",
-  hierarchy: "Region",
-  slug: d.replace(/\s/g, "-").toLowerCase(),
-  name: d
-}));
+const axios = require("axios");
+const {CANON_CMS_CUBES} = process.env;
+const yn = require("yn");
+const verbose = yn(process.env.CANON_CMS_LOGGING);
+const BASE_API = `${CANON_CMS_CUBES}data.jsonrecords`;
+
+const catcher = error => {
+  if (verbose) console.error("Custom Attribute Error:", error);
+  return [];
+};
 
 module.exports = function(app) {
 
@@ -36,19 +31,37 @@ module.exports = function(app) {
 
     const {id} = req.query;
 
-    const showCounties = id !== "<id>";
+    const hierarchy = id !== "<id>" ? "County" : "Region";
+    const where = {hierarchy};
 
-    const profiles = showCounties ? await db.search
-      .findAll({
-        include: [{association: "content"}],
-        where: {hierarchy: "County"}
-      })
+    if (hierarchy === "County"){
+
+      const regionId = await db.search
+        .findOne({where: {slug: id}})
+        .then(row => row.id)
+        .catch(catcher);
+
+      const params = {
+        cube: "Regions",
+        drilldowns: "County",
+        measures: "Counties",
+        Region: regionId
+      };
+
+      where.id = await axios.get(BASE_API, {params})
+        .then(resp => resp.data.data.map(d => d["County ID"]))
+        .catch(catcher);
+
+    }
+
+    const profiles = await db.search
+      .findAll({include: [{association: "content"}], where})
       .then(rows => rows.map(d => ({
         id: d.id,
         hierarchy: d.hierarchy,
         slug: d.slug,
         name: d.content.find(c => c.locale === "en").name
-      }))) : regions;
+      })));
 
     const sections = await db.section
       .findAll({
@@ -88,7 +101,7 @@ module.exports = function(app) {
           tabs.push({
             icon: group.icon,
             title: stripP(group.title),
-            tiles: (showCounties ? shuffle(profiles.slice()) : profiles.slice()).map(d => {
+            tiles: shuffle(profiles.slice()).map(d => {
               const topic = shuffle(topics)[0];
               return {
                 image: `/api/image?slug=geo&id=${d.id}&size=thumb`,
