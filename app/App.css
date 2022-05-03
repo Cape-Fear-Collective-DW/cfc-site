@@ -124,3 +124,11 @@ body {
     }
   }
 }
+
+/* shrinks CMS meta sidebar width */
+.cms-meta-header {
+  width: 300px !important;
+}
+.cms-meta-table-container {
+  max-width: calc(100% - 300px) !important;
+}
