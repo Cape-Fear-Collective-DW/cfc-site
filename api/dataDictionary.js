@@ -55,10 +55,6 @@ module.exports = function(app) {
     const [results, ] = await connection.query("SELECT * FROM `data_dictionary`");
     connection.release();
 
-    results.forEach(r => {
-      if (r.tablename === "housing_price_index_fhfa") console.log(r);
-    });
-
     const rollups = rollup(results, arr => merge(arr, aggs), d => d.tablename);
 
     const tables = Array.from(rollups, r => r[1])
