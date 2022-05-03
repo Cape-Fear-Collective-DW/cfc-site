@@ -10,6 +10,7 @@
   & .cp-hero-inner {
     padding: 0;
     position: relative;
+    width: 100%;
   }
   & .cp-hero-img-overlay {
     background: linear-gradient(180deg, rgba(18, 19, 29, 0.9) 0, rgba(34, 37, 64, 0.4) 40%, rgba(26, 54, 90, 0.85) 70%, #14406A 85%);
