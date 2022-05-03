@@ -27,12 +27,16 @@ module.exports = function(app) {
   };
 
   const aggs = {
+    attribute: (arr, cb) => arr.map(cb),
+    attribute_description: (arr, cb) => arr.map(cb),
     last_updated: (arr, cb) => cb(arr[0]),
     tags: (arr, cb) => arr.map(cb)
       .filter(d => d !== "key")
       .join(",")
       .split(/\,[\s]{0,1}/g)
-      .filter((d, i, a) => a.indexOf(d) === i)
+      .filter((d, i, a) => a.indexOf(d) === i),
+    target_update_dt: (arr, cb) => arr.map(cb),
+    vartype: (arr, cb) => arr.map(cb)
   };
 
   const stickies = ["year", "state", "state_fips", "county", "county_fips", "gender", "race"];
@@ -50,6 +54,10 @@ module.exports = function(app) {
 
     const [results, ] = await connection.query("SELECT * FROM `data_dictionary`");
     connection.release();
+
+    results.forEach(r => {
+      if (r.tablename === "housing_price_index_fhfa") console.log(r);
+    });
 
     const rollups = rollup(results, arr => merge(arr, aggs), d => d.tablename);
 
