@@ -11,6 +11,7 @@ const Footer = props =>
     </Link>
     <div className="footer-links">
       <Link className="footer-link" to="/">home</Link>
+      <Link className="footer-link" to="/community-data">data</Link>
       <a className="footer-link" href="https://capefearcollective.org/about/" target="_blank">about</a>
       <a className="footer-link" href="https://capefearcollective.org/contact/" target="_blank">contact us</a>
     </div>
