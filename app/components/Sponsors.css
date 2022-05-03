@@ -3,6 +3,7 @@
 .site-logos {
   color: var(--white);
   display: flex;
+  flex-wrap: wrap;
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -12,6 +13,7 @@
   & .site-logo-block {
     align-items: center;
     display: flex;
+    justify-content: center;
     padding: 0 20px;
     & img {
       height: 23px;
@@ -19,8 +21,19 @@
       &:last-child {
         margin-right: 0;
       }
+      &[alt="Novant Health"] {
+        height: 20px;
+      }
     }
-    &:not(:first-child) {
+
+    & a + a {
+      margin-left: 10px;
+    }
+    &:first-child {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    &:last-child {
       border-left: 1px solid var(--white);
     }
   }

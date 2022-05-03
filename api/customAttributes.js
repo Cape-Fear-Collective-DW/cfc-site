@@ -43,17 +43,18 @@ module.exports = function(app) {
 
     //Poverty cube
     const poverty = {
-        cube: "Poverty Population",
-        drilldowns: "Year",
-        measures: "Indicator Total",
-      };
+      cube: "Poverty Population",
+      drilldowns: "Year",
+      measures: "Indicator Total",
+    };
 
     const povertyData = await axios
-        .get(BASE_API, {params: poverty})
-        .then(resp => resp.data.data)
-        .catch(catcher);
-      povertyData.sort((a, b) => b["Year"] - a["Year"]);
-      const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
+      .get(BASE_API, {params: poverty})
+      .then(resp => resp.data.data)
+      .catch(catcher);
+
+    povertyData.sort((a, b) => b["Year"] - a["Year"]);
+    const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
 
     return res.json({
       tesseract: process.env.CANON_CONST_TESSERACT,
@@ -62,7 +63,7 @@ module.exports = function(app) {
       regionId,
       customHierarchy,
       povertyLastYear,
-      sponsor: sponsors[0]
+      sponsor: sponsors.find(s => s.regions.includes(regionId)) || sponsors[0]
     });
 
   });
