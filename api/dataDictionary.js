@@ -2,6 +2,7 @@ const mysql = require("mysql2");
 const {Parser} = require("json2csv");
 const {rollup} = require("d3-array");
 const {merge} = require("d3plus-common");
+const counties = require("../static/counties.json");
 
 const catcher = err => {
   console.log("MySQL Connection Error:");
@@ -14,13 +15,19 @@ module.exports = function(app) {
 
   const pool = CANON_AWS_DB ? mysql.createPool(CANON_AWS_DB).promise() : false;
 
-  const {countyFips, stateFips} = app.settings.cache;
+  const {stateFips} = app.settings.cache;
 
   const prepData = d => {
     Object.keys(d).forEach(key => {
       if (key.includes("_fips")) {
-        if (key.includes("state")) d[key.replace("_fips", "")] = stateFips[d[key]] || "N/A";
-        if (key.includes("county")) d[key.replace("_fips", "")] = d[key] === "000" ? "State Total" : countyFips[d[key]] || "N/A";
+        if (key.includes("state")) {
+          d[key.replace("_fips", "")] = stateFips[d[key]] || "N/A";
+        }
+        else if (key.includes("county") && d["state_fips"]) {
+          d[key.replace("_fips", "")] = d[key] === "000" ? "State Total"
+            : counties.find(c => `${c.statefp}${c.countyfp}` === `${d["state_fips"]}${d[key]}`) ? counties.find(c => `${c.statefp}${c.countyfp}` === `${d["state_fips"]}${d[key]}`).countyname
+             : "N/A";
+        }
       }
     });
     return d;
