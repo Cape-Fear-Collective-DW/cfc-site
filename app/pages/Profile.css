@@ -434,7 +434,7 @@ p {
 .cp-viz-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100vh - var(--nav-height) - var(--subnav-height) - var(--gutter-xl) - var(--gutter-xl));
   & .cp-viz-header {
     position: static;
     & .cp-viz-title {
