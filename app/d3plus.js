@@ -79,7 +79,7 @@ export default {
       strokeWidth: d => d["Data ID"] === "Indicator" || d.County === "Indicator" || d.Tract === "Indicator" ? 4 : 2
     },
     Path: {
-      fillOpacity: 0.8,
+      fillOpacity: 0.6,
       stroke: styles.darkblue
     }
   },
