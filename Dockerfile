@@ -1,11 +1,8 @@
 # starting point: an image of node-12
-FROM node:12
-
-# install mysql
-RUN apt-get update
-RUN apt-get install default-mysql-client -y
+FROM node:12.22.11
 
 # create the app directory inside the image
+RUN mkdir -p /usr/src/app && cd /usr/src/app
 WORKDIR /usr/src/app
 
 # install app dependencies from the files package.json and package-lock.json
@@ -24,7 +21,12 @@ COPY ./ ./
 RUN npm run build
 
 # expose the required port
-EXPOSE 3300
+EXPOSE 80
 
-# start the app on image startup
-CMD ["npm", "run", "start"]
+# install nginx
+RUN apt-get update && apt-get install -y nano supervisor nginx
+COPY frontend.conf /etc/nginx/conf.d/frontend.conf
+ADD /supervisor /src/supervisor
+
+# Initializing nginx and node app from supervisord
+CMD ["supervisord","-c","/src/supervisor/service_script.conf"]
