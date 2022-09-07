@@ -1,7 +1,8 @@
 @import "@datawheel/canon-cms/src/css/mixins.css";
 
 .cp-hero {
-  max-height: 700px;
+  height: 630px;
+  max-height: 630px;
   min-height: 630px;
   padding: var(--nav-height) var(--gutter-xl);
   @mixin max-sm {
@@ -75,6 +76,11 @@
     padding: 0;
     @mixin max-md {
       min-height: 300px !important;
+    }
+    & .cp-viz-container,
+    & .cp-viz-figure {
+      height: calc(100% - 70px);
+      min-height: 0;
     }
   }
 
