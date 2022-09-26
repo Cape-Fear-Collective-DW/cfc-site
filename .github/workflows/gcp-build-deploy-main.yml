@@ -15,29 +15,3 @@ jobs:
       IMAGE_TAG: production
       IMAGE_ENVIRONMENT: prod
     secrets: inherit
-
-  # deploys the image to a cluster on gke
-  #deploy:
-  #  name: Deploy Docker Image on GKE
-  #  needs: build
-  #  environment: production_environment
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout Source Code
-  #      uses: actions/checkout@v3
-
-  #    - name: Authenticate to Google Cloud
-  #      uses: google-github-actions/auth@v0
-  #      with:
-  #        project_id: ${{ secrets.GCP_PROJECT_ID }}
-  #        credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-  #    - name: Get GKE Credentials
-  #      uses: google-github-actions/get-gke-credentials@v0
-  #      with:
-  #        cluster_name: ${{ secrets.GKE_CLUSTER }}
-  #        location: ${{ secrets.GKE_ZONE }}
-
-  #    - name: Restart Deployment
-  #      run: kubectl rollout restart deployment/${{ secrets.GKE_DEPLOYMENT_NAME }}
-
