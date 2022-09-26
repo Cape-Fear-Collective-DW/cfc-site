@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/gcp-build-to-registry.yml
     with:
       IMAGE_NAME: healthycommunities-site
-      IMAGE_TAG: ${{ github.ref }}
+      IMAGE_TAG: production
       IMAGE_ENVIRONMENT: prod
     secrets: inherit
 
