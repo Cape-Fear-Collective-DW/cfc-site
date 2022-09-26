@@ -1,0 +1,252 @@
+#data {
+  background-color: var(--backgroundlight);
+  margin-top: var(--nav-height);
+  padding: var(--gutter-md) var(--gutter-xl) var(--gutter-xl);
+  text-align: center;
+  & .data-title {
+    color: var(--darkblue);
+    font-size: 3em;
+    margin-bottom: var(--gutter-lg);
+    text-align: center;
+  }
+  & .data-page-link {
+    background: var(--backgroundlight);
+    border: 1px solid var(--midblue);
+    border-radius: 17px;
+    box-shadow: none;
+    color: var(--darkblue);
+    font-family: "Oswald", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    margin: calc(var(--gutter-xl) * -1) auto 0;
+    text-transform: uppercase;
+    & .bp3-icon {
+      color: var(--darkblue);
+    }
+    &:hover, &.bp3-active {
+      background: var(--darkblue);
+      border-color: var(--darkblue);
+      color: var(--white);
+      & .bp3-icon {
+        color: var(--white);
+      }
+    }
+  }
+  & .data-intro {
+    margin: 0 auto var(--gutter-xl);
+    max-width: 600px;
+    text-align: left;
+  }
+  & #data-container {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: left;
+    width: 100%;
+  }
+  & #data-filters {
+    align-self: flex-start;
+    min-width: 264px;
+    position: sticky;
+    top: var(--nav-height);
+    & .bp3-input-group {
+      & .bp3-icon {
+        color: var(--darkblue);
+        font-size: 24px;
+        margin: 8px 0;
+      }
+      & .bp3-input {
+        background: transparent;
+        border-bottom: 1px solid var(--midblue);
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+    & .data-filters-list {
+      max-height: calc(100vh - var(--nav-height) - 40px);
+      overflow-y: auto;
+      & .data-filters-list-title {
+        color: var(--darkblue);
+        font-family: var(--heading-font-stack);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: var(--gutter-lg);
+        text-transform: uppercase;
+      }
+      & .data-filters-list-category {
+        cursor: pointer;
+        & .bp3-button {
+          background: var(--lightblue);
+          border: 0;
+          border-radius: 10px;
+          box-shadow: none;
+          float: right;
+          height: 15px;
+          margin-right: 5px;
+          margin-top: 4px;
+          min-height: 15px;
+          min-width: 15px;
+          width: 15px;
+          & .bp3-icon {
+            color: var(--white);
+            & svg {
+              height: 10px;
+              width: 10px;
+            }
+          }
+        }
+
+      }
+      & ul {
+        color: var(--darkblue);
+        font-family: var(--base-font-stack);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 22px;
+        list-style-type: none;
+        padding-left: 0;
+        & li {
+          border-radius: 20px;
+          color: var(--midblue);
+          cursor: pointer;
+          display: table;
+          font-size: 13px;
+          line-height: 20px;
+          margin: 2px 0;
+          padding: 3px 10px;
+          text-transform: uppercase;
+          &.active {
+            background-color: var(--midblue);
+            color: var(--white);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  & #data-results {
+    flex: 1 1 100%;
+    margin-left: var(--gutter-md);
+    min-width: 1px;
+    & .data-results-count {
+      color: var(--midblue);
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 20px;
+      text-transform: uppercase;
+      & .bp3-tag {
+        margin: 0 var(--gutter-xs) 0 0;
+      }
+    }
+    & .bp3-card {
+      border-radius: 15px;
+      box-shadow: 4px 4px 5px rgba(7, 33, 58, 0.15);
+      box-sizing: border-box;
+      margin: var(--gutter-md) 0;
+      min-width: 200px;
+      padding: var(--gutter-lg);
+      width: 100%;
+      & .data-result-header {
+        align-items: center;
+        display: flex;
+        width: 100%;
+        & .data-result-header-text {
+          flex: 1 1 100%;
+          margin-right: var(--gutter-md);
+          & .data-result-title {
+            color: var(--verydarkblue);
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 var(--gutter-xs);
+            text-transform: uppercase;
+          }
+        }
+        & .bp3-button {
+          background-color: var(--lightblue);
+          border: 0;
+          & .bp3-icon {
+            color: var(--white);
+          }
+        }
+      }
+      & .meta-table {
+        margin-top: var(--gutter-md);
+      }
+      & .bp3-tag {
+        background: var(--lightblue);
+        font-size: 13px;
+        font-weight: 500;
+        margin: 0 var(--gutter-xs) var(--gutter-xs) 0;
+        max-width: 200px;
+        padding: 0.5em var(--gutter-xs);
+        text-transform: uppercase;
+      }
+      & .data-table-container {
+        overflow: scroll;
+        margin: var(--gutter-lg) 0 0;
+        max-height: 600px;
+        white-space: nowrap;
+        width: 100%;
+        & tr {
+          box-shadow: inset 0 0.5px var(--lightblue);
+          & td {
+            vertical-align: middle;
+            &.wrap {
+              white-space: initial;
+            }
+          }
+        }
+      }
+      & .bp3-html-table {
+        width: 100%;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        & thead {
+          background: var(--verylightblue);
+          & th {
+            color: var(--verydarkblue);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+          }
+        }
+        & tbody {
+          & tr:first-child td {
+            box-shadow: none;
+          }
+          & tr {
+            & td {
+              padding: var(--gutter-sm) var(--gutter-xs);
+            }
+          }
+        }
+      }
+      & .bp3-button {
+        background: var(--white);
+        border: 1px solid var(--gris);
+        border-radius: 17px;
+        box-shadow: none;
+        color: var(--gris);
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        margin-right: var(--gutter-sm);
+        text-transform: uppercase;
+        & .bp3-icon {
+          color: var(--gris);
+        }
+        &:hover, &.bp3-active {
+          background: var(--emerald);
+          border-color: var(--emerald);
+          color: var(--white);
+          & .bp3-icon {
+            color: var(--white);
+          }
+        }
+      }
+    }
+  }
+}

@@ -32,6 +32,23 @@ body {
   }
 }
 
+.bp3-drawer {
+  background-color: var(--backgroundlight);
+  border-radius: 15px 15px 0 0;
+  overflow-y: auto;
+  & .close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    & .bp3-icon {
+      color: var(--midblue);
+    }
+  }
+  & #data {
+    margin-top: 0;
+  }
+}
+
 .cms-profilesearch-tile {
   background-color: var(--darkblue);
   height: 200px;
@@ -106,4 +123,12 @@ body {
       text-align: right !important;
     }
   }
+}
+
+/* shrinks CMS meta sidebar width */
+.cms-meta-header {
+  width: 300px !important;
+}
+.cms-meta-table-container {
+  max-width: calc(100% - 300px) !important;
 }

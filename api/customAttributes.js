@@ -14,36 +14,57 @@ module.exports = function(app) {
 
   app.post("/api/cms/customAttributes/:pid", async(req, res) => {
     const {variables} = req.body;
-    const {id1} = variables;
+    const {id1, hierarchy1} = variables;
 
-    const customHierarchy = id1 === "cf" ? "Cape Fear Member" : "County"
-    const customId = id1 === "cf" ? 1 : id1
-    const isRegion = id1 === "cf"
-    const notRegion = !isRegion
+    const isRegion = hierarchy1 === "Region";
+    const isCounty = hierarchy1 === "County";
+    const customHierarchy = "Region";
 
-    const poverty = {
-        cube: "Poverty Population",
-        drilldowns: "Year",
-        measures: "Indicator Total",
+    let regionId = ""
+    if (hierarchy1 === "County"){
+    //Regions cube
+       const region = {
+        cube: "Regions",
+        drilldowns: "County",
+        measures: "Counties",
+        [hierarchy1]: id1,
+        parents: true
       };
 
-    const povertyData = await axios
-        .get(BASE_API, {params: poverty})
+      const regionData = await axios
+        .get(BASE_API, {params: region})
         .then(resp => resp.data.data)
         .catch(catcher);
-      povertyData.sort((a, b) => b["Year"] - a["Year"]);
-      const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
+      regionId = regionData[0]["Region ID"]
+    }
+    else {
+      regionId = id1
+    }
+
+    //Poverty cube
+    const poverty = {
+      cube: "Poverty Population",
+      drilldowns: "Year",
+      measures: "Indicator Total",
+    };
+
+    const povertyData = await axios
+      .get(BASE_API, {params: poverty})
+      .then(resp => resp.data.data)
+      .catch(catcher);
+
+    povertyData.sort((a, b) => b["Year"] - a["Year"]);
+    const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
 
     return res.json({
       tesseract: process.env.CANON_CONST_TESSERACT,
-      customHierarchy,
-      customId,
       isRegion,
-      notRegion,
+      isCounty,
+      regionId,
+      customHierarchy,
       povertyLastYear,
-      sponsor: sponsors[0]
+      sponsor: sponsors.find(s => s.regions.includes(regionId)) || sponsors[0]
     });
 
   });
-
 };

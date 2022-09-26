@@ -45,10 +45,10 @@ class Profile extends Component {
     }
 
     return (
-      <Fragment>
+      <div id="Profile">
         <Helmet title={title} />
         <CMSProfile searchProps={{...profileSearchConfig(t)}} {...this.props} />
-      </Fragment>
+      </div>
     );
   }
 }

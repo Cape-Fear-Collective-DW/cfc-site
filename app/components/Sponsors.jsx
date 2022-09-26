@@ -7,7 +7,7 @@ const Sponsors = () => (
     <div className="site-logo-block">
       Sponsored by {sponsors.map(s => (
         <a href={s.url} target="_blank">
-          <img src={`/images/sponsors/${s.image}`} />
+          <img src={`/images/sponsors/${s.image}`} alt={s.name} />
         </a>
       ))}
     </div>

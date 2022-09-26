@@ -1,5 +1,9 @@
 # starting point: an image of node-12
-FROM node:12-alpine
+FROM node:12
+
+# install mysql
+RUN apt-get update
+RUN apt-get install default-mysql-client -y
 
 # create the app directory inside the image
 WORKDIR /usr/src/app
