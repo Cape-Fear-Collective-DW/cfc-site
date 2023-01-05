@@ -1,6 +1,8 @@
 import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet-async";
+import { io } from "socket.io-client";
+import {uuid} from "d3plus-common";
 import axios from "axios";
 
 import {AnchorButton, Button, Card, Spinner, Tag} from "@blueprintjs/core";
@@ -60,6 +62,7 @@ class Data extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      csvProgress: false,
       fields: props.tables.length ? Object.keys(props.tables[0]) : [],
       filters: [],
       keywords: props.keywords,
@@ -120,19 +123,40 @@ class Data extends Component {
     }
     else {
       this.setState({preview: false, previewTable: tablename});
-      axios.get(`/data/${tablename}/json`)
+      axios.post(`/data/${tablename}/json`)
         .then(resp => this.setState({preview: resp.data}));
     }
   }
 
   onCSV(tablename) {
 
-    const a = document.createElement("a");
-    a.href = `/data/${tablename}/csv`;
-    a.download = `${tablename}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const socket = io();
+    const sessionId = uuid();
+    this.setState({csvProgress: false});
+    socket.emit('init', sessionId);
+    socket.on('progress', data => {
+      this.setState({csvProgress: data});
+    });
+    socket.on('init', () => {
+      axios.post(`/data/${tablename}/csv`, {sessionId: sessionId}, {responseType: "blob"})
+        .then(resp => {
+
+          const href = URL.createObjectURL(resp.data);
+
+          const a = document.createElement("a");
+          a.href = href;
+          a.download = `${tablename}.csv`;
+          document.body.appendChild(a);
+          a.click();
+
+          document.body.removeChild(a);
+          URL.revokeObjectURL(href);
+
+          this.setState({csvProgress: false});
+          socket.disconnect();
+
+        });
+    });
 
   }
 
@@ -174,7 +198,7 @@ class Data extends Component {
 
   render() {
 
-    const {filters, keywords, openFilters, openTables, preview, previewTable, results, title} = this.state;
+    const {csvProgress, filters, keywords, openFilters, openTables, preview, previewTable, results, title} = this.state;
     const {tables} = this.props;
 
     return (
@@ -275,7 +299,7 @@ class Data extends Component {
                         </table>
                       </div>
                       <Button icon="th" active={table.tablename === previewTable} onClick={this.onPreview.bind(this, table.tablename)}>Preview First 10 Rows</Button>
-                      <Button icon="download" onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
+                      <Button icon={csvProgress ? <Spinner size={16} value={csvProgress.progress && csvProgress.total ? csvProgress.progress / csvProgress.total : undefined} /> : "download"} disabled={csvProgress} onClick={this.onCSV.bind(this, table.tablename)}>Download Full CSV</Button>
                       { table.tablename === previewTable
                         ? <div className="data-table-container">
                           { preview ? <table className="bp3-html-table">

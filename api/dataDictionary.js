@@ -2,36 +2,22 @@ const mysql = require("mysql2");
 const {Parser} = require("json2csv");
 const {rollup} = require("d3-array");
 const {merge} = require("d3plus-common");
+
 const counties = require("../static/counties.json");
+const countyLookup = counties.reduce((obj, c) => (obj[`${c.statefp}${c.countyfp}`] = c, obj), {});
 
 const catcher = err => {
   console.log("MySQL Connection Error:");
   console.log(err);
 };
 
-const {CANON_AWS_DB} = process.env;
+const {CANON_AWS_DB, NODE_ENV} = process.env;
 
 module.exports = function(app) {
 
   const pool = CANON_AWS_DB ? mysql.createPool(CANON_AWS_DB).promise() : false;
 
   const {stateFips} = app.settings.cache;
-
-  const prepData = d => {
-    Object.keys(d).forEach(key => {
-      if (key.includes("_fips")) {
-        if (key.includes("state")) {
-          d[key.replace("_fips", "")] = stateFips[d[key]] || "N/A";
-        }
-        else if (key.includes("county") && d["state_fips"]) {
-          d[key.replace("_fips", "")] = d[key] === "000" ? "State Total"
-            : counties.find(c => `${c.statefp}${c.countyfp}` === `${d["state_fips"]}${d[key]}`) ? counties.find(c => `${c.statefp}${c.countyfp}` === `${d["state_fips"]}${d[key]}`).countyname
-             : "N/A";
-        }
-      }
-    });
-    return d;
-  };
 
   const aggs = {
     attribute: (arr, cb) => arr.map(cb),
@@ -71,33 +57,60 @@ module.exports = function(app) {
 
   });
 
-  app.get("/data/:table/:format", async(req, res) => {
+  app.post("/data/:table/:format", async(req, res) => {
 
     if (!pool) return res.json([]);
+
+    const {sessionId} = req.body;
+    const sockets = app.get("sockets");
+    const io = app.get("io");
+    const socket = io.to(sockets[sessionId]);
+
     const connection = await pool.getConnection().catch(catcher);
     if (!connection) return res.json([]);
 
     const {table, format} = req.params;
     const query = `SELECT * FROM \`${table}\`${format === "json" ? " LIMIT 10" : ""}`;
 
+    socket.emit("progress", {progress: 0});
     const [results, ] = await connection.query(query);
     connection.release();
+    const total = results.length / 10000 + 3;
+    socket.emit("progress", {progress: 1, total});
 
-    const data = results.map(prepData);
+    for (let i = 0; i < results.length; i++) {
+      const d = results[i];
+      Object.keys(d).forEach(key => {
+        if (key.includes("_fips")) {
+          if (key.includes("state")) {
+            d[key.replace("_fips", "")] = stateFips[d[key]] || "N/A";
+          }
+          else if (key.includes("county") && d["state_fips"]) {
+            d[key.replace("_fips", "")] = d[key] === "000" ? "State Total"
+              : countyLookup[`${d["state_fips"]}${d[key]}`] ? countyLookup[`${d["state_fips"]}${d[key]}`].countyname
+               : "N/A";
+          }
+        }
+      });
+      if (!(i % 10000)) socket.emit("progress", {total, progress: i / 10000});
+    }
+
+    socket.emit("progress", {total, progress: results.length / 10000 + 1});
 
     if (format === "csv") {
 
-      const fields = Object.keys(data[0]).sort(sorter);
+      const fields = Object.keys(results[0]).sort(sorter);
       const json2csv = new Parser({fields});
-      const csv = json2csv.parse(data);
+      const csv = json2csv.parse(results);
+      socket.emit("progress", {total, progress: results.length / 10000 + 2});
 
-      res.header('Content-Type', 'text/csv');
+      res.header("Content-Type", "text/csv");
       res.attachment(`${table}.csv`);
       return res.send(csv).end();
 
     }
     else {
-      return res.json(data);
+      return res.json(results);
     }
 
   });
