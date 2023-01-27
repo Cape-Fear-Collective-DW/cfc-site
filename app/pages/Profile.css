@@ -134,6 +134,11 @@
     padding: var(--gutter-xs);
     position: absolute;
     width: 150px;
+    @mixin max-md {
+      bottom: calc(var(--nav-height) * 2);
+      left: auto;
+      right: var(--gutter-xl);
+    }
     & .cp-hero-credits-button {
       align-items: center;
       border: 0;
@@ -275,8 +280,14 @@
     & .cp-default-section-figure {
       width: 50%;
       @mixin max-md {
-        height: 300px;
+        height: calc(100vw - var(--gutter-xl) - var(--gutter-xl));
         width: 100%;
+        & .cp-viz-container {
+          height: 100%;
+          & .cp-viz-figure {
+            height: 100%;
+          }
+        }
       }
     }
     & h2, & p {
