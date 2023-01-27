@@ -12,7 +12,7 @@ WORKDIR /usr/src/app
 # installing before transfering the app files allows us to take advantage of cached Docker layers
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 # If you are building your code for production
 # RUN npm ci --only=production
