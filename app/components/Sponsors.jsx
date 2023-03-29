@@ -5,7 +5,7 @@ import "./Sponsors.css";
 const Sponsors = () => (
   <div className="site-logos">
     <div className="site-logo-block">
-      Sponsored by {sponsors.map(s => (
+      <span className="site-logo-text">Sponsored by</span> {sponsors.map(s => (
         <a href={s.url} target="_blank">
           <img src={`/images/sponsors/${s.image}`} alt={s.name} />
         </a>

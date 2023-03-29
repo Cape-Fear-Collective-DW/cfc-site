@@ -43,7 +43,25 @@
     flex-direction: column;
     & .site-logo-block {
       border: 0 !important;
-      margin: var(--gutter-xs) 0;
+      flex-wrap: wrap;
+      margin: 0;
+      & .site-logo-text {
+        text-align: center;
+        width: 100%;
+      }
+      & img {
+        height: 19px;
+        margin: 6px 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+        &[alt="Novant Health"] {
+          height: 17px;
+        }
+      }
+      & a + a {
+        margin-left: 0;
+      }
     }
   }
 }

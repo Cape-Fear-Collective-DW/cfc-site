@@ -76,12 +76,13 @@
     }
     & .home-splash-map {
       height: 350px;
-      flex: 1;
+      flex: 1 1 auto;
       margin-left: var(--gutter-lg);
       max-width: 600px;
       z-index: 1;
       @mixin max-md {
-        height: 300px;
+        height: 200px;
+        max-height: 200px;
         margin-left: 0;
         max-width: 100%;
       }
@@ -90,6 +91,9 @@
       margin-top: var(--gutter-xl);
       min-width: 100%;
       z-index: 1;
+      @mixin max-md {
+        margin-top: 0;
+      }
     }
   }
 
