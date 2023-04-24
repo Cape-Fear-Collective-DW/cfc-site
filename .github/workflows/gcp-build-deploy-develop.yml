@@ -40,4 +40,4 @@ jobs:
           location: ${{ secrets.GKE_ZONE }}
 
       - name: Restart Deployment
-        run: kubectl rollout restart deployment/${{ secrets.GKE_DEPLOYMENT_NAME }}
+        run: kubectl delete pod -n development -l app=${{ secrets.GKE_DEPLOYMENT_NAME }}
