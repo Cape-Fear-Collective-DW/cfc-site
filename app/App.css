@@ -132,3 +132,7 @@ body {
 .cms-meta-table-container {
   max-width: calc(100% - 300px) !important;
 }
+
+.ace_editor, .ace_editor * {
+  font-size: 12px !important;
+}
