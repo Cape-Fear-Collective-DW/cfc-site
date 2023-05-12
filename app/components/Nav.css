@@ -1,3 +1,5 @@
+@import "@datawheel/canon-cms/src/css/mixins.css";
+
 nav.site-nav {
   align-items: center;
   display: flex;
@@ -32,6 +34,32 @@ nav.site-nav {
     transition: transform 0.2s;
     &:hover {
       transform: scale(1.25);
+    }
+  }
+  & .nav-profile-title {
+    color: var(--white);
+    cursor: n-resize;
+    font-family: var(--heading-font-stack);
+    font-size: 2em;
+    position: absolute;
+    left: 150px;
+    opacity: 0;
+    right: 150px;
+    text-align: center;
+    transition: opacity 0.2s;
+    top: 10px;
+    @mixin max-sm {
+      font-size: 1.25em;
+      left: 140px;
+      overflow: hidden;
+      right: 40px;
+      text-align: left;
+      text-overflow: ellipsis;
+      top: 17px;
+      white-space: nowrap;
+    }
+    &.visible {
+      opacity: 1;
     }
   }
 }
