@@ -240,7 +240,9 @@ class Data extends Component {
               return <Card>
                 <div className="data-result-header">
                   <div className="data-result-header-text">
-                    <h2 className="data-result-title">{table.tablename}</h2>
+                    <h2 id={table.tablename} className="data-result-title">
+                      <a href={`#${table.tablename}`}>{table.tablename}</a>
+                    </h2>
                     <p>{table.table_description}</p>
                   </div>
                   <div className="data-result-header-button">
