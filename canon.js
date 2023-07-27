@@ -9,7 +9,7 @@ module.exports = {
   ],
   pdf: {
     pageOptions: {
-      timeout: 120000
+      timeout: 0
     }
   }
 };
