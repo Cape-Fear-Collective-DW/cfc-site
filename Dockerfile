@@ -72,8 +72,5 @@ EXPOSE 3300
 # Set the user to 'nodejs' for subsequent commands
 USER nodejs
 
-# Set Node Max Old Space Size
-ENV NODE_OPTIONS=--max_old_space_size=3072
-
 # start the app on image startup
 CMD ["npm", "run", "start"]
