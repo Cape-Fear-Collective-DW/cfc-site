@@ -57,7 +57,7 @@ serviceAccount:
   name: ""
 
 configMap:
-  CANON_API: "https://cfc.datawheel.us"
+  CANON_API: "http://localhost:3300"
   CANON_LANGUAGE_DEFAULT: "en"
   CANON_LANGUAGES: "en"
   CANON_CMS_ENABLE: "true"
