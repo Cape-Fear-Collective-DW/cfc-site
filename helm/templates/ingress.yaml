@@ -39,5 +39,12 @@ spec:
                 port:
                   number: {{ $servicePort }}
           {{- end }}
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: websocket-service
+                port:
+                  number: 8080
     {{- end }}
 {{- end }}
