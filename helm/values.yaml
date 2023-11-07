@@ -1,0 +1,111 @@
+image:
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: github
+
+replicaCount: 1
+
+autoscaling:
+  enabled: false
+  # minReplicas: 1
+  # maxReplicas: 10
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 120
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 2Gi
+  limits:
+    cpu: 1000m
+    memory: 4Gi
+
+# livenessProbe:
+#   failureThreshold: 3
+#   httpGet:
+#     path: /
+#     port: 3300
+#     scheme: HTTP
+#   initialDelaySeconds: 60
+#   periodSeconds: 40
+#   timeoutSeconds: 40
+#   successThreshold: 1
+
+# readinessProbe:
+#   failureThreshold: 3
+#   httpGet:
+#     path: /
+#     port: 3300
+#     scheme: HTTP
+#   initialDelaySeconds: 60
+#   periodSeconds: 40
+#   timeoutSeconds: 40
+#   successThreshold: 2
+
+service:
+  type: ClusterIP
+  port: 3300
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+configMap:
+  CANON_API: "https://cfc.datawheel.us"
+  CANON_LANGUAGE_DEFAULT: "en"
+  CANON_LANGUAGES: "en"
+  CANON_CMS_ENABLE: "true"
+  CANON_CMS_CUBES: "https://cfc.api.datawheel.us/tesseract/"
+  CANON_CMS_GENERATOR_TIMEOUT: "120000"
+  CANON_CMS_REQUESTS_PER_SECOND: "40"
+  CANON_CONST_STORAGE_BUCKET: "x"
+  CANON_CONST_TESSERACT: "https://cfc.api.datawheel.us/tesseract/"
+  WDS_SOCKET_PORT: "0"
+
+secrets:
+  CANON_CMS_DB: cG9zdGdyZXNxbDovL3Bvc3RncmVzOll1V2pLRzJMVGpXTG84UWN2MzdMQDM0LjE3MS4yMDUuMzQvaGVhbHRoeS1jb21tdW5pdGllcy1jbXMtZGV2
+  CANON_AWS_DB: bXlzcWw6Ly9kYXRhd2hlZWw6ZGF0YXdoZWVsX3B3b3JkQGNmYy1wcm9kLmMxZjMybnhweWtvNS51cy1lYXN0LTEucmRzLmFtYXpvbmF3cy5jb206MzMwNi9jZmNfY2Rw
+  FLICKR_API_KEY: ZDRmMDk1ZmQ2NjhkZTZmZGNlOTE0ZTVjOTY5M2Q1NjM=
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.org/proxy-connect-timeout: "120s"
+    nginx.org/proxy-read-timeout: "120s"
+    nginx.org/proxy-buffers: "8 16k"
+    nginx.org/proxy-buffer-size: "16k"
+    nginx.org/proxy-busy-buffers-size: "64k"
+    # nginx.org/websocket-services: "websocket-service"
+    nginx.org/server-snippets: |
+      if ($http_x_forwarded_proto = 'http') {
+          return 308 https://$host$request_uri;
+      }
+    nginx.org/location-snippets: |
+      add_header Access-Control-Allow-Origin *;
+
+      proxy_pass_header         Access-Control-Allow-Origin;
+      proxy_pass_header         Access-Control-Allow-Methods;
+      proxy_pass_header         Access-Control-Allow-Headers;
+
+      proxy_set_header          Host $host;
+      proxy_set_header          X-Forwarded-For     $proxy_add_x_forwarded_for;
+      proxy_set_header          X-Forwarded-Proto   $scheme;
+      proxy_set_header          Upgrade $http_upgrade;
+      proxy_set_header          Connection "upgrade";
+  hosts:
+    - host: cfc.datawheel.us
+      paths:
+        - /
+  tls:
+    - secretName: canon-site-tls
+      hosts:
+        - cfc.datawheel.us
