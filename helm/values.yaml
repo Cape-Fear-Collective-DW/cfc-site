@@ -79,8 +79,10 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     acme.cert-manager.io/http01-edit-in-place: "true"
     ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.org/proxy-connect-timeout: "120s"
-    nginx.org/proxy-read-timeout: "120s"
+    nginx.org/client-max-body-size: "4m"
+    nginx.org/proxy-connect-timeout: "300s"
+    nginx.org/proxy-read-timeout: "300s"
+    nginx.org/proxy-send-timeout: "300s"
     nginx.org/proxy-buffers: "8 16k"
     nginx.org/proxy-buffer-size: "16k"
     nginx.org/proxy-busy-buffers-size: "64k"
@@ -105,6 +107,7 @@ ingress:
     - host: cfc.datawheel.us
       paths:
         - /
+        - /ws
   tls:
     - secretName: canon-site-tls
       hosts:
