@@ -1,0 +1,175 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: varnish-vcl-frontend
+  namespace: production
+data:
+  default.vcl.tmpl: |
+    vcl 4.0;
+
+    import std;
+    import directors;
+    import purge;
+
+    // ".Frontends" is a slice that contains all known Varnish instances
+    // (as selected by the service specified by -frontend-service).
+    // The backend name needs to be the Pod name, since this value is compared
+    // to the server identity ("server.identity" [1]) later.
+    //
+    //   [1]: https://varnish-cache.org/docs/6.4/reference/vcl.html#local-server-remote-and-client
+    {{ range .Frontends }}
+    backend {{ .Name }} {
+      .host = "{{ .Host }}";
+      .port = "{{ .Port }}";
+    }
+    {{- end }}
+
+    {{ range .Backends }}
+    backend be-{{ .Name }} {
+      .host = "{{ .Host }}";
+      .port = "{{ .Port }}";
+    }
+    {{- end }}
+
+    sub vcl_init {
+      new cluster = directors.shard();
+
+      {{ range .Frontends -}}
+      cluster.add_backend({{ .Name }});
+      {{ end }}
+
+      cluster.set_warmup(180);
+
+      cluster.reconfigure();
+
+      new lb = directors.round_robin();
+
+      {{ range .Backends -}}
+      lb.add_backend(be-{{ .Name }});
+      {{ end }}
+    }
+
+    sub cache_files
+    {
+      # set cache logic header
+      set req.http.X-Varnish-Cache-Logic = "HIT";
+
+      # caching logic
+      unset req.http.Accept-Encoding;
+      unset req.http.Authorization;
+      unset req.http.Cache-Control;
+      unset req.http.Cookie;
+      unset req.http.Pragma;
+      unset req.http.User-Agent;
+      unset req.http.Vary;
+    }
+
+    sub vcl_recv
+    {
+      # Set backend hint for non cachable objects.
+      set req.backend_hint = lb.backend();
+
+      # Routing logic. Pass a request to an appropriate Varnish node.
+      # See https://info.varnish-software.com/blog/creating-self-routing-varnish-cluster for more info.
+      unset req.http.x-cache;
+      set req.backend_hint = cluster.backend(by=URL);
+      set req.http.x-shard = req.backend_hint;
+      if (req.http.x-shard != server.identity) {
+        return(pass);
+      }
+      set req.backend_hint = lb.backend();
+
+      # Command to clear complete cache for one URL
+      if (req.method == "PURGE") {
+        if (req.http.X-Varnish-Token != "VY7qdZX2x2qN7ZnG28Ne") {
+          return(synth(405, "User not allowed to PURGE."));
+        }
+        return(purge);
+      }
+
+      # Command to clear complete cache for all URLs and all sub-domains
+      if (req.method == "XCGFULLBAN") {
+        if (req.http.X-Varnish-Token != "VY7qdZX2x2qN7ZnG28Ne") {
+          return(synth(405, "User not allowed to BAN."));
+        }
+        ban("req.http.host ~ .*");
+        return (synth(200, "Full cache cleared"));
+      }
+
+      # Varnish configuration https://www.varnish-software.com/developers/tutorials/example-vcl-template/
+      # Remove Google Analytics based cookies
+      if (req.url ~ "(\?|&)(utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl)=") {
+        set req.url = regsuball(req.url, "&(utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl)=([A-z0-9_\-\.%25]+)", "");
+        set req.url = regsuball(req.url, "\?(utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl)=([A-z0-9_\-\.%25]+)", "?");
+        set req.url = regsub(req.url, "\?&", "?");
+        set req.url = regsub(req.url, "\?$", "");
+      }
+      set req.http.Cookie = regsuball(req.http.Cookie, "(__utm|_ga|_opt)[a-z_]*=[^;]+(; )?", "");
+      set req.http.Cookie = regsuball(req.http.Cookie, "(utmctr|utmcmd|utmccn)=[^;]+(; )?", "");
+
+      # Remove Stripe based cookies
+      set req.http.Cookie = regsuball(req.http.Cookie, "(__stripe_mid)[a-z_]*=[^;]+(; )?", "");
+      set req.http.Cookie = regsuball(req.http.Cookie, "(__stripe_sid)[a-z_]*=[^;]+(; )?", "");
+
+      # Sort query stream params
+      # set req.url = std.querysort(req.url);
+
+      # Remove httpoxy impact
+      unset req.http.proxy;
+
+      # Do not cache requests that are not GET or HEAD
+      if (req.method != "GET" && req.method != "HEAD") {
+        set req.http.X-Varnish-Cache-Logic = "PASS";
+        return (pass);
+      }
+
+      # DO NOT cache data endpoints
+      if (req.url ~ "^/data") {
+        set req.http.X-Varnish-Cache-Logic = "PASS";
+        return (pass);
+      }
+
+      # cache static content
+      if (req.url ~ "^[^?]*\.(7z|avi|bmp|bz2|css|csv|doc|docx|eot|flac|flv|gif|gz|ico|jpeg|jpg|js|json|less|mka|mkv|mov|mp3|mp4|mpeg|mpg|odt|ogg|ogm|opus|otf|pdf|png|ppt|pptx|rar|rtf|svg|svgz|swf|tar|tbz|tgz|ttf|txt|txz|wav|webm|webp|woff|woff2|xls|xlsx|xml|xz|zip)(\?.*)?$") {
+        call cache_files;
+      }
+
+      # cache homepage and profile endpoints
+      if (req.url ~ "^/" || req.url ~ "^/profile") {
+        call cache_files;
+      }
+
+      return(hash);
+    }
+
+    sub vcl_backend_response
+    {
+      # set X-Backend header
+      set beresp.http.X-Backend = beresp.backend.name;
+
+      # delete cookies for static content on server response
+      if (bereq.url ~ "^[^?]*\.(7z|avi|bmp|bz2|css|csv|doc|docx|eot|flac|flv|gif|gz|ico|jpeg|jpg|js|json|less|mka|mkv|mov|mp3|mp4|mpeg|mpg|odt|ogg|ogm|opus|otf|pdf|png|ppt|pptx|rar|rtf|svg|svgz|swf|tar|tbz|tgz|ttf|txt|txz|wav|webm|webp|woff|woff2|xls|xlsx|xml|xz|zip)(\?.*)?$") {
+        unset beresp.http.cookie;
+        unset beresp.http.Set-Cookie;
+        set beresp.ttl = 1d;
+      }
+    }
+
+    sub vcl_synth {
+      if (resp.status == 750) {
+        set resp.status = 308;
+        set resp.http.Location = "https://api.healthycommunitiesnc.org" + req.url;
+        return(deliver);
+      }
+    }
+
+    sub vcl_deliver
+    {
+      # set cache headers on content delivery
+      set resp.http.X-Varnish-Cache-Logic = req.http.X-Varnish-Cache-Logic;
+      if (obj.hits > 0) {
+        set resp.http.X-Varnish-Cache = "HIT";
+      } else {
+        set resp.http.X-Varnish-Cache = "MISS";
+      }
+    }

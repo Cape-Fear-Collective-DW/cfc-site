@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: canon-site-cache
+  namespace: production
+  labels:
+    app: frontend-cache
+spec:
+  serviceName: canon-site-cache
+  replicas: 2
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: frontend-cache
+  template:
+    metadata:
+      labels:
+        app: frontend-cache
+    spec:
+      containers:
+      - name: cache
+        image: quay.io/mittwald/kube-httpcache:stable
+        imagePullPolicy: Always
+        args:
+        - -admin-addr=0.0.0.0
+        - -admin-port=6083
+        - -signaller-enable
+        - -signaller-port=8090
+        - -frontend-watch
+        - -frontend-namespace=$(NAMESPACE)
+        - -frontend-service=canon-site-cache # as in the "kind: Service" below
+        - -frontend-port=8080
+        - -backend-watch
+        - -backend-namespace=$(NAMESPACE)
+        - -backend-service=canon-site # as in the cluster application service name
+        - -varnish-secret-file=/etc/varnish/k8s-secret/secret
+        - -varnish-vcl-template=/etc/varnish/tmpl/default.vcl.tmpl
+        - -varnish-storage=malloc,128M
+        env:
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        volumeMounts:
+        - name: template
+          mountPath: /etc/varnish/tmpl
+        - name: secret
+          mountPath: /etc/varnish/k8s-secret
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8090
+          name: signaller
+      serviceAccountName: kube-httpcache  # when using RBAC
+      restartPolicy: Always
+      volumes:
+      - name: template
+        configMap:
+          name: varnish-vcl-frontend # on configuration.yaml
+      - name: secret
+        secret:
+          secretName: varnish-secret-temp # when creating the secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canon-site-cache # "-frontend-service="
+  namespace: production
+  labels:
+    app: frontend-cache
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: http
+  - name: "signaller"
+    port: 8090
+    targetPort: signaller
+  selector:
+    app: frontend-cache
