@@ -15,11 +15,11 @@ autoscaling:
 
 resources:
   requests:
-    cpu: 1000m
-    memory: 8Gi
+    cpu: 500m
+    memory: 2Gi
   limits:
-    cpu: 1000m
-    memory: 8Gi
+    cpu: 500m
+    memory: 2Gi
 
 # livenessProbe:
 #   failureThreshold: 3
