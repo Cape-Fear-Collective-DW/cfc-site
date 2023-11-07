@@ -15,11 +15,11 @@ autoscaling:
 
 resources:
   requests:
-    cpu: 500m
-    memory: 2Gi
+    cpu: 1000m
+    memory: 4Gi
   limits:
-    cpu: 500m
-    memory: 2Gi
+    cpu: 1000m
+    memory: 4Gi
 
 # livenessProbe:
 #   failureThreshold: 3
@@ -67,7 +67,7 @@ configMap:
   CANON_CONST_STORAGE_BUCKET: "x"
   CANON_CONST_TESSERACT: "https://api.healthycommunitiesnc.org/tesseract/"
   CANON_GOOGLE_ANALYTICS: "UA-219881506-1"
-  WDS_SOCKET_PORT: "0"
+  WDS_SOCKET_PORT: "3300"
 
 secrets:
   CANON_CMS_DB: cG9zdGdyZXNxbDovL3JlYWRvbmx5OkZ5QkE4Q3FoZm52UkpRY280WWlCQDM0LjE3MS4yMDUuMzQ6NTQzMi9oZWFsdGh5LWNvbW11bml0aWVzLWNtcw==
