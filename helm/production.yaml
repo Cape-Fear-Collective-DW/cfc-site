@@ -4,7 +4,7 @@ image:
 imagePullSecrets:
   - name: github
 
-replicaCount: 2
+replicaCount: 1
 
 autoscaling:
   enabled: false
