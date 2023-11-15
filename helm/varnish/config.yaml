@@ -21,6 +21,8 @@ data:
     backend {{ .Name }} {
       .host = "{{ .Host }}";
       .port = "{{ .Port }}";
+      .connect_timeout        = 300s;
+      .first_byte_timeout     = 300s;
     }
     {{- end }}
 
@@ -28,6 +30,8 @@ data:
     backend be-{{ .Name }} {
       .host = "{{ .Host }}";
       .port = "{{ .Port }}";
+      .connect_timeout        = 300s;
+      .first_byte_timeout     = 300s;
     }
     {{- end }}
 
