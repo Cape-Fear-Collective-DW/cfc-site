@@ -127,7 +127,7 @@
     }
   }
   & .cp-hero-credits {
-    bottom: calc(var(--gutter-xl) + var(--nav-height));
+    bottom: calc(var(--gutter-xl) + var(--gutter-xs));
     display: flex;
     left: calc(var(--gutter-xl) + 180px);
     margin: 0;
