@@ -11,25 +11,105 @@
     border: 0;
   }
 
-  /* hide unuseful stuff */
+  /* hide useless stuff */
   nav,
   .cp-hero-pdf,
   .cp-hero-credits,
-  .cp .profile-tiles {
+  .cp .profile-tiles,
+  .cp .dataset-button,
+  .d3plus-attribution {
     display: none !important;
+  }
+
+  .cp-default-section + .cp-sub-grouping-section {
+    page-break-before: always !important;
+  }
+
+  .cp-sub-grouping-section {
+    page-break-after: avoid !important;
+  }
+
+  .cp-default-section {
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
   }
 
   .cp-section {
     margin: 0 !important;
+    &.cp-hero {
+      height: 850px;
+      max-height: 850px;
+      min-height: 850px;
+      & .cp-hero-stat-group-wrapper {
+        justify-content: flex-start;
+        margin-left: 0.5rem;
+        position: static;
+      }
+      & .cp-hero-inner {
+        margin: 0;
+      }
+      & .cp-hero-heading-wrapper, & .cp-hero-figure, & .cp-hero-inner {
+        min-height: 0 !important;
+        & .cp-hero-subhead {
+          margin-top: 0;
+          margin-left: 0.5rem;
+        }
+        & .cp-hero-caption {
+          flex-basis: calc(100% - var(--gutter-xl) - 40%);
+        }
+        & .cp-hero-figure {
+          flex-basis: 40% !important;
+          min-width: 40% !important;
+          margin-right: var(--gutter-xl);
+          & .cp-viz-figure {
+            height: 650px !important;
+          }
+        }
+      }
+    }
     & .cp-section-inner {
       background-color: transparent !important;
       box-shadow: none !important;
+      & .cp-section-content {
+        & .cp-button-group, & label {
+          width: auto !important;
+        }
+      }
       & .cp-section-paragraph a {
         color: inherit;
         &::after {
           content: "";
         }
       }
+      & .cp-section-paragraph a,
+      & .SourceGroup a {
+        color: inherit;
+        &::after {
+          content: "";
+        }
+      }
+      & .cp-sub-grouping-section-caption {
+        flex-direction: row !important;
+      }
+    }
+    &.cp-single-column-section .cp-table-viz-container .cp-viz-figure {
+      max-height: none !important;
+    }
+  }
+
+  /* Radar Section */
+  #cp-section-104 {
+    height: 500px !important;
+    & .cp-section-inner {
+      flex-direction: row-reverse !important;
+      max-width: 100% !important;
+    }
+    & .cp-default-section-caption {
+      width: 50% !important;
+    }
+    & .cp-default-section-figure {
+      flex: 1 1 auto !important;
+      width: auto !important;
     }
   }
 

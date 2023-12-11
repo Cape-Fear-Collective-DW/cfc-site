@@ -20,10 +20,10 @@ module.exports = function(app) {
     const isCounty = hierarchy1 === "County";
     const customHierarchy = "Region";
 
-    let regionId = ""
-    if (hierarchy1 === "County"){
-    //Regions cube
-       const region = {
+    let regionId = "";
+    if (hierarchy1 === "County") {
+    // Regions cube
+      const region = {
         cube: "Regions",
         drilldowns: "County",
         measures: "Counties",
@@ -35,17 +35,17 @@ module.exports = function(app) {
         .get(BASE_API, {params: region})
         .then(resp => resp.data.data)
         .catch(catcher);
-      regionId = regionData[0]["Region ID"]
+      regionId = regionData[0]["Region ID"];
     }
     else {
-      regionId = id1
+      regionId = id1;
     }
 
-    //Poverty cube
+    // Poverty cube
     const poverty = {
       cube: "Poverty Population",
       drilldowns: "Year",
-      measures: "Indicator Total",
+      measures: "Indicator Total"
     };
 
     const povertyData = await axios
@@ -53,8 +53,8 @@ module.exports = function(app) {
       .then(resp => resp.data.data)
       .catch(catcher);
 
-    povertyData.sort((a, b) => b["Year"] - a["Year"]);
-    const povertyLastYear = povertyData[0] ? povertyData[0]["Year"] : undefined;
+    povertyData.sort((a, b) => b.Year - a.Year);
+    const povertyLastYear = povertyData[0] ? povertyData[0].Year : undefined;
 
     return res.json({
       tesseract: process.env.CANON_CONST_TESSERACT,
