@@ -77,7 +77,7 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    cert-manager.io/issue-temporary-certificate: "true
+    cert-manager.io/issue-temporary-certificate: "true"
     acme.cert-manager.io/http01-edit-in-place: "true"
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.org/client-max-body-size: "4m"
