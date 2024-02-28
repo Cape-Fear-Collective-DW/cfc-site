@@ -76,7 +76,7 @@ secrets:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     acme.cert-manager.io/http01-edit-in-place: "true"
     ingress.kubernetes.io/ssl-redirect: "true"
     nginx.org/client-max-body-size: "4m"
@@ -87,10 +87,10 @@ ingress:
     nginx.org/proxy-buffer-size: "16k"
     nginx.org/proxy-busy-buffers-size: "64k"
     nginx.org/websocket-services: "canon-site"
-    nginx.org/server-snippets: |
-      if ($http_x_forwarded_proto = 'http') {
-          return 308 https://$host$request_uri;
-      }
+    # nginx.org/server-snippets: |
+    #   if ($http_x_forwarded_proto = 'http') {
+    #       return 308 https://$host$request_uri;
+    #   }
     nginx.org/location-snippets: |
       add_header Access-Control-Allow-Origin *;
 
