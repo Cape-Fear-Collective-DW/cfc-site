@@ -57,7 +57,7 @@ serviceAccount:
   name: ""
 
 configMap:
-  CANON_API: "http://cfc.datawheel.us"
+  CANON_API: "https://dev.cfc.datawheel.us"
   CANON_LANGUAGE_DEFAULT: "en"
   CANON_LANGUAGES: "en"
   CANON_CMS_ENABLE: "true"
@@ -78,7 +78,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
     acme.cert-manager.io/http01-edit-in-place: "true"
-    ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-redirect: "false"
     nginx.org/client-max-body-size: "4m"
     nginx.org/proxy-connect-timeout: "300s"
     nginx.org/proxy-read-timeout: "300s"
@@ -87,10 +87,10 @@ ingress:
     nginx.org/proxy-buffer-size: "16k"
     nginx.org/proxy-busy-buffers-size: "64k"
     nginx.org/websocket-services: "canon-site"
-    # nginx.org/server-snippets: |
-    #   if ($http_x_forwarded_proto = 'http') {
-    #       return 308 https://$host$request_uri;
-    #   }
+    nginx.org/server-snippets: |
+      if ($http_x_forwarded_proto = 'http') {
+          return 308 https://$host$request_uri;
+      }
     nginx.org/location-snippets: |
       add_header Access-Control-Allow-Origin *;
 
@@ -104,11 +104,11 @@ ingress:
       proxy_set_header          Upgrade $http_upgrade;
       proxy_set_header          Connection "upgrade";
   hosts:
-    - host: cfc.datawheel.us
+    - host: dev.cfc.datawheel.us
       paths:
         - /
         - /ws
   tls:
-    - secretName: canon-site-tls
+    - secretName: canon-site-tls-dev
       hosts:
-        - cfc.datawheel.us
+        - dev.cfc.datawheel.us
