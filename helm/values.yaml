@@ -87,10 +87,6 @@ ingress:
     nginx.org/proxy-buffer-size: "16k"
     nginx.org/proxy-busy-buffers-size: "64k"
     nginx.org/websocket-services: "canon-site"
-    nginx.org/server-snippets: |
-      if ($http_x_forwarded_proto = 'http') {
-          return 308 https://$host$request_uri;
-      }
     nginx.org/location-snippets: |
       add_header Access-Control-Allow-Origin *;
 
