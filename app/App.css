@@ -104,8 +104,13 @@ body {
   }
 }
 
+.d3plus-id-Target {
+  pointer-events: none !important;
+}
+
 .d3plus-tooltip {
   box-shadow: -1px -1px 3px rgba(15, 43, 70, 0.1), 1px 1px 3px rgba(15, 43, 70, 0.1);
+  pointer-events: none !important;
   & .d3plus-tooltip-thead {
     & tr {
       border-top: 0.75px solid var(--darkblue) !important;
