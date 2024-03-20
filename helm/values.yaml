@@ -21,27 +21,29 @@ resources:
     cpu: 500m
     memory: 2Gi
 
-# livenessProbe:
-#   failureThreshold: 3
-#   httpGet:
-#     path: /
-#     port: 3300
-#     scheme: HTTP
-#   initialDelaySeconds: 60
-#   periodSeconds: 40
-#   timeoutSeconds: 40
-#   successThreshold: 1
+livenessProbe:
+  enabled: false
+  failureThreshold: 3
+  httpGet:
+    path: /
+    port: 3300
+    scheme: HTTP
+  initialDelaySeconds: 60
+  periodSeconds: 40
+  timeoutSeconds: 40
+  successThreshold: 1
 
-# readinessProbe:
-#   failureThreshold: 3
-#   httpGet:
-#     path: /
-#     port: 3300
-#     scheme: HTTP
-#   initialDelaySeconds: 60
-#   periodSeconds: 40
-#   timeoutSeconds: 40
-#   successThreshold: 2
+readinessProbe:
+  enabled: false
+  failureThreshold: 3
+  httpGet:
+    path: /
+    port: 3300
+    scheme: HTTP
+  initialDelaySeconds: 60
+  periodSeconds: 40
+  timeoutSeconds: 40
+  successThreshold: 2
 
 service:
   type: ClusterIP
@@ -57,7 +59,7 @@ serviceAccount:
   name: ""
 
 configMap:
-  CANON_API: "https://dev.cfc.datawheel.us"
+  CANON_API: "https://cfc.datawheel.us"
   CANON_LANGUAGE_DEFAULT: "en"
   CANON_LANGUAGES: "en"
   CANON_CMS_ENABLE: "true"
@@ -76,7 +78,7 @@ secrets:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     acme.cert-manager.io/http01-edit-in-place: "true"
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.org/client-max-body-size: "4m"
@@ -87,6 +89,10 @@ ingress:
     nginx.org/proxy-buffer-size: "16k"
     nginx.org/proxy-busy-buffers-size: "64k"
     nginx.org/websocket-services: "canon-site"
+    nginx.org/server-snippets: |
+      if ($http_x_forwarded_proto = 'http') {
+          return 308 https://$host$request_uri;
+      }
     nginx.org/location-snippets: |
       add_header Access-Control-Allow-Origin *;
 
@@ -100,11 +106,11 @@ ingress:
       proxy_set_header          Upgrade $http_upgrade;
       proxy_set_header          Connection "upgrade";
   hosts:
-    - host: dev.cfc.datawheel.us
+    - host: cfc.datawheel.us
       paths:
         - /
         - /ws
   tls:
-    - secretName: canon-site-tls-dev
+    - secretName: canon-site-tls
       hosts:
-        - dev.cfc.datawheel.us
+        - cfc.datawheel.us
