@@ -66,6 +66,7 @@ configMap:
   CANON_CMS_CUBES: "https://cfc.api.datawheel.us/tesseract/"
   CANON_CMS_GENERATOR_TIMEOUT: "120000"
   CANON_CMS_REQUESTS_PER_SECOND: "40"
+  CANON_LOGINS: "true"
   CANON_CONST_STORAGE_BUCKET: "x"
   CANON_CONST_TESSERACT: "https://cfc.api.datawheel.us/tesseract/"
   WDS_SOCKET_PORT: "3300"
