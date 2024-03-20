@@ -276,6 +276,7 @@
       }
     }
     & .cp-default-section-figure {
+      color: var(--white);
       width: 50%;
       @mixin max-md {
         height: calc(100vw - var(--gutter-xl) - var(--gutter-xl));
