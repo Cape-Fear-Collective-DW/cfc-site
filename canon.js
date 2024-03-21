@@ -3,7 +3,8 @@ module.exports = {
     {
       connection: process.env.CANON_CMS_DB,
       tables: [
-        require("@datawheel/canon-cms/models")
+        require("@datawheel/canon-cms/models"),
+        require("@datawheel/canon-core/models")
       ]
     }
   ],
